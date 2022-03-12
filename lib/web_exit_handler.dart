@@ -1,16 +1,24 @@
 import 'dart:async';
+import 'dart:collection';
 import 'dart:html' as html;
 
-class _ExitHandler {
-  final _cleanupCallbacks = <void Function()>[];
+/// Function callback type for [ExitHandler.register].
+typedef VoidCallback = void Function();
 
-  _ExitHandler() {
+/// Manages callbacks to execute when unloading the web page.
+///
+/// Callbacks will be executed in reverse order of registration.
+class ExitHandler {
+  // ignore: prefer_collection_literals
+  final _cleanupCallbacks = LinkedHashMap<Object, VoidCallback>();
+
+  ExitHandler._() {
     addSubscription(html.window.onUnload.listen(_onUnload));
   }
 
   void _onUnload(html.Event _) {
-    // print('_ExitHandler: Firing onUnload callbacks');
-    for (var callback in _cleanupCallbacks.reversed) {
+    // print('_ExitHandler: Firing ${_cleanupCallbacks.length} onUnload callbacks');
+    for (var callback in _cleanupCallbacks.values.toList().reversed) {
       try {
         callback();
       } catch (e) {
@@ -20,11 +28,27 @@ class _ExitHandler {
     _cleanupCallbacks.clear();
   }
 
-  // TODO: Make it possible to unregister?
-  void register(void Function() callback) => _cleanupCallbacks.add(callback);
+  /// Registers a callback to invoke automatically when leaving the web page.
+  ///
+  /// Returns a token that can be passed to [unregister].
+  Object register(VoidCallback callback) {
+    var key = Object();
+    _cleanupCallbacks[key] = callback;
+    return key;
+  }
 
-  void addSubscription(StreamSubscription<Object?> subscription) =>
+  /// Unregisters an exit callback.
+  ///
+  /// [token] must be the result of a prior call to [register].
+  ///
+  /// Returns the unregistered callback.  Returns `null` if [token] was not
+  /// valid.
+  VoidCallback? unregister(Object token) => _cleanupCallbacks.remove(token);
+
+  /// Registers automatic cancellation of a [StreamSubscription].
+  Object addSubscription(StreamSubscription<Object?> subscription) =>
       register(subscription.cancel);
 }
 
-final _ExitHandler exitHandler = _ExitHandler();
+/// Singleton instance for [ExitHandler].
+final ExitHandler exitHandler = ExitHandler._();
