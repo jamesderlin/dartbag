@@ -26,3 +26,22 @@ extension ElementUtilsExension on html.Element {
       ..top = '${topLeft.y}px';
   }
 }
+
+/// Tries to parse a [bool] from a [String].
+///
+/// Returns `true` if the input is "true", "yes", or "1".  Returns `false` if
+/// the input is "false", "no", or "0".  In both cases, case and whitespace are
+/// ignored.
+///
+/// Returns `null` if the input is not recognized.
+bool? tryParseBool(String value) {
+  const trueStrings = {'true', 'yes', '1'};
+  const falseStrings = {'false', 'no', '0'};
+  value = value.trim().toLowerCase();
+  if (trueStrings.contains(value)) {
+    return true;
+  } else if (falseStrings.contains(value)) {
+    return false;
+  }
+  return null;
+}
