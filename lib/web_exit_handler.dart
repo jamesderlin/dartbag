@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:html' as html;
 
+import 'package:logging/logging.dart' as log;
+
 /// Function callback type for [ExitHandler.register].
 typedef VoidCallback = void Function();
 
@@ -17,12 +19,17 @@ class ExitHandler {
   }
 
   void _onUnload(html.Event _) {
-    // print('_ExitHandler: Firing ${_cleanupCallbacks.length} onUnload callbacks');
+    log.Logger.root.info(
+      () =>
+          '_ExitHandler: Firing ${_cleanupCallbacks.length} onUnload callbacks',
+    );
     for (var callback in _cleanupCallbacks.values.toList().reversed) {
       try {
         callback();
+
+        // ignore: avoid_catches_without_on_clauses
       } catch (e) {
-        print('_ExitHandler: Cleanup callback failed: $e');
+        log.Logger.root.warning('_ExitHandler: Cleanup callback failed: $e');
       }
     }
     _cleanupCallbacks.clear();
