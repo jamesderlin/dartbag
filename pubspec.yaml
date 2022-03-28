@@ -1,0 +1,10 @@
+name: dart_utils
+description: Miscellaneous Dart utility code.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: '>=2.16.2 <3.0.0'
+
+dev_dependencies:
+  test: ^1.16.0
