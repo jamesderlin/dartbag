@@ -1,14 +1,21 @@
 import 'dart:html' as html;
 import 'dart:math';
 
+import 'dart_utils.dart';
+
 /// Miscellaneous utility methods for [Rectangle].
 extension RectangleUtils<T extends num> on Rectangle<T> {
   /// Returns the center of the [Rectangle].
   Point<num> get center => Point<num>(left + width / 2, top + height / 2);
 }
 
-/// Utility methods for [html.Element].
-extension ElementUtilsExension on html.Element {
+/// Wrapper around [html.querySelector] that also tries to cast it to the
+/// specified [Element] type.
+T? querySelectorAs<T extends html.Element>(String selectors) =>
+    html.querySelector(selectors).tryAs<T>();
+
+/// Miscellaneous utility methods for [html.Element].
+extension ElementUtils on html.Element {
   /// Returns the bounding [Rectangle] of the [Element] relative to the
   /// document.
   Rectangle<num> get documentRect => Rectangle<num>(
@@ -44,4 +51,20 @@ bool? tryParseBool(String value) {
     return false;
   }
   return null;
+}
+
+/// Miscellaneous utility methods for [Uri].
+extension UriUtils on Uri {
+  /// Adds or replaces query parameters.
+  ///
+  /// The values in the [queryParameters] [Map] must be [String]s or
+  /// [Iterable<String>]s.  See [Uri.new] for details.
+  Uri updateQueryParameters(Map<String, dynamic> queryParameters) {
+    return replace(
+      queryParameters: {
+        ...this.queryParameters,
+        ...queryParameters,
+      },
+    );
+  }
 }
