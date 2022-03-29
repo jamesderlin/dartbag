@@ -127,6 +127,28 @@ void main() {
     });
   });
 
+  group('reverse:', () {
+    test('empty List', () {
+      var list = <int>[]..reverse();
+      expect(list, <int>[]);
+    });
+
+    test('List with 1 element', () {
+      var list = [1]..reverse();
+      expect(list, [1]);
+    });
+
+    test('List with an even length', () {
+      var list = [1, 2, 3, 4]..reverse();
+      expect(list, [4, 3, 2, 1]);
+    });
+
+    test('List with an odd length', () {
+      var list = [1, 2, 3, 4, 5]..reverse();
+      expect(list, [5, 4, 3, 2, 1]);
+    });
+  });
+
   group('sortWithKey:', () {
     final random = Random(0);
     final ordered =

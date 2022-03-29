@@ -36,6 +36,23 @@ extension AsUint8List on List<int> {
   }
 }
 
+// ignore: public_member_api_docs
+extension ReverseList<T> on List<T> {
+  /// Reverses a [List] in-place.
+  void reverse() {
+    var start = 0;
+    var end = length - 1;
+    while (start < end) {
+      var temp = this[start];
+      this[start] = this[end];
+      this[end] = temp;
+
+      start += 1;
+      end -= 1;
+    }
+  }
+}
+
 class _SortableKeyPair<T, K extends Comparable<Object>>
     implements Comparable<_SortableKeyPair<T, K>> {
   _SortableKeyPair(this.original, this.key);
