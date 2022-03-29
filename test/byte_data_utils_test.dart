@@ -1,8 +1,8 @@
 import 'dart:math' show Random;
 import 'dart:typed_data';
 
+import 'package:dart_utils/byte_data_utils.dart';
 import 'package:dart_utils/dart_utils.dart';
-import 'package:dart_utils/mem_equals.dart';
 
 import 'package:test/test.dart';
 

@@ -1,8 +1,18 @@
-// See <https://stackoverflow.com/questions/70749634/>.
-
 import 'dart:typed_data';
 
+import 'dart_utils.dart';
+
+// ignore: public_member_api_docs
+extension AsUint8List on List<int> {
+  /// Converts a `List<int>` to a [Uint8List].
+  ///
+  /// Attempts to cast to a [Uint8List] first to avoid creating an unnecessary
+  /// copy.
+  Uint8List asUint8List() => tryAs<Uint8List>() ?? Uint8List.fromList(this);
+}
+
 /// Compares two [Uint8List]s by comparing 8 bytes at a time.
+// See <https://stackoverflow.com/questions/70749634/>.
 bool memEquals(Uint8List bytes1, Uint8List bytes2) {
   if (identical(bytes1, bytes2)) {
     return true;
