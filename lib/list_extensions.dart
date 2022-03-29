@@ -1,13 +1,18 @@
-// ignore: public_member_api_docs
-extension ReverseList<T> on List<T> {
-  /// Reverses a [List] in-place.
+/// Extension methods on [List] that do work in-place.
+extension InPlaceOperations<T> on List<T> {
+  /// Swaps two elements.
+  void swap(int i, int j) {
+    var temp = this[i];
+    this[i] = this[j];
+    this[j] = temp;
+  }
+
+  /// Reverses the [List] in-place.
   void reverse() {
     var start = 0;
     var end = length - 1;
     while (start < end) {
-      var temp = this[start];
-      this[start] = this[end];
-      this[end] = temp;
+      swap(start, end);
 
       start += 1;
       end -= 1;
