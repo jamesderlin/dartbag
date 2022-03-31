@@ -32,6 +32,13 @@ extension ElementUtils on html.Element {
       ..left = '${topLeft.x}px'
       ..top = '${topLeft.y}px';
   }
+
+  /// Sets the sole child for this.
+  void setChild(html.Element child) {
+    children
+      ..clear()
+      ..add(child);
+  }
 }
 
 /// Tries to parse a [bool] from a [String].
