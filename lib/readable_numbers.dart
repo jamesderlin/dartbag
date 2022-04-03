@@ -1,18 +1,76 @@
-const _siPrefixes = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'];
-final _binaryPrefixes = [
+const _siMacroPrefixes = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'];
+const _siMicroPrefixes = ['m', '\u03BC', 'n', 'p', 'f', 'a', 'z', 'y'];
+
+final _binaryMacroPrefixes = [
   '',
-  for (var prefix in _siPrefixes.skip(1)) '${prefix}i',
+  for (var prefix in _siMacroPrefixes.skip(1)) '${prefix}i',
 ];
 
+/// Helper function to [readableNumber] to handle non-zero numbers with an
+/// absolute value strictly less than 1.
+String _readableMicroNumber(
+  num n, {
+  required int precision,
+  required String unit,
+}) {
+  var absoluteValue = n.abs();
+  assert(absoluteValue > 0 && absoluteValue < 1);
+
+  const multiplier = 1000;
+  late String numberString;
+
+  var i = 0;
+  while (true) {
+    if (i == _siMicroPrefixes.length) {
+      numberString = n.toStringAsExponential(precision);
+      break;
+    }
+
+    n *= multiplier;
+
+    if (n.abs() >= 1) {
+      numberString = n.toStringAsFixed(precision);
+      break;
+    }
+
+    i += 1;
+  }
+
+  return '$numberString ${_siMicroPrefixes[i]}$unit';
+}
+
 /// Returns the specified number as a human-readable string.
+///
+/// [precision] specifies the number of fractional digits to show after the
+/// decimal point.
+///
+/// [unit], if specified, will be appended to the resulting string.
+///
+/// If [binary] is true, `readableNumber` will prefer binary IEC prefixes over
+/// SI prefixes. [binary] will be ignored for numbers with an absolute value
+/// less than 1.
+///
+/// Examples:
+/// ```dart
+/// readableNumber(1, unit: 'B'); // '1 B'
+/// readableNumber(1000); // '1 K'
+/// readableNumber(1234567, precision: 2, unit: 'B'); // '1.23 MB'
+/// readableNumber(1234567, precision: 2, unit: 'B', binary: true); // '1.18 MiB'
+/// readableNumber(0.1, unit: 'g'); // '100 mg'
+/// ```
 String readableNumber(
   num n, {
   int precision = 0,
   String unit = '',
   bool binary = false,
 }) {
+  var absoluteValue = n.abs();
+  if (absoluteValue > 0 && absoluteValue < 1) {
+    return _readableMicroNumber(n, precision: precision, unit: unit);
+  }
+
   var multiplier = binary ? 1024 : 1000;
-  var prefixes = binary ? _binaryPrefixes : _siPrefixes;
+  var prefixes = binary ? _binaryMacroPrefixes : _siMacroPrefixes;
   var space = ' ';
   var i = 0;
   while (true) {

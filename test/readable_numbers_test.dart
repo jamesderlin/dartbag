@@ -74,6 +74,24 @@ void main() {
         '-1 MiB',
       );
     });
+
+    test('Small numbers', () {
+      expect(0.1.toReadableString(unit: 'g'), '100 mg');
+      expect(0.01.toReadableString(unit: 'g'), '10 mg');
+      expect(0.001.toReadableString(unit: 'g'), '1 mg');
+      expect(0.0001.toReadableString(unit: 'g'), '100 \u03BCg');
+
+      expect((-0.1).toReadableString(unit: 'g'), '-100 mg');
+      expect((-0.01).toReadableString(unit: 'g'), '-10 mg');
+      expect((-0.001).toReadableString(unit: 'g'), '-1 mg');
+      expect((-0.0001).toReadableString(unit: 'g'), '-100 \u03BCg');
+
+      expect(0.0123.toReadableString(unit: 'g'), '12 mg');
+      expect(0.0123.toReadableString(precision: 1, unit: 'g'), '12.3 mg');
+
+      expect((-0.0123).toReadableString(unit: 'g'), '-12 mg');
+      expect((-0.0123).toReadableString(precision: 1, unit: 'g'), '-12.3 mg');
+    });
   });
 
   group('readableDuration:', () {
