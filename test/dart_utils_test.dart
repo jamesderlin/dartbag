@@ -1,5 +1,33 @@
+import 'dart:collection';
+import 'dart:math' as math;
+
 import 'package:dart_utils/dart_utils.dart';
 import 'package:test/test.dart';
+
+class TrackedRandom implements math.Random {
+  TrackedRandom();
+
+  final _rawRandom = math.Random(0);
+  int callCount = 0;
+
+  @override
+  bool nextBool() {
+    callCount += 1;
+    return _rawRandom.nextBool();
+  }
+
+  @override
+  int nextInt(int max) {
+    callCount += 1;
+    return _rawRandom.nextInt(max);
+  }
+
+  @override
+  double nextDouble() {
+    callCount += 1;
+    return _rawRandom.nextDouble();
+  }
+}
 
 void main() {
   test('staticType works', () {
@@ -18,49 +46,6 @@ void main() {
     expect(null.tryAs<int>(), null);
     expect(x.tryAs<String>(), null);
     expect(x.tryAs<int>(), 7);
-  });
-
-  group('readableDuration:', () {
-    test('0s', () {
-      expect(Duration.zero.toReadableString(), '0s');
-    });
-
-    test('1s', () {
-      expect(const Duration(seconds: 1).toReadableString(), '1s');
-    });
-
-    test('Subseconds', () {
-      expect(const Duration(milliseconds: 100).toReadableString(), '0.1s');
-      expect(const Duration(milliseconds: 10).toReadableString(), '0.01s');
-      expect(const Duration(milliseconds: 1).toReadableString(), '0.001s');
-      expect(const Duration(microseconds: 100).toReadableString(), '0.0001s');
-      expect(const Duration(microseconds: 10).toReadableString(), '0.00001s');
-      expect(const Duration(microseconds: 1).toReadableString(), '0.000001s');
-    });
-
-    test('All components', () {
-      expect(
-        const Duration(days: 1, hours: 2, minutes: 3, seconds: 4)
-            .toReadableString(),
-        '1d2h3m4s',
-      );
-      expect(
-        const Duration(days: 1, hours: 2, minutes: 34, seconds: 56)
-            .toReadableString(),
-        '1d2h34m56s',
-      );
-    });
-
-    test('Missing components', () {
-      expect(
-        const Duration(hours: 1, seconds: 2).toReadableString(),
-        '1h2s',
-      );
-      expect(
-        const Duration(hours: 1, milliseconds: 500).toReadableString(),
-        '1h0.5s',
-      );
-    });
   });
 
   test('padDigits works', () {
@@ -121,6 +106,82 @@ void main() {
         ]),
         [1, 2, 3, 4, 5, 6],
       );
+    });
+  });
+
+  test('nextIntFrom works', () {
+    var random = math.Random(0);
+    for (var i = 0; i < 10; i += 1) {
+      expect(random.nextIntFrom(5, 6), 5);
+    }
+
+    var results = [
+      for (var i = 0; i < 100; i += 1) random.nextIntFrom(5, 10),
+    ]..sort();
+
+    expect(results[0], 5);
+    expect(results[results.length - 1], 9);
+  });
+
+  group('lazyShuffler:', () {
+    final original = UnmodifiableListView([for (var i = 0; i < 100; i += 1) i]);
+
+    test('shuffles', () {
+      var list = [...original];
+
+      // ignore: no_leading_underscores_for_local_identifiers
+      for (var _ in lazyShuffler(list, random: math.Random(0))) {}
+
+      expect(list, isNot(original));
+      expect(list..sort(), original);
+    });
+
+    test('is repeatable', () {
+      var shuffled1 = [
+        for (var i in lazyShuffler([...original], random: math.Random(0))) i,
+      ];
+      var shuffled2 = [
+        for (var i in lazyShuffler([...original], random: math.Random(0))) i,
+      ];
+
+      expect(shuffled1, shuffled2);
+      expect(shuffled1, isNot(same(shuffled2)));
+    });
+
+    test('shuffles lazily', () {
+      var trackedRandom = TrackedRandom();
+
+      var fullyShuffled = [
+        for (var i in lazyShuffler([...original], random: trackedRandom)) i,
+      ];
+
+      var fullCallCount = trackedRandom.callCount;
+      expect(fullCallCount, original.length);
+
+      trackedRandom = TrackedRandom();
+      var partiallyShuffled = [...original];
+
+      var iterator =
+          lazyShuffler(partiallyShuffled, random: trackedRandom).iterator;
+
+      var n = 10;
+      for (var i = 0; i < n; i += 1) {
+        expect(iterator.moveNext(), true, reason: 'Iteration: $i');
+        expect(iterator.current, partiallyShuffled[i], reason: 'Iteration: $i');
+      }
+
+      var lazyCallCount = trackedRandom.callCount;
+
+      expect(lazyCallCount, n);
+
+      expect(partiallyShuffled.getRange(0, n), fullyShuffled.getRange(0, n));
+      expect(
+        partiallyShuffled.getRange(n, partiallyShuffled.length),
+        isNot(fullyShuffled.getRange(n, fullyShuffled.length)),
+      );
+
+      expect(partiallyShuffled, isNot(original));
+      expect(partiallyShuffled..sort(), original);
     });
   });
 }

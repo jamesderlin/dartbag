@@ -1,3 +1,7 @@
+import 'dart:math' as math;
+
+import 'list_extensions.dart';
+
 // ignore: public_member_api_docs
 extension TryAsExtension on Object? {
   /// Attempts to cast this to `T`, returning `null` on failure.
@@ -28,56 +32,6 @@ Iterable<T> flattenDeep<T>(Iterable<Object?> list) sync* {
   }
 }
 
-/// Returns a [Duration] as a human-readable string.
-///
-/// Example outputs:
-/// 1d2h34m56.789s
-/// 1d
-/// 1d58s
-/// 1d0.2s
-String readableDuration(Duration duration) {
-  if (duration.inMicroseconds == 0) {
-    return '0s';
-  }
-
-  var sign = '';
-  if (duration.isNegative) {
-    sign = '-';
-    duration = -duration;
-  }
-
-  var days = duration.inDays;
-  var hours = duration.inHours % Duration.hoursPerDay;
-  var minutes = duration.inMinutes % Duration.minutesPerHour;
-  var seconds = duration.inSeconds % Duration.secondsPerMinute;
-  var microseconds = duration.inMicroseconds % Duration.microsecondsPerSecond;
-
-  var secondsString = '';
-  if (microseconds > 0) {
-    var fractionalSecondsString =
-        '$microseconds'.padLeft(6, '0').replaceAll(RegExp(r'0+$'), '');
-    secondsString = '$seconds.${fractionalSecondsString}s';
-  } else if (seconds > 0) {
-    secondsString = '${seconds}s';
-  }
-
-  var components = <String>[
-    sign,
-    if (days > 0) '${days}d',
-    if (hours > 0) '${hours}h',
-    if (minutes > 0) '${minutes}m',
-    secondsString,
-  ];
-
-  return components.join();
-}
-
-// ignore: public_member_api_docs
-extension ReadableDuration on Duration {
-  /// An extension version of [readableDuration].
-  String toReadableString() => readableDuration(this);
-}
-
 // ignore: public_member_api_docs
 extension PadStringExtension on int {
   /// Returns a string representation of this [int], left-padded with zeroes if
@@ -90,4 +44,46 @@ Duration timeOperation(void Function() operation) {
   var stopwatch = Stopwatch()..start();
   operation();
   return stopwatch.elapsed;
+}
+
+/// Miscellaneous utility methods for [math.Random].
+extension RandomUtils on math.Random {
+  /// Returns a random intenger in the range \[`low`, `high`).
+  int nextIntFrom(int low, int high) => low + nextInt(high - low);
+}
+
+/// Shuffles a [List] lazily.
+///
+/// Examples:
+/// ```dart
+/// var list = [for (var i = 0; i < 1000; i += 1) i];
+///
+/// // Draw 5 random elements from `list`.  The rest of `list` will contain the
+/// // remaining elements in an indeterminate order.
+/// var iterator = lazyShuffler(list).iterator;
+/// for (var i = 0; i < 5 && iterator.moveNext(); i += 1) {
+///   print(iterator.current);
+/// }
+///
+/// // Alternatively:
+/// var i = 0;
+/// for (var element in lazyShuffler(list)) {
+///   if (i == 5) {
+///     break;
+///   }
+///   print(element);
+/// }
+///
+/// // Or if resuming iteration later is unnecessary:
+/// lazyShuffler(list).take(5).forEach(print);
+/// ```
+/// Since advancing the iterator mutates `list`, `list[i]` in the example
+/// above would the same value as `iterator.current`.
+Iterable<T> lazyShuffler<T>(List<T> list, {math.Random? random}) sync* {
+  random ??= math.Random();
+  for (var nextIndex = 0; nextIndex < list.length; nextIndex += 1) {
+    var i = random.nextIntFrom(nextIndex, list.length);
+    list.swap(nextIndex, i);
+    yield list[nextIndex];
+  }
 }
