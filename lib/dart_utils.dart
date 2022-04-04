@@ -87,3 +87,45 @@ Iterable<T> lazyShuffler<T>(List<T> list, {math.Random? random}) sync* {
     yield list[nextIndex];
   }
 }
+
+/// Tries to parse a [bool] from a [String].
+///
+/// Returns `true` if the input is "true", "yes", or "1".  Returns `false` if
+/// the input is "false", "no", or "0".  In both cases, case and surroudning
+/// whitespace are ignored.
+///
+/// Returns `null` if the input is not recognized.
+bool? tryParseBool(String value) {
+  const trueStrings = {'true', 'yes', '1'};
+  const falseStrings = {'false', 'no', '0'};
+  value = value.trim().toLowerCase();
+  if (trueStrings.contains(value)) {
+    return true;
+  } else if (falseStrings.contains(value)) {
+    return false;
+  }
+  return null;
+}
+
+/// Miscellaneous utility methods for [Uri].
+extension UriUtils on Uri {
+  /// Adds or replaces query parameters.
+  ///
+  /// The values in the [queryParameters] [Map] must be [String]s or
+  /// [Iterable<String>]s.  See [Uri.new] for details.
+  Uri updateQueryParameters(Map<String, dynamic> queryParameters) {
+    return replace(
+      queryParameters: {
+        ...this.queryParameters,
+        ...queryParameters,
+      },
+    );
+  }
+}
+
+/// Miscellaneous utility methods for [Rectangle].
+extension RectangleUtils<T extends num> on math.Rectangle<T> {
+  /// Returns the center of the [Rectangle].
+  math.Point<num> get center =>
+      math.Point<num>(left + width / 2, top + height / 2);
+}
