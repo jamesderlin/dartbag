@@ -48,7 +48,7 @@ void main() {
     expect(x.tryAs<int>(), 7);
   });
 
-  test('padDigits works', () {
+  test('int.padDigits works', () {
     expect(0.padDigits(0), '0');
     expect(1.padDigits(0), '1');
     expect(0.padDigits(1), '0');
@@ -109,7 +109,7 @@ void main() {
     });
   });
 
-  test('nextIntFrom works', () {
+  test('Random.nextIntFrom works', () {
     var random = math.Random(0);
     for (var i = 0; i < 10; i += 1) {
       expect(random.nextIntFrom(5, 6), 5);
@@ -183,5 +183,73 @@ void main() {
       expect(partiallyShuffled, isNot(original));
       expect(partiallyShuffled..sort(), original);
     });
+  });
+
+  group('tryParseBool', () {
+    test('Normal operations work', () {
+      expect(tryParseBool('true'), true);
+      expect(tryParseBool('yes'), true);
+      expect(tryParseBool('1'), true);
+      expect(tryParseBool('false'), false);
+      expect(tryParseBool('no'), false);
+      expect(tryParseBool('0'), false);
+
+      expect(tryParseBool(''), null);
+      expect(tryParseBool('2'), null);
+      expect(tryParseBool('maybe'), null);
+    });
+    test('Case-insensitive', () {
+      expect(tryParseBool('TRuE'), true);
+      expect(tryParseBool('FaLSE'), false);
+    });
+    test('Whitespace-insensitive', () {
+      expect(tryParseBool('  \ttrue\n  '), true);
+      expect(tryParseBool('  \tno\n    '), false);
+
+      expect(tryParseBool(' \t\n'), null);
+    });
+    test('Miscellaneous negative cases', () {
+      expect(tryParseBool('1.0'), null);
+      expect(tryParseBool('00'), null);
+      expect(tryParseBool('yesman'), null);
+      expect(tryParseBool('y'), null);
+      expect(tryParseBool('n'), null);
+    });
+  });
+
+  test('Uri.updateQueryParameters', () {
+    var uri = Uri.parse(
+      'https://user@www.example.com:8080/'
+      '?foo=bar&lorem=ipsum&nine=9#anchor',
+    );
+    expect(
+      uri.updateQueryParameters({'lorem': 'dolor'}).toString(),
+      'https://user@www.example.com:8080/?foo=bar&lorem=dolor&nine=9#anchor',
+    );
+
+    expect(
+      uri.updateQueryParameters({'nine': '10'}).toString(),
+      'https://user@www.example.com:8080/?foo=bar&lorem=ipsum&nine=10#anchor',
+    );
+    expect(
+      uri.updateQueryParameters({'ten': '10'}).toString(),
+      'https://user@www.example.com:8080/'
+      '?foo=bar&lorem=ipsum&nine=9&ten=10#anchor',
+    );
+  });
+  test('Rectangle.center', () {
+    expect(
+      const math.Rectangle(10, 20, 100, 200).center,
+      const math.Point(60, 120),
+    );
+    expect(
+      const math.Rectangle(-10, -20, 100, 200).center,
+      const math.Point(40, 80),
+    );
+
+    expect(
+      const math.Rectangle(10, 20, 0, 0).center,
+      const math.Point(10, 20),
+    );
   });
 }
