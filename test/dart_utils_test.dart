@@ -29,6 +29,8 @@ class TrackedRandom implements math.Random {
   }
 }
 
+enum Color { red, green, blue }
+
 void main() {
   test('staticType works', () {
     var someInt = 0;
@@ -185,7 +187,7 @@ void main() {
     });
   });
 
-  group('tryParseBool', () {
+  group('tryParseBool:', () {
     test('Normal operations work', () {
       expect(tryParseBool('true'), true);
       expect(tryParseBool('yes'), true);
@@ -214,6 +216,27 @@ void main() {
       expect(tryParseBool('yesman'), null);
       expect(tryParseBool('y'), null);
       expect(tryParseBool('n'), null);
+    });
+  });
+
+  group('List<Enum>.tryParse:', () {
+    test('Normal operations work', () {
+      expect(Color.values.tryParse('red'), Color.red);
+      expect(Color.values.tryParse('green'), Color.green);
+      expect(Color.values.tryParse('blue'), Color.blue);
+    });
+    test('Returns null for unrecognized values', () {
+      expect(Color.values.tryParse(''), null);
+      expect(Color.values.tryParse('fuchsia'), null);
+      expect(Color.values.tryParse('reddish'), null);
+    });
+    test('Case-sensitivity works', () {
+      expect(Color.values.tryParse('Blue'), Color.blue);
+      expect(Color.values.tryParse('Blue', caseSensitive: true), null);
+    });
+    test('Whitespace-insensitive', () {
+      expect(Color.values.tryParse(' \tblue\n '), Color.blue);
+      expect(Color.values.tryParse(' \tBlue\n '), Color.blue);
     });
   });
 

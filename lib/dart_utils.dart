@@ -107,6 +107,40 @@ bool? tryParseBool(String value) {
   return null;
 }
 
+// ignore: public_member_api_docs
+extension ParseEnum<T extends Enum> on List<T> {
+  /// Tries to parse an `enum` constant` from its name.
+  ///
+  /// Ignores surrounding whitespace.
+  ///
+  /// Returns `null` if unrecognized.
+  ///
+  /// Example:
+  /// ```dart
+  /// enum Color { red, green, blue }
+  ///
+  /// Color.values.tryParse('blue'); // Color.blue
+  /// ```
+  T? tryParse(String name, {bool caseSensitive = false}) {
+    name = name.trim();
+    if (!caseSensitive) {
+      name = name.toLowerCase();
+    }
+
+    for (var element in this) {
+      var enumName = element.name;
+      if (!caseSensitive) {
+        enumName = enumName.toLowerCase();
+      }
+
+      if (enumName == name) {
+        return element;
+      }
+    }
+    return null;
+  }
+}
+
 /// Miscellaneous utility methods for [Uri].
 extension UriUtils on Uri {
   /// Adds or replaces query parameters.
