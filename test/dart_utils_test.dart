@@ -50,6 +50,16 @@ void main() {
     expect(x.tryAs<int>(), 7);
   });
 
+  test('OutputParameter<T> works', () {
+    void f(OutputParameter<int> output) {
+      output.value = 42;
+    }
+
+    var result = OutputParameter<int>(0);
+    f(result);
+    expect(result.value, 42);
+  });
+
   test('int.padDigits works', () {
     expect(0.padDigits(0), '0');
     expect(1.padDigits(0), '1');

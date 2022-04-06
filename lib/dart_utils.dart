@@ -3,6 +3,12 @@ import 'dart:math' as math;
 import 'list_extensions.dart';
 
 // ignore: public_member_api_docs
+extension StaticTypeExtension<T> on T {
+  /// Returns the static type of this object.
+  Type get staticType => T;
+}
+
+// ignore: public_member_api_docs
 extension TryAsExtension on Object? {
   /// Attempts to cast this to `T`, returning `null` on failure.
   ///
@@ -14,11 +20,17 @@ extension TryAsExtension on Object? {
   }
 }
 
-// ignore: public_member_api_docs
-extension StaticTypeExtension<T> on T {
-  /// Returns the static type of this object.
-  Type get staticType => T;
+/// A basic wrapper around another type.
+class Boxed<T> {
+  /// The wrapped value.
+  T value;
+
+  /// Constructor.
+  Boxed(this.value);
 }
+
+/// An output parameter.
+typedef OutputParameter<T> = Boxed<T>;
 
 /// Recursively flattens all nested [Iterable]s in specified [Iterable] to a
 /// single [Iterable] sequence.
