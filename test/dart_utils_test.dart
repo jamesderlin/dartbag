@@ -285,4 +285,58 @@ void main() {
       const math.Point(10, 20),
     );
   });
+
+  test('roundToMultiple', () {
+    const expectedMultiplesOf5 = <int, int>{
+      0: 0,
+      1: 0,
+      2: 0,
+      3: 5,
+      4: 5,
+      5: 5,
+    };
+
+    const expectedMultiplesOf10 = <int, int>{
+      0: 0,
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 10,
+      6: 10,
+      7: 10,
+      8: 10,
+      9: 10,
+      10: 10,
+    };
+
+    var random = math.Random(0);
+    void helper(int multiplier, Map<int, int> expectedMultiples) {
+      for (var entry in expectedMultiples.entries) {
+        var n = entry.key;
+        var expected = entry.value;
+        expect(
+          entry.key.roundToMultipleOf(multiplier),
+          entry.value,
+          reason: '$n.roundToMultipleOf($multiplier) => $expected',
+        );
+      }
+
+      for (var i = 0; i < 100; i += 1) {
+        var exactMultiple = random.nextInt(1000) * multiplier;
+        for (var i = 0; i < multiplier; i += 1) {
+          var n = exactMultiple + i;
+          var expected = exactMultiple + expectedMultiples[i]!;
+          expect(
+            n.roundToMultipleOf(multiplier),
+            expected,
+            reason: '$n.roundToMultipleOf($multiplier) => $expected',
+          );
+        }
+      }
+    }
+
+    helper(5, expectedMultiplesOf5);
+    helper(10, expectedMultiplesOf10);
+  });
 }

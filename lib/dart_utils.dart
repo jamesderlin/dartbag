@@ -2,6 +2,10 @@ import 'dart:math' as math;
 
 import 'list_extensions.dart';
 
+/// The maximum value allowed for [Random.nextInt].
+// See <https://github.com/dart-lang/sdk/issues/48647>
+const randMaxInt = (1 << 31) * 2;
+
 // ignore: public_member_api_docs
 extension StaticTypeExtension<T> on T {
   /// Returns the static type of this object.
@@ -45,10 +49,19 @@ Iterable<T> flattenDeep<T>(Iterable<Object?> list) sync* {
 }
 
 // ignore: public_member_api_docs
-extension PadStringExtension on int {
+extension IntUtils on int {
   /// Returns a string representation of this [int], left-padded with zeroes if
   /// necessary to have the specified number of digits.
   String padDigits(int minimumDigits) => toString().padLeft(minimumDigits, '0');
+
+  /// Rounds a non-negative integer to the nearest multiple of `multipleOf`.
+  ///
+  /// `multipleOf` must be positive.
+  int roundToMultipleOf(int multipleOf) {
+    assert(this >= 0);
+    assert(multipleOf > 0);
+    return (this + multipleOf ~/ 2) ~/ multipleOf * multipleOf;
+  }
 }
 
 /// Times the specified operation.
