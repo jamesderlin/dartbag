@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'list_extensions.dart';
+import 'package:collection/collection.dart';
 
 /// The maximum value allowed for [Random.nextInt].
 // See <https://github.com/dart-lang/sdk/issues/48647>

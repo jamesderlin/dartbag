@@ -1,23 +1,9 @@
+import 'package:collection/collection.dart' as collection;
+
 /// Extension methods on [List] that do work in-place.
 extension InPlaceOperations<T> on List<T> {
-  /// Swaps two elements.
-  void swap(int i, int j) {
-    var temp = this[i];
-    this[i] = this[j];
-    this[j] = temp;
-  }
-
   /// Reverses the [List] in-place.
-  void reverse() {
-    var start = 0;
-    var end = length - 1;
-    while (start < end) {
-      swap(start, end);
-
-      start += 1;
-      end -= 1;
-    }
-  }
+  void reverse() => collection.reverse(this);
 }
 
 class _SortableKeyPair<T, K extends Comparable<Object>>
