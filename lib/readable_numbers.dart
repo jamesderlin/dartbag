@@ -1,3 +1,7 @@
+import 'dart:math' as math;
+
+import 'dart_utils.dart';
+
 const _siMacroPrefixes = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'];
 const _siMicroPrefixes = ['m', '\u03BC', 'n', 'p', 'f', 'a', 'z', 'y'];
 
@@ -42,7 +46,7 @@ String _readableMicroNumber(
 /// Returns the specified number as a human-readable string.
 ///
 /// [precision] specifies the number of fractional digits to show after the
-/// decimal point.
+/// decimal point. [precision] must be non-negative.
 ///
 /// [unit], if specified, will be appended to the resulting string.
 ///
@@ -107,12 +111,18 @@ extension ReadableNumber on num {
 
 /// Returns a [Duration] as a human-readable string.
 ///
+/// [precision] specifies the *maximum* number of fractional digits to show
+/// after the decimal point in the number of seconds.  If `null`, the maximum
+/// precision will be used.
+///
+/// Trailing zeroes from any fractional portion are always discarded.
+///
 /// Example outputs:
 /// 1d2h34m56.789s
 /// 1d
 /// 1d58s
 /// 1d0.2s
-String readableDuration(Duration duration) {
+String readableDuration(Duration duration, {int? precision}) {
   if (duration.inMicroseconds == 0) {
     return '0s';
   }
@@ -121,6 +131,18 @@ String readableDuration(Duration duration) {
   if (duration.isNegative) {
     sign = '-';
     duration = -duration;
+  }
+
+  if (precision != null && precision < 6) {
+    if (precision < 0) {
+      throw ArgumentError(
+        'readableDuration: precision must be non-negative.',
+      );
+    }
+    duration = Duration(
+      microseconds: duration.inMicroseconds
+          .roundToMultipleOf(math.pow(10, 6 - precision) as int),
+    );
   }
 
   var days = duration.inDays;
@@ -152,5 +174,6 @@ String readableDuration(Duration duration) {
 // ignore: public_member_api_docs
 extension ReadableDuration on Duration {
   /// An extension version of [readableDuration].
-  String toReadableString() => readableDuration(this);
+  String toReadableString({int? precision}) =>
+      readableDuration(this, precision: precision);
 }

@@ -135,5 +135,60 @@ void main() {
         '1h0.5s',
       );
     });
+
+    group('precision:', () {
+      test('Truncates', () {
+        const duration2 = Duration(
+          seconds: 1,
+          microseconds: 123123,
+        );
+
+        expect(duration2.toReadableString(), '1.123123s');
+        expect(duration2.toReadableString(precision: 6), '1.123123s');
+        expect(duration2.toReadableString(precision: 5), '1.12312s');
+        expect(duration2.toReadableString(precision: 4), '1.1231s');
+        expect(duration2.toReadableString(precision: 3), '1.123s');
+        expect(duration2.toReadableString(precision: 2), '1.12s');
+        expect(duration2.toReadableString(precision: 1), '1.1s');
+        expect(duration2.toReadableString(precision: 0), '1s');
+        expect(
+          () => duration2.toReadableString(precision: -1),
+          throwsA(isA<ArgumentError>()),
+        );
+      });
+
+      test('Simple rounding', () {
+        expect(
+          const Duration(seconds: 1, microseconds: 500 * 1000)
+              .toReadableString(precision: 0),
+          '2s',
+        );
+
+        const duration = Duration(seconds: 1, microseconds: 150 * 1000);
+        expect(duration.toReadableString(precision: 0), '1s');
+        expect(duration.toReadableString(precision: 1), '1.2s');
+        expect(duration.toReadableString(precision: 2), '1.15s');
+        expect(duration.toReadableString(precision: 3), '1.15s');
+      });
+
+      test('Rounding with carries', () {
+        const duration = Duration(
+          hours: 1,
+          minutes: 59,
+          seconds: 59,
+          microseconds: 999999,
+        );
+
+        expect(duration.toReadableString(), '1h59m59.999999s');
+        expect(duration.toReadableString(precision: 7), '1h59m59.999999s');
+        expect(duration.toReadableString(precision: 6), '1h59m59.999999s');
+        expect(duration.toReadableString(precision: 5), '2h');
+        expect(duration.toReadableString(precision: 4), '2h');
+        expect(duration.toReadableString(precision: 3), '2h');
+        expect(duration.toReadableString(precision: 2), '2h');
+        expect(duration.toReadableString(precision: 1), '2h');
+        expect(duration.toReadableString(precision: 0), '2h');
+      });
+    });
   });
 }
