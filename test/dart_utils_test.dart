@@ -95,6 +95,13 @@ void main() {
     });
   });
 
+  test('tryParseInt/tryParseDouble', () {
+    expect(tryParseInt(null), null);
+    expect(tryParseInt('123'), 123);
+    expect(tryParseDouble(null), null);
+    expect(tryParseDouble('1.23'), 1.23);
+  });
+
   group('tryParseBool:', () {
     test('Normal operations work', () {
       expect(tryParseBool('true'), true);
@@ -104,6 +111,7 @@ void main() {
       expect(tryParseBool('no'), false);
       expect(tryParseBool('0'), false);
 
+      expect(tryParseBool(null), null);
       expect(tryParseBool(''), null);
       expect(tryParseBool('2'), null);
       expect(tryParseBool('maybe'), null);
@@ -134,6 +142,7 @@ void main() {
       expect(Color.values.tryParse('blue'), Color.blue);
     });
     test('Returns null for unrecognized values', () {
+      expect(Color.values.tryParse(null), null);
       expect(Color.values.tryParse(''), null);
       expect(Color.values.tryParse('fuchsia'), null);
       expect(Color.values.tryParse('reddish'), null);

@@ -72,7 +72,11 @@ Duration timeOperation(void Function() operation) {
 /// whitespace are ignored.
 ///
 /// Returns `null` if the input is not recognized.
-bool? tryParseBool(String value) {
+bool? tryParseBool(String? value) {
+  if (value == null) {
+    return null;
+  }
+
   const trueStrings = {'true', 'yes', '1'};
   const falseStrings = {'false', 'no', '0'};
   value = value.trim().toLowerCase();
@@ -83,6 +87,14 @@ bool? tryParseBool(String value) {
   }
   return null;
 }
+
+/// A wrapper around [int.tryParse] that accepts a `null` argument.
+int? tryParseInt(String? value, {int? radix}) =>
+    value == null ? null : int.tryParse(value, radix: radix);
+
+/// A wrapper around [double.tryParse] that accepts a `null` argument.
+double? tryParseDouble(String? value) =>
+    value == null ? null : double.tryParse(value);
 
 // ignore: public_member_api_docs
 extension ParseEnum<T extends Enum> on List<T> {
@@ -98,7 +110,11 @@ extension ParseEnum<T extends Enum> on List<T> {
   ///
   /// Color.values.tryParse('blue'); // Color.blue
   /// ```
-  T? tryParse(String name, {bool caseSensitive = false}) {
+  T? tryParse(String? name, {bool caseSensitive = false}) {
+    if (name == null) {
+      return null;
+    }
+
     name = name.trim();
     if (!caseSensitive) {
       name = name.toLowerCase();
