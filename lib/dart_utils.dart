@@ -7,6 +7,18 @@ extension StaticTypeExtension<T> on T {
 }
 
 // ignore: public_member_api_docs
+extension ChainIf<T> on T {
+  /// Returns `this` if [shouldChain] is true, `null` otherwise.
+  ///
+  /// Example:
+  /// ```dart
+  /// var items = Set<int>.of([1, 2, 3]..chainIf(shouldShuffle)?.shuffle());
+  /// ```
+  // ignore: avoid_positional_boolean_parameters
+  T? chainIf(bool shouldChain) => shouldChain ? this : null;
+}
+
+// ignore: public_member_api_docs
 extension TryAsExtension on Object? {
   /// Attempts to cast this to `T`, returning `null` on failure.
   ///

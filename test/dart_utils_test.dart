@@ -1,12 +1,13 @@
 import 'dart:math' as math;
 
 import 'package:dart_utils/dart_utils.dart';
+import 'package:dart_utils/list_extensions.dart';
 import 'package:test/test.dart';
 
 enum Color { red, green, blue }
 
 void main() {
-  test('staticType works', () {
+  test('staticType', () {
     var someInt = 0;
     var someString = '';
     expect(someInt.staticType, int);
@@ -17,14 +18,22 @@ void main() {
     expect(someNum.staticType, num);
   });
 
-  test('tryAs works', () {
+  test('tryAs', () {
     num x = 7;
     expect(null.tryAs<int>(), null);
     expect(x.tryAs<String>(), null);
     expect(x.tryAs<int>(), 7);
   });
 
-  test('OutputParameter<T> works', () {
+  test('chainIf', () {
+    var list = [1, 2, 3]..chainIf(true)?.reverse();
+    expect(list, [3, 2, 1]);
+
+    list = [1, 2, 3]..chainIf(false)?.reverse();
+    expect(list, [1, 2, 3]);
+  });
+
+  test('OutputParameter<T>', () {
     void f(OutputParameter<int> output) {
       output.value = 42;
     }
@@ -34,7 +43,7 @@ void main() {
     expect(result.value, 42);
   });
 
-  test('int.padDigits works', () {
+  test('int.padDigits', () {
     expect(0.padDigits(0), '0');
     expect(1.padDigits(0), '1');
     expect(0.padDigits(1), '0');
