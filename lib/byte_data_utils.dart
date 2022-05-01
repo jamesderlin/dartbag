@@ -3,12 +3,20 @@ import 'dart:typed_data';
 import 'dart_utils.dart';
 
 // ignore: public_member_api_docs
-extension AsUint8List on List<int> {
+extension BytesExtension on List<int> {
   /// Converts a `List<int>` to a [Uint8List].
   ///
   /// Attempts to cast to a [Uint8List] first to avoid creating an unnecessary
   /// copy.
   Uint8List asUint8List() => tryAs<Uint8List>() ?? Uint8List.fromList(this);
+
+  /// Returns a [List] of the hexadecimal strings of each element.
+  ///
+  /// Each hexadecimal string will be converted to uppercase and will be
+  /// optionally prefixed with [prefix].
+  List<String> toHex({String prefix = '0x'}) => [
+        for (var byte in this) '$prefix${byte.toRadixString(16).toUpperCase()}',
+      ];
 }
 
 /// Compares two [Uint8List]s by comparing 8 bytes at a time.
