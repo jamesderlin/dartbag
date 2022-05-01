@@ -34,3 +34,9 @@ extension ElementUtils on html.Element {
       ..add(child);
   }
 }
+
+/// Returns a [Future] that should complete after the window has been repainted.
+Future<void> get afterWindowRepaint async {
+  await html.window.animationFrame;
+  return Future.delayed(Duration.zero);
+}
