@@ -25,7 +25,7 @@ extension RandomUtils on math.Random {
 ///   print(iterator.current);
 /// }
 ///
-/// // Alternatively:
+/// // Alternatively, if resuming iteration later is unnecessary:
 /// var i = 0;
 /// for (var element in lazyShuffler(list)) {
 ///   if (i == 5) {
@@ -34,11 +34,11 @@ extension RandomUtils on math.Random {
 ///   print(element);
 /// }
 ///
-/// // Or if resuming iteration later is unnecessary:
+/// // Or:
 /// lazyShuffler(list).take(5).forEach(print);
 /// ```
 /// Since advancing the iterator mutates `list`, `list[i]` in the example
-/// above would the same value as `iterator.current`.
+/// above would have the same value as `iterator.current`.
 Iterable<T> lazyShuffler<T>(List<T> list, {math.Random? random}) sync* {
   random ??= math.Random();
   for (var nextIndex = 0; nextIndex < list.length; nextIndex += 1) {

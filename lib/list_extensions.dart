@@ -21,12 +21,13 @@ class _SortableKeyPair<T, K extends Comparable<Object>>
 extension SortWithKeyExtension<E> on List<E> {
   /// Sorts [items] according to the computed sort key.
   ///
-  /// This can be much more time-efficient (at the expense of space) than using
-  /// [sort] with a custom comparison callback if comparisons are expensive.
+  /// The sort keys are cached, so this can be much more time-efficient (at the
+  /// expense of space) than using [sort] with a custom comparison callback if
+  /// comparisons are expensive.
   ///
-  /// `K` intentionally extends from `Comparable<Object>` and not from
-  /// `Comparable<K>` so that this works with `int` and `double` types (which
-  /// otherwise would not work because `int` and `double` implement
+  /// [K] intentionally extends from [Comparable<Object>] and not from
+  /// `Comparable<K>` so that this works with [int] and [double] types (which
+  /// otherwise would not work because [int] and [double] implement
   /// `Comparable<num>`).
   void sortWithKey<K extends Comparable<Object>>(
     K Function(E) key,
