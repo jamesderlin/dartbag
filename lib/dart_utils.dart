@@ -1,5 +1,10 @@
 import 'dart:math' as math;
 
+import 'package:stack_trace/stack_trace.dart' as stacktrace;
+
+/// Returns the path to the current Dart library, relative to the package root.
+String currentDartPackagePath() => stacktrace.Frame.caller(1).library;
+
 // ignore: public_member_api_docs
 extension StaticTypeExtension<T> on T {
   /// Returns the static type of this object.
@@ -167,4 +172,16 @@ extension RectangleUtils<T extends num> on math.Rectangle<T> {
   /// Returns the center of the [Rectangle].
   math.Point<num> get center =>
       math.Point<num>(left + width / 2, top + height / 2);
+}
+
+/// Returns true if [assert] is enabled.
+bool assertsEnabled() {
+  var result = false;
+  assert(
+    () {
+      result = true;
+      return true;
+    }(),
+  );
+  return result;
 }

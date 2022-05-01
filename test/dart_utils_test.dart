@@ -7,6 +7,10 @@ import 'package:test/test.dart';
 enum Color { red, green, blue }
 
 void main() {
+  test('currentDartPackagePath', () {
+    expect(currentDartPackagePath(), 'test/dart_utils_test.dart');
+  });
+
   test('staticType', () {
     var someInt = 0;
     var someString = '';
