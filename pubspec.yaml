@@ -10,6 +10,7 @@ dependencies:
   args: ^2.3.1
   clock: ^1.1.0
   collection: ^1.16.0
+  matcher: ^0.12.11
   stack_trace: ^1.10.0
 
 dev_dependencies:

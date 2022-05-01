@@ -31,7 +31,7 @@ class Boxed<T> {
   /// The wrapped value.
   T value;
 
-  /// Constructor.
+  // ignore: public_member_api_docs
   Boxed(this.value);
 }
 

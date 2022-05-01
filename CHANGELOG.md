@@ -4,6 +4,7 @@
 * Added a `timeAsyncOperation` function as an asynchronous version of
   `timeOperation`.
 * Added a `parseOptionValue` extension method on `package:args`'s `ArgResults`.
+* Added a `matcher` library with a `toStringMatches` function.
 
 ## 0.3.0
 

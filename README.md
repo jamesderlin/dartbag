@@ -26,6 +26,11 @@ includes (but is not limited to):
 * `List.sortWithKey` sorts a `List` by computing and caching sort keys, which can be
   significantly faster if comparisons are expensive.
 
+## [matcher]
+
+* `toStringMatches` verifies that a tested value has a matching type and string
+  representation.
+
 ## [misc]
 
 * `chainIf` allows conditional method chaining based on a condition.
@@ -91,6 +96,7 @@ includes (but is not limited to):
 [byte_data]: https://pub.dev/documentation/dartbag/latest/byte_data/byte_data-library.html
 [debug]: https://pub.dev/documentation/dartbag/latest/debug/debug-library.html
 [iterables]: https://pub.dev/documentation/dartbag/latest/iterables/iterables-library.html
+[matcher]: https://pub.dev/documentation/dartbag/latest/matcher/matcher-library.html
 [misc]: https://pub.dev/documentation/dartbag/latest/misc/misc-library.html
 [parse]: https://pub.dev/documentation/dartbag/latest/parse/parse-library.html
 [random]: https://pub.dev/documentation/dartbag/latest/random/random-library.html
