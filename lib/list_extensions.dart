@@ -42,3 +42,14 @@ extension SortWithKeyExtension<E> on List<E> {
     }
   }
 }
+
+/// Miscellaneous utility methods for [Iterable].
+extension IterableUtils<E> on Iterable<E> {
+  /// Iterates over all elements, discarding the results.
+  ///
+  /// Useful only if iterating has side-effects, which is uncommon.
+  void drain() {
+    // ignore: no_leading_underscores_for_local_identifiers
+    for (void _ in this) {}
+  }
+}

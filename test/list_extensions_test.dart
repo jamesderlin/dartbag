@@ -58,4 +58,13 @@ void main() {
       );
     });
   });
+
+  test('Iterable.drain', () {
+    var list = [1, 2, 3];
+    var result = 0;
+    var iterable = list.map((x) => result = result * result + x);
+    expect(result, 0);
+    iterable.drain();
+    expect(result, 12);
+  });
 }
