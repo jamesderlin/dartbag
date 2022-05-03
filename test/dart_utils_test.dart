@@ -259,4 +259,8 @@ void main() {
     helper(5, expectedMultiplesOf5);
     helper(10, expectedMultiplesOf10);
   });
+
+  test('asserts are enabled in tests', () {
+    expect(assertsEnabled, true);
+  });
 }

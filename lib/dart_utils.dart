@@ -175,7 +175,7 @@ extension RectangleUtils<T extends num> on math.Rectangle<T> {
 }
 
 /// Returns true if [assert] is enabled.
-bool assertsEnabled() {
+bool get assertsEnabled {
   var result = false;
   assert(
     () {
