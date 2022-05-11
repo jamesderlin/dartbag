@@ -3,6 +3,8 @@ import 'dart:math' as math;
 import 'package:stack_trace/stack_trace.dart' as stacktrace;
 
 /// Returns the path to the current Dart library, relative to the package root.
+///
+/// This doesn't work for Dart for the Web.
 String currentDartPackagePath() => stacktrace.Frame.caller(1).library;
 
 // ignore: public_member_api_docs

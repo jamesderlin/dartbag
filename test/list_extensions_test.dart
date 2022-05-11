@@ -21,9 +21,11 @@ void main() {
     test('Sorts efficiently', () {
       var trackedParseCallCount = 0;
 
-      int trackedParse(String string) {
+      BigInt trackedParse(String string) {
         trackedParseCallCount += 1;
-        return int.parse(string);
+
+        // [BigInt] is significantly more expensive than native [int].
+        return BigInt.parse(string);
       }
 
       var stopwatch = Stopwatch()..start();
