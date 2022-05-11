@@ -93,7 +93,6 @@ extension IterableUtils<E> on Iterable<E> {
   ///
   /// Useful only if iterating has side-effects, which is uncommon.
   void drain() {
-    // ignore: no_leading_underscores_for_local_identifiers, https://github.com/dart-lang/linter/issues/3126
     for (void _ in this) {}
   }
 }
