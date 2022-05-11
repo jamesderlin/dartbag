@@ -1,6 +1,6 @@
 name: dart_utils
 description: Miscellaneous Dart utility code.
-version: 0.1.15
+version: 0.1.16
 publish_to: none
 
 environment:
