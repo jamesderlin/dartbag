@@ -2,19 +2,18 @@ import 'dart:async';
 
 import 'package:clock/clock.dart';
 
-/// A [Timer] that can be easily restarted.
+/// A non-periodic [Timer] that can be easily restarted.
 class RestartableTimer implements Timer {
   Duration _duration;
   void Function() _callback;
 
-  final DateTime _startTime;
   Timer? _timer;
+  int _tick = 0;
 
   /// Constructor.
   RestartableTimer(Duration duration, void Function() callback)
       : _duration = duration,
-        _callback = callback,
-        _startTime = clock.now() {
+        _callback = callback {
     restart();
   }
 
@@ -22,9 +21,7 @@ class RestartableTimer implements Timer {
   bool get isActive => _timer != null;
 
   @override
-  int get tick =>
-      clock.now().difference(_startTime).inMicroseconds ~/
-      _duration.inMicroseconds;
+  int get tick => _tick;
 
   @override
   void cancel() {
@@ -43,6 +40,7 @@ class RestartableTimer implements Timer {
     _timer?.cancel();
     _timer = Timer(_duration, () {
       try {
+        _tick += 1;
         _callback();
       } finally {
         _timer = null;
