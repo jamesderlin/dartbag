@@ -20,6 +20,8 @@ extension BytesExtension on List<int> {
 }
 
 /// Compares two [Uint8List]s by comparing 8 bytes at a time.
+///
+/// This should be faster than a naive, byte-by-byte comparison.
 // See <https://stackoverflow.com/questions/70749634/>.
 bool memEquals(Uint8List bytes1, Uint8List bytes2) {
   if (identical(bytes1, bytes2)) {

@@ -47,6 +47,27 @@ class Boxed<T> {
 }
 
 /// An output parameter.
+///
+/// Example:
+/// ```dart
+/// void divmod(
+///   int dividend,
+///   int divisor, {
+///   required OutputParameter<int> quotient,
+///   required OutputParameter<int> remainder,
+/// }) {
+///   assert(divisor != 0);
+///   quotient.value = dividend ~/ divisor;
+///   remainder.value = dividend.remainder(divisor);
+/// }
+///
+/// void main() {
+///   var quotient = OutputParameter<int>(0);
+///   var remainder = OutputParameter<int>(0);
+///   divmod(13, 5, quotient: quotient, remainder: remainder);
+///   print('13 / 5 = ${quotient.value}R${remainder.value}');
+/// }
+/// ```
 typedef OutputParameter<T> = Boxed<T>;
 
 /// Recursively flattens all nested [Iterable]s in specified [Iterable] to a
