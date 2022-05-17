@@ -7,25 +7,6 @@ import 'package:test/test.dart';
 enum Color { red, green, blue }
 
 void main() {
-  test(
-    'currentDartPackagePath',
-    onPlatform: {'browser': const Skip()},
-    () {
-      expect(currentDartPackagePath(), 'test/dart_utils_test.dart');
-    },
-  );
-
-  test('staticType', () {
-    var someInt = 0;
-    var someString = '';
-    expect(someInt.staticType, int);
-    expect(someString.staticType, String);
-
-    num someNum = someInt;
-    expect(someNum.runtimeType, int);
-    expect(someNum.staticType, num);
-  });
-
   test('tryAs', () {
     num x = 7;
     expect(null.tryAs<int>(), null);
@@ -262,10 +243,6 @@ void main() {
 
     helper(5, expectedMultiplesOf5);
     helper(10, expectedMultiplesOf10);
-  });
-
-  test('asserts are enabled in tests', () {
-    expect(assertsEnabled, true);
   });
 
   test('implies extension works', () {
