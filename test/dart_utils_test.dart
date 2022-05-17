@@ -267,4 +267,11 @@ void main() {
   test('asserts are enabled in tests', () {
     expect(assertsEnabled, true);
   });
+
+  test('implies extension works', () {
+    expect(false.implies(false), true);
+    expect(false.implies(true), true);
+    expect(true.implies(false), false);
+    expect(true.implies(true), true);
+  });
 }

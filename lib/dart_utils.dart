@@ -208,3 +208,10 @@ bool get assertsEnabled {
   );
   return result;
 }
+
+// ignore: public_member_api_docs
+extension ImpliesExtension on bool {
+  /// Returns whether [this] logically implies [consequence].
+  // ignore: avoid_positional_boolean_parameters
+  bool implies(bool consequence) => !this || consequence;
+}
