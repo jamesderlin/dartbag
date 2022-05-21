@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
-import 'package:dart_utils/dart_utils.dart';
 import 'package:dart_utils/list_extensions.dart';
+import 'package:dart_utils/misc_utils.dart';
 import 'package:test/test.dart';
 
 void main() {

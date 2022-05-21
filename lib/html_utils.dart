@@ -1,7 +1,7 @@
 import 'dart:html' as html;
 import 'dart:math' as math;
 
-import 'dart_utils.dart';
+import 'misc_utils.dart';
 
 /// Wrapper around [html.querySelector] that also tries to cast it to the
 /// specified [Element] type.
