@@ -1,6 +1,6 @@
 @TestOn('vm')
 
-import 'package:dart_utils/tty_utils.dart';
+import 'package:dartbag/tty.dart';
 
 import 'package:test/test.dart';
 

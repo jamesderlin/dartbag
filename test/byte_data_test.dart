@@ -3,9 +3,9 @@
 import 'dart:math' show Random;
 import 'dart:typed_data';
 
-import 'package:dart_utils/byte_data_utils.dart';
-import 'package:dart_utils/misc_utils.dart';
-import 'package:dart_utils/readable_numbers.dart';
+import 'package:dartbag/byte_data.dart';
+import 'package:dartbag/misc.dart';
+import 'package:dartbag/readable_numbers.dart';
 
 import 'package:test/test.dart';
 

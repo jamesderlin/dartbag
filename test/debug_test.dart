@@ -1,4 +1,4 @@
-import 'package:dart_utils/debug_utils.dart';
+import 'package:dartbag/debug.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -6,7 +6,7 @@ void main() {
     'currentDartPackagePath',
     onPlatform: {'browser': const Skip()},
     () {
-      expect(currentDartPackagePath(), 'test/debug_utils_test.dart');
+      expect(currentDartPackagePath(), 'test/debug_test.dart');
     },
   );
 

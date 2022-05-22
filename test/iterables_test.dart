@@ -1,7 +1,7 @@
 import 'dart:collection';
 import 'dart:math';
 
-import 'package:dart_utils/list_extensions.dart';
+import 'package:dartbag/iterables.dart';
 import 'package:test/test.dart';
 
 void main() {

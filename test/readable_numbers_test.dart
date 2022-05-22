@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:dart_utils/readable_numbers.dart';
+import 'package:dartbag/readable_numbers.dart';
 import 'package:test/test.dart';
 
 void main() {

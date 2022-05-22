@@ -1,4 +1,4 @@
-import 'package:dart_utils/timer_utils.dart';
+import 'package:dartbag/timer.dart';
 import 'package:fake_async/fake_async.dart';
 import 'package:test/test.dart';
 

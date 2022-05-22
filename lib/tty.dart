@@ -1,7 +1,7 @@
 import 'dart:io' as io;
 
-import 'misc_utils.dart';
-import 'parse_utils.dart';
+import 'misc.dart';
+import 'parse.dart';
 
 /// Tries to get the size of the terminal.
 ///

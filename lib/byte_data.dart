@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'misc_utils.dart';
+import 'misc.dart';
 
 // ignore: public_member_api_docs
 extension BytesExtension on List<int> {

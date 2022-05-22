@@ -1,4 +1,4 @@
-name: dart_utils
+name: dartbag
 description: Miscellaneous Dart utility code.
 version: 0.2.0
 publish_to: none
@@ -9,7 +9,6 @@ environment:
 dependencies:
   clock: ^1.1.0
   collection: ^1.16.0
-  logging: ^1.0.2
   stack_trace: ^1.10.0
 
 dev_dependencies:

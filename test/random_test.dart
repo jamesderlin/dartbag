@@ -1,7 +1,7 @@
 import 'dart:collection';
 import 'dart:math' as math;
 
-import 'package:dart_utils/random_utils.dart';
+import 'package:dartbag/random.dart';
 import 'package:test/test.dart';
 
 class TrackedRandom implements math.Random {

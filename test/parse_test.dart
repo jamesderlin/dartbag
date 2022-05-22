@@ -1,4 +1,4 @@
-import 'package:dart_utils/parse_utils.dart';
+import 'package:dartbag/parse.dart';
 import 'package:test/test.dart';
 
 enum Color { red, green, blue }
