@@ -1,7 +1,7 @@
 name: dartbag
-description: Miscellaneous Dart utility code.
+description: A grab-bag of miscellaneous, lightweight utility code for Dart.
 version: 0.2.0
-publish_to: none
+repository: https://github.com/jamesderlin/dartbag
 
 environment:
   sdk: '>=2.17.0 <3.0.0'
