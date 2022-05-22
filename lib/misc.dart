@@ -1,6 +1,8 @@
+/// Miscellaneous utilities.
+
 import 'dart:math' as math;
 
-// ignore: public_member_api_docs
+/// Provides a [chainIf] extension method on all objects.
 extension ChainIf<T> on T {
   /// Returns `this` if [shouldChain] is true, `null` otherwise.
   ///
@@ -8,11 +10,11 @@ extension ChainIf<T> on T {
   /// ```dart
   /// var items = Set<int>.of([1, 2, 3]..chainIf(shouldShuffle)?.shuffle());
   /// ```
-  // ignore: avoid_positional_boolean_parameters
+  // ignore: avoid_positional_boolean_parameters, https://github.com/dart-lang/linter/issues/1638
   T? chainIf(bool shouldChain) => shouldChain ? this : null;
 }
 
-// ignore: public_member_api_docs
+/// Provides a [tryAs] extension method on all objects.
 extension TryAsExtension on Object? {
   /// Attempts to cast this to `T`, returning `null` on failure.
   ///
@@ -69,7 +71,7 @@ Iterable<T> flattenDeep<T>(Iterable<Object?> list) sync* {
   }
 }
 
-// ignore: public_member_api_docs
+/// Provides miscellaneous extension methods on [int].
 extension IntUtils on int {
   /// Returns a string representation of this [int], left-padded with zeroes if
   /// necessary to have the specified number of digits.
@@ -115,9 +117,11 @@ extension RectangleUtils<T extends num> on math.Rectangle<T> {
       math.Point<num>(left + width / 2, top + height / 2);
 }
 
-// ignore: public_member_api_docs
+/// Provides an [implies] extension method on [bool].
 extension ImpliesExtension on bool {
-  /// Returns whether [this] logically implies [consequence].
-  // ignore: avoid_positional_boolean_parameters
+  /// Returns whether this [bool] [logically implies][1] [consequence].
+  ///
+  /// [1]: https://simple.wikipedia.org/wiki/Implication_(logic)
+  // ignore: avoid_positional_boolean_parameters, https://github.com/dart-lang/linter/issues/1638
   bool implies(bool consequence) => !this || consequence;
 }

@@ -50,7 +50,7 @@ void main() {
     test('shuffles', () {
       var list = [...original];
 
-      // ignore: no_leading_underscores_for_local_identifiers
+      // ignore: no_leading_underscores_for_local_identifiers, https://github.com/dart-lang/linter/issues/3126
       for (var _ in lazyShuffler(list, random: math.Random(0))) {}
 
       expect(list, isNot(original));

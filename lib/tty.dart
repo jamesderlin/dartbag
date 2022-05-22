@@ -1,3 +1,5 @@
+/// Utilities for command-line applications.
+
 import 'dart:io' as io;
 
 import 'misc.dart';
@@ -5,12 +7,14 @@ import 'parse.dart';
 
 /// Tries to get the size of the terminal.
 ///
-/// Mimics the logic `shutil.get_terminal_size` from Python:
+/// Mimics the logic of [Python's `shutil.get_terminal_size` function][1]:
 /// * Returns the values of the `COLUMNS` and `LINES` environment variables if
 ///   available. (However, these variables usually are unexported shell
 ///   variables and therefore typically are *not* available.)
 /// * Otherwise queries the connected TTY.
 /// * Otherwise falls back to default values (80 columns by 24 lines).
+///
+/// [1]: https://docs.python.org/3/library/shutil.html#shutil.get_terminal_size
 void getTerminalSize({
   OutputParameter<int>? width,
   OutputParameter<int>? height,

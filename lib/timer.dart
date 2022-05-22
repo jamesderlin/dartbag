@@ -1,3 +1,5 @@
+/// [Timer] implementations with different behaviors.
+
 import 'dart:async';
 
 import 'package:clock/clock.dart';
@@ -11,6 +13,8 @@ class RestartableTimer implements Timer {
   int _tick = 0;
 
   /// Constructor.
+  ///
+  /// Invokes [callback] after the specified [duration].
   RestartableTimer(Duration duration, void Function() callback)
       : _duration = duration,
         _callback = callback {
@@ -23,6 +27,10 @@ class RestartableTimer implements Timer {
   @override
   int get tick => _tick;
 
+  /// Cancels the timer.
+  ///
+  /// Once canceled, the callback will not be invoked unless the [restart] is
+  /// called.
   @override
   void cancel() {
     _timer?.cancel();
@@ -103,7 +111,6 @@ class ExpiringPeriodicTimer implements Timer {
   @override
   int get tick => _periodicTimer.tick;
 
-  /// Cancels the timer.
   @override
   void cancel() {
     _periodicTimer.cancel();

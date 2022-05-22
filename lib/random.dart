@@ -1,3 +1,5 @@
+/// Random number utilities.
+
 import 'dart:math' as math;
 
 import 'package:collection/collection.dart';

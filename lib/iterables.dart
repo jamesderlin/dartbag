@@ -1,3 +1,5 @@
+/// Utilities for [List]s and other [Iterable]s.
+
 import 'package:collection/collection.dart' as collection;
 
 /// Extension methods on [List] that do work in-place.
@@ -17,9 +19,9 @@ class _SortableKeyPair<T, K extends Comparable<Object>>
   int compareTo(_SortableKeyPair<T, K> other) => key.compareTo(other.key);
 }
 
-// ignore: public_member_api_docs
+/// Provides a [sortWithKey] extension method on [List].
 extension SortWithKeyExtension<E> on List<E> {
-  /// Sorts [items] according to the computed sort key.
+  /// Sorts this [List] according to the computed sort key.
   ///
   /// The sort keys are cached, so this can be much more time-efficient (at the
   /// expense of space) than using [sort] with a custom comparison callback if
@@ -49,7 +51,7 @@ extension IterableUtils<E> on Iterable<E> {
   ///
   /// Useful only if iterating has side-effects, which is uncommon.
   void drain() {
-    // ignore: no_leading_underscores_for_local_identifiers
+    // ignore: no_leading_underscores_for_local_identifiers, https://github.com/dart-lang/linter/issues/3126
     for (void _ in this) {}
   }
 }

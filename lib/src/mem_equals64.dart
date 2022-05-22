@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-// ignore: public_member_api_docs
+// ignore: public_member_api_docs, see `mem_equals32.dart`.
 bool memEquals(Uint8List bytes1, Uint8List bytes2) {
   if (identical(bytes1, bytes2)) {
     return true;

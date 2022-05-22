@@ -1,10 +1,12 @@
+/// Utilities for operating on byte data.
+
 import 'dart:typed_data';
 
 import 'misc.dart';
 
 export 'src/mem_equals32.dart' if (dart.library.io) 'src/mem_equals64.dart';
 
-// ignore: public_member_api_docs
+/// Provides extension methods for operating on lists of bytes.
 extension BytesExtension on List<int> {
   /// Converts a `List<int>` to a [Uint8List].
   ///

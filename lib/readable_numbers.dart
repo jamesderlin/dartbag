@@ -1,3 +1,5 @@
+/// Makes numbers more human-readable by adding SI prefixes and units.
+
 import 'dart:math' as math;
 
 import 'misc.dart';
@@ -98,7 +100,7 @@ String readableNumber(
   return '${n.toStringAsFixed(precision)}$space${prefixes[i]}$unit';
 }
 
-// ignore: public_member_api_docs
+/// Provides a [toReadableString] extension method on [num].
 extension ReadableNumber on num {
   /// An extension version of [readableNumber].
   String toReadableString({
@@ -171,7 +173,7 @@ String readableDuration(Duration duration, {int? precision}) {
   return components.join();
 }
 
-// ignore: public_member_api_docs
+/// Provides a [toReadableString] extension method on [Duration].
 extension ReadableDuration on Duration {
   /// An extension version of [readableDuration].
   String toReadableString({int? precision}) =>

@@ -1,3 +1,8 @@
+/// Utilities to parse objects from [String]s.
+
+// See <https://github.com/dart-lang/dartdoc/issues/1082>
+library parse;
+
 /// Tries to parse a [bool] from a [String].
 ///
 /// Returns `true` if the input is "true", "yes", or "1".  Returns `false` if
@@ -29,7 +34,7 @@ int? tryParseInt(String? value, {int? radix}) =>
 double? tryParseDouble(String? value) =>
     value == null ? null : double.tryParse(value);
 
-// ignore: public_member_api_docs
+/// Provides a [tryParse] extension method on a [List] of `enum` values.
 extension ParseEnum<T extends Enum> on List<T> {
   /// Tries to parse an `enum` constant from its name.
   ///
