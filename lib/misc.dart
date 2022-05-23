@@ -74,8 +74,14 @@ Iterable<T> flattenDeep<T>(Iterable<Object?> list) sync* {
 /// Provides miscellaneous extension methods on [int].
 extension IntUtils on int {
   /// Returns a string representation of this [int], left-padded with zeroes if
-  /// necessary to have the specified number of digits.
-  String padDigits(int minimumDigits) => toString().padLeft(minimumDigits, '0');
+  /// necessary to have the specified minimum number of characters.
+  String padDigits(int minimumWidth) {
+    if (this < 0) {
+      var padded = (-this).padDigits(minimumWidth - 1);
+      return '-$padded';
+    }
+    return toString().padLeft(minimumWidth, '0');
+  }
 
   /// Rounds a non-negative integer to the nearest multiple of `multipleOf`.
   ///

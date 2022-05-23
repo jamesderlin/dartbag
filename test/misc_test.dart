@@ -30,14 +30,27 @@ void main() {
     expect(result.value, 42);
   });
 
-  test('int.padDigits', () {
-    expect(0.padDigits(0), '0');
-    expect(1.padDigits(0), '1');
-    expect(0.padDigits(1), '0');
-    expect(1.padDigits(1), '1');
-    expect(0.padDigits(2), '00');
-    expect(1.padDigits(2), '01');
-    expect(100.padDigits(2), '100');
+  group('int.padDigits:', () {
+    test('non-negative integers', () {
+      expect(0.padDigits(0), '0');
+      expect(1.padDigits(0), '1');
+      expect(0.padDigits(1), '0');
+      expect(1.padDigits(1), '1');
+      expect(0.padDigits(2), '00');
+      expect(1.padDigits(2), '01');
+      expect(100.padDigits(2), '100');
+    });
+
+    test('negative integers', () {
+      expect((-0).padDigits(0), '0');
+      expect((-1).padDigits(0), '-1');
+      expect((-0).padDigits(1), '0');
+      expect((-1).padDigits(1), '-1');
+      expect((-0).padDigits(2), '00');
+      expect((-1).padDigits(2), '-1');
+      expect((-0).padDigits(3), '000');
+      expect((-1).padDigits(3), '-01');
+    });
   });
 
   group('flattenDeep:', () {
