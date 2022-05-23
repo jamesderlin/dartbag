@@ -87,13 +87,6 @@ extension IntUtils on int {
   }
 }
 
-/// Times the specified operation.
-Duration timeOperation(void Function() operation) {
-  var stopwatch = Stopwatch()..start();
-  operation();
-  return stopwatch.elapsed;
-}
-
 /// Miscellaneous utility methods for [Uri].
 extension UriUtils on Uri {
   /// Adds or replaces query parameters.

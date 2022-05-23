@@ -1,7 +1,7 @@
 import 'dart:math' show Random;
 import 'dart:typed_data';
 
-import 'package:dartbag/misc.dart';
+import 'package:dartbag/debug.dart';
 import 'package:dartbag/readable_numbers.dart';
 import 'package:dartbag/src/mem_equals32.dart' as mem_equals32;
 import 'package:dartbag/src/mem_equals64.dart' as mem_equals64;

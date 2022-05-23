@@ -28,3 +28,10 @@ bool get assertsEnabled {
   );
   return result;
 }
+
+/// Times the specified operation.
+Duration timeOperation(void Function() operation) {
+  var stopwatch = Stopwatch()..start();
+  operation();
+  return stopwatch.elapsed;
+}
