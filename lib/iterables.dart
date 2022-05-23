@@ -3,9 +3,39 @@
 import 'package:collection/collection.dart' as collection;
 
 /// Extension methods on [List] that do work in-place.
-extension InPlaceOperations<T> on List<T> {
+extension InPlaceOperations<E> on List<E> {
   /// Reverses the [List] in-place.
   void reverse() => collection.reverse(this);
+
+  /// Rotates the [List] in-place.
+  ///
+  /// If [shiftAmount] is positive, rotates elements to the left.  If negative,
+  /// rotates elements to the right.
+  ///
+  /// Rotates elements in the range [start] (inclusive) to [end] (exclusive).
+  /// If unspecified, [start] defaults to 0 and [end] defaults to the length of
+  /// the [List].
+  void rotateLeft(int shiftAmount, {int? start, int? end}) {
+    start ??= 0;
+    end ??= length;
+    assert(start >= 0);
+    assert(start <= end);
+    assert(end <= length);
+
+    var rotatedLength = end - start;
+    if (rotatedLength == 0) {
+      // Nothing to rotate.
+      return;
+    }
+
+    shiftAmount %= rotatedLength;
+    assert(shiftAmount >= 0);
+
+    var splitIndex = start + rotatedLength - shiftAmount;
+    reverseRange(start, end);
+    reverseRange(start, splitIndex);
+    reverseRange(splitIndex, end);
+  }
 }
 
 class _SortableKeyPair<T, K extends Comparable<Object>>

@@ -4,7 +4,136 @@ import 'dart:math';
 import 'package:dartbag/iterables.dart';
 import 'package:test/test.dart';
 
+extension<E> on List<E> {
+  void rotateLeftSlow(
+    int shiftAmount, {
+    int? start,
+    int? end,
+  }) {
+    for (var i = 0; i < shiftAmount; i += 1) {
+      rotateLeft(1, start: start, end: end);
+    }
+  }
+}
+
 void main() {
+  group('rotateLeft:', () {
+    const oddList = [0, 1, 2, 3, 4, 5, 6];
+    const evenList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+    assert(oddList.length.isOdd);
+    assert(evenList.length.isEven);
+
+    test('Empty list', () {
+      expect(<int>[]..rotateLeft(0), <int>[]);
+      expect(<int>[]..rotateLeft(1), <int>[]);
+      expect(<int>[]..rotateLeft(-1), <int>[]);
+    });
+
+    test('shiftAmount == 0', () {
+      for (var list in [oddList, evenList]) {
+        expect([...list]..rotateLeft(0), list);
+      }
+    });
+
+    test('shiftAmount > 0', () {
+      expect(
+        [...oddList]..rotateLeft(1),
+        [1, 2, 3, 4, 5, 6, 0],
+      );
+      expect(
+        [...evenList]..rotateLeft(1),
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0],
+      );
+
+      var stopwatch = Stopwatch()..start();
+      for (var list in [oddList, evenList]) {
+        for (var i = 0; i < list.length; i += 1) {
+          expect(
+            [...list]..rotateLeft(i),
+            [...list]..rotateLeftSlow(i),
+            reason: 'shiftAmount: $i',
+          );
+        }
+      }
+      print(stopwatch.elapsed);
+    });
+
+    test('shiftAmount < 0', () {
+      expect(
+        [...oddList]..rotateLeft(-1),
+        [6, 0, 1, 2, 3, 4, 5],
+      );
+      expect(
+        [...evenList]..rotateLeft(-1),
+        [11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      );
+
+      for (var list in [oddList, evenList]) {
+        for (var i = 0; i < list.length; i += 1) {
+          expect(
+            [...list]..rotateLeft(-i),
+            [...list]..rotateLeft(list.length - i),
+            reason: 'shiftAmount: -$i',
+          );
+        }
+      }
+    });
+
+    test('shiftAmount >= length', () {
+      for (var list in [oddList, evenList]) {
+        expect([...list]..rotateLeft(list.length), list);
+        expect(
+          [...list]..rotateLeft(list.length + 1),
+          [...list]..rotateLeft(1),
+        );
+        expect(
+          [...list]..rotateLeft(list.length + 2),
+          [...list]..rotateLeft(2),
+        );
+        expect(
+          [...list]..rotateLeft(list.length * 2 + 1),
+          [...list]..rotateLeft(1),
+        );
+      }
+    });
+
+    test('shiftAmount <= -length', () {
+      for (var list in [oddList, evenList]) {
+        expect([...list]..rotateLeft(-list.length), list);
+        expect(
+          [...list]..rotateLeft(-list.length - 1),
+          [...list]..rotateLeft(-1),
+        );
+        expect(
+          [...list]..rotateLeft(-list.length - 2),
+          [...list]..rotateLeft(-2),
+        );
+        expect(
+          [...list]..rotateLeft(-list.length * 2 + -1),
+          [...list]..rotateLeft(-1),
+        );
+      }
+    });
+
+    test('ranges work', () {
+      var preamble = <Object>['a', 'b', 'c'];
+      var postamble = <Object>['w', 'x', 'y', 'z'];
+
+      for (var i = 0; i < oddList.length; i += 1) {
+        expect(
+          (preamble + oddList + postamble)
+            ..rotateLeft(
+              i,
+              start: preamble.length,
+              end: preamble.length + oddList.length,
+            ),
+          preamble + ([...oddList]..rotateLeft(i)) + postamble,
+          reason: 'shiftAmount: $i',
+        );
+      }
+    });
+  });
+
   group('sortWithKey:', () {
     final random = Random(0);
     final ordered =

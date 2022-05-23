@@ -121,6 +121,18 @@ extension RectangleUtils<T extends num> on math.Rectangle<T> {
 extension ImpliesExtension on bool {
   /// Returns whether this [bool] [logically implies][1] [consequence].
   ///
+  /// Given two boolean expressions *p* and *q*, the results of "*p* implies
+  /// *q*"" (denoted as *p &rarr; q*) are shown by the following truth table:
+  ///
+  /// |  p  |  q  | p &rarr; q |
+  /// |:---:|:---:|:----------:|
+  /// |  T  |  T  | T          |
+  /// |  T  |  F  | F          |
+  /// |  F  |  T  | T          |
+  /// |  F  |  F  | F          |
+  ///
+  /// <style>table, th, td { border: 1px solid; border-collapse: collapse; padding: 1ex; }</style>
+  ///
   /// [1]: https://simple.wikipedia.org/wiki/Implication_(logic)
   // ignore: avoid_positional_boolean_parameters, https://github.com/dart-lang/linter/issues/1638
   bool implies(bool consequence) => !this || consequence;
