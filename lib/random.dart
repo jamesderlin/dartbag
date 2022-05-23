@@ -50,8 +50,8 @@ Iterable<T> lazyShuffler<T>(List<T> list, {math.Random? random}) sync* {
   }
 }
 
-/// A pseudo-random number generator that allows retrieving the existing seed
-/// and that allows the random sequence to be easily restarted.
+/// Wraps an existing pseudo-random number generator to allow retrieving the
+/// existing seed and to allows the random sequence to be easily restarted.
 class RepeatableRandom implements math.Random {
   /// A random number generator that is *not* intended to be repeatable.
   ///
@@ -60,6 +60,16 @@ class RepeatableRandom implements math.Random {
 
   /// Returns a new seed value.
   static int newSeed() => _nonrepeatableRandom.nextInt(randMaxInt);
+
+  /// Constructor.
+  ///
+  /// [prngFromSeed] is a callback that constructs a [math.Random] from a seed.
+  /// If not specified, defaults to [math.Random.new].
+  RepeatableRandom([math.Random Function(int?) prngFromSeed = math.Random.new])
+      : _prngFromSeed = prngFromSeed;
+
+  /// A callback that constructs the underlying pseudo-random number generator.
+  final math.Random Function(int?) _prngFromSeed;
 
   /// The current seed value.
   ///
@@ -82,10 +92,10 @@ class RepeatableRandom implements math.Random {
   }
 
   /// The underlying pseudo-random number generator.
-  late math.Random _random = math.Random(_seed);
+  late math.Random _random = _prngFromSeed(_seed);
 
   /// Restarts the current random sequence.
-  void restart() => _random = math.Random(_seed);
+  void restart() => _random = _prngFromSeed(_seed);
 
   @override
   bool nextBool() => _random.nextBool();

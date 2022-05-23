@@ -5,8 +5,6 @@ import 'package:dartbag/random.dart';
 import 'package:test/test.dart';
 
 class TrackedRandom implements math.Random {
-  TrackedRandom();
-
   final _rawRandom = math.Random(0);
   int callCount = 0;
 
@@ -27,6 +25,28 @@ class TrackedRandom implements math.Random {
     callCount += 1;
     return _rawRandom.nextDouble();
   }
+}
+
+class FakeRandom implements math.Random {
+  static final _instance = FakeRandom._();
+
+  static int? currentSeed;
+
+  factory FakeRandom([int? seed]) {
+    currentSeed = seed;
+    return _instance;
+  }
+
+  FakeRandom._();
+
+  @override
+  bool nextBool() => false;
+
+  @override
+  int nextInt(int max) => 9;
+
+  @override
+  double nextDouble() => 9;
 }
 
 void main() {
@@ -106,20 +126,28 @@ void main() {
     });
   });
 
-  test('RepeatableRandom is repeatable', () {
-    var random = RepeatableRandom();
+  group('RepeatableRandom:', () {
+    test('is repeatable', () {
+      var random = RepeatableRandom();
 
-    List<int> randomSequence() =>
-        [for (var i = 0; i < 1000; i += 1) random.nextInt(100)];
+      List<int> randomSequence() =>
+          [for (var i = 0; i < 1000; i += 1) random.nextInt(100)];
 
-    var sequence1 = randomSequence();
+      var sequence1 = randomSequence();
 
-    random.restart();
-    var sequence2 = randomSequence();
-    expect(sequence1, sequence2);
+      random.restart();
+      var sequence2 = randomSequence();
+      expect(sequence1, sequence2);
 
-    random.seed = random.seed;
-    sequence2 = randomSequence();
-    expect(sequence1, sequence2);
+      random.seed = random.seed;
+      sequence2 = randomSequence();
+      expect(sequence1, sequence2);
+    });
+
+    test('can use a different PRNG', () {
+      var random = RepeatableRandom(FakeRandom.new);
+      expect(random.nextInt(0), 9);
+      expect(FakeRandom.currentSeed, random.seed);
+    });
   });
 }
