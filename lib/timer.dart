@@ -4,59 +4,6 @@ import 'dart:async';
 
 import 'package:clock/clock.dart';
 
-/// A non-periodic [Timer] that can be easily restarted.
-class RestartableTimer implements Timer {
-  Duration _duration;
-  void Function() _callback;
-
-  Timer? _timer;
-  int _tick = 0;
-
-  /// Constructor.
-  ///
-  /// Invokes [callback] after the specified [duration].
-  RestartableTimer(Duration duration, void Function() callback)
-      : _duration = duration,
-        _callback = callback {
-    restart();
-  }
-
-  @override
-  bool get isActive => _timer != null;
-
-  @override
-  int get tick => _tick;
-
-  /// Cancels the timer.
-  ///
-  /// Once canceled, the callback will not be invoked unless the [restart] is
-  /// called.
-  @override
-  void cancel() {
-    _timer?.cancel();
-    _timer = null;
-  }
-
-  /// Restarts the [RestartableTimer].
-  ///
-  /// If [duration] or [callback] are not specified, the initial value passed
-  /// to the [RestartableTimer.new] will be used.
-  void restart({Duration? duration, void Function()? callback}) {
-    _duration = duration ?? _duration;
-    _callback = callback ?? _callback;
-
-    _timer?.cancel();
-    _timer = Timer(_duration, () {
-      try {
-        _tick += 1;
-        _callback();
-      } finally {
-        _timer = null;
-      }
-    });
-  }
-}
-
 /// A periodic [Timer] that automatically stops after a specified amount of
 /// time.
 // Based on <https://stackoverflow.com/a/72144642/>.

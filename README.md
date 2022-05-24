@@ -78,8 +78,6 @@ includes (but is not limited to):
 
 ## [timer]
 
-* `RestartableTimer` is a non-periodic `Timer` that can be easily restarted.
-
 * `ExpiringPeriodicTimer` is a periodic `Timer` that automatically stops after a
   time limit.
 

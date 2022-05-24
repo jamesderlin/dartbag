@@ -1,3 +1,7 @@
+## 0.4.0
+
+* Removed `RestartableTimer`. `package:async` already provides such a class.
+
 ## 0.3.0
 
 * Added a `List.rotateLeft` extension method.
