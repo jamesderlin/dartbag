@@ -2,6 +2,8 @@
 
 import 'dart:io' as io;
 
+import 'package:args/args.dart';
+
 import 'misc.dart';
 import 'parse.dart';
 
@@ -74,4 +76,34 @@ String wordWrap(
   }
 
   return result.join('\n');
+}
+
+/// Provides a [parseOption] extension method on [ArgResults].
+extension ArgsParseOption on ArgResults {
+  /// Tries to parse an option value.
+  ///
+  /// Returns `null` if the option was not supplied.  Throws an
+  /// [ArgParserException] if the option was supplied but is invalid.
+  R? parseOptionValue<R>(String name, R? Function(String) tryParse) {
+    var rawValue = this[name];
+
+    String? stringValue;
+    if (rawValue is bool) {
+      // This function is meant to be used with options added with
+      // [ArgParser.addOption], but try to handle boolean flags added with
+      // [ArgParser.addFlag] as a precaution.
+      stringValue = rawValue ? 'true' : 'false';
+    } else {
+      stringValue = this[name] as String?;
+      if (stringValue == null) {
+        return null;
+      }
+    }
+
+    var value = tryParse(stringValue);
+    if (value == null) {
+      throw ArgParserException('Invalid value for $name: $stringValue');
+    }
+    return value;
+  }
 }

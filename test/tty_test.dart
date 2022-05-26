@@ -1,7 +1,8 @@
 @TestOn('vm')
 
+import 'package:args/args.dart';
+import 'package:dartbag/parse.dart';
 import 'package:dartbag/tty.dart';
-
 import 'package:test/test.dart';
 
 void main() {
@@ -99,6 +100,44 @@ void main() {
         '  lmnopqrs\n'
         '  tuvwxyz',
       );
+    });
+  });
+
+  group('ArgResults.parseOptionValue:', () {
+    var argParser = ArgParser()
+      ..addOption('int')
+      ..addFlag('flag');
+
+    test('Works with options', () {
+      var argResults = argParser.parse(['--int', '42']);
+      var value = argResults.parseOptionValue('int', int.tryParse);
+      expect(value, 42);
+
+      // TODO: Check exception messages.
+      argResults = argParser.parse(['--int', '']);
+      expect(
+        () => argResults.parseOptionValue('int', int.tryParse),
+        throwsA(isA<ArgParserException>()),
+      );
+
+      argResults = argParser.parse(['--int', '0.0']);
+      expect(
+        () => argResults.parseOptionValue('int', int.tryParse),
+        throwsA(isA<ArgParserException>()),
+      );
+
+      argResults = argParser.parse(['--int', 'foo']);
+      expect(
+        () => argResults.parseOptionValue('int', int.tryParse),
+        throwsA(isA<ArgParserException>()),
+      );
+    });
+    test('Works with flags', () {
+      var argResults = argParser.parse(['--flag']);
+      expect(argResults.parseOptionValue('flag', tryParseBool), true);
+
+      argResults = argParser.parse(['--no-flag']);
+      expect(argResults.parseOptionValue('flag', tryParseBool), false);
     });
   });
 }
