@@ -1,5 +1,6 @@
 /// Utilities to make debugging easier.
 
+import 'dart:async';
 import 'package:stack_trace/stack_trace.dart' as stacktrace;
 
 /// Returns the path to the current Dart library, relative to the package root.
@@ -29,9 +30,16 @@ bool get assertsEnabled {
   return result;
 }
 
-/// Times the specified operation.
+/// Times the specified synchronous operation.
 Duration timeOperation(void Function() operation) {
   var stopwatch = Stopwatch()..start();
   operation();
+  return stopwatch.elapsed;
+}
+
+/// Times the specified asynchronous operation.
+Future<Duration> timeAsyncOperation(Future<void> Function() operation) async {
+  var stopwatch = Stopwatch()..start();
+  await operation();
   return stopwatch.elapsed;
 }

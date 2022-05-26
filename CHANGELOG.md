@@ -1,6 +1,8 @@
 ## 0.4.0
 
 * Removed `RestartableTimer`. `package:async` already provides such a class.
+* Added a `timeAsyncOperation` function as an asynchronous version of
+  `timeOperation`.
 
 ## 0.3.0
 
