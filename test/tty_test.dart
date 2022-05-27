@@ -1,6 +1,7 @@
 @TestOn('vm')
 
 import 'package:args/args.dart';
+import 'package:dartbag/matcher.dart';
 import 'package:dartbag/parse.dart';
 import 'package:dartbag/tty.dart';
 import 'package:test/test.dart';
@@ -117,19 +118,31 @@ void main() {
       argResults = argParser.parse(['--int', '']);
       expect(
         () => argResults.parseOptionValue('int', int.tryParse),
-        throwsA(isA<ArgParserException>()),
+        throwsA(
+          toStringMatches<ArgParserException>(
+            contains('Invalid value for "int": ""'),
+          ),
+        ),
       );
 
       argResults = argParser.parse(['--int', '0.0']);
       expect(
         () => argResults.parseOptionValue('int', int.tryParse),
-        throwsA(isA<ArgParserException>()),
+        throwsA(
+          toStringMatches<ArgParserException>(
+            contains('Invalid value for "int": "0.0"'),
+          ),
+        ),
       );
 
       argResults = argParser.parse(['--int', 'foo']);
       expect(
         () => argResults.parseOptionValue('int', int.tryParse),
-        throwsA(isA<ArgParserException>()),
+        throwsA(
+          toStringMatches<ArgParserException>(
+            contains('Invalid value for "int": "foo"'),
+          ),
+        ),
       );
     });
     test('Works with flags', () {

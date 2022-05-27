@@ -102,7 +102,7 @@ extension ArgsParseOption on ArgResults {
 
     var value = tryParse(stringValue);
     if (value == null) {
-      throw ArgParserException('Invalid value for $name: $stringValue');
+      throw ArgParserException('Invalid value for "$name": "$stringValue"');
     }
     return value;
   }
