@@ -114,7 +114,6 @@ void main() {
       var value = argResults.parseOptionValue('int', int.tryParse);
       expect(value, 42);
 
-      // TODO: Check exception messages.
       argResults = argParser.parse(['--int', '']);
       expect(
         () => argResults.parseOptionValue('int', int.tryParse),
