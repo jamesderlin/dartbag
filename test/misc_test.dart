@@ -140,7 +140,7 @@ void main() {
     );
   });
 
-  test('roundToMultiple', () {
+  test('int.roundToMultiple', () {
     const expectedMultiplesOf5 = <int, int>{
       0: 0,
       1: 0,
@@ -194,10 +194,39 @@ void main() {
     helper(10, expectedMultiplesOf10);
   });
 
-  test('implies extension works', () {
+  test('bool.implies', () {
     expect(false.implies(false), true);
     expect(false.implies(true), true);
     expect(true.implies(false), false);
     expect(true.implies(true), true);
   });
+
+  test('Future.cast', () async {
+    expect(polymorphicFuture(), isA<Future<Derived>>());
+    expect(polymorphicFuture(), isA<Future<Base>>());
+    expect(polymorphicFuture().cast<Base>(), isA<Future<Base>>());
+    expect(polymorphicFuture().cast<Base>(), isNot(isA<Future<Derived>>()));
+
+    expect(
+      () => polymorphicFuture()
+          .timeout(const Duration(milliseconds: 1), onTimeout: Base.new),
+      throwsA(isA<TypeError>()),
+    );
+
+    expect(
+      () => polymorphicFuture()
+          .cast<Base>()
+          .timeout(const Duration(milliseconds: 1), onTimeout: Base.new),
+      returnsNormally,
+    );
+  });
 }
+
+class Base {}
+
+class Derived extends Base {}
+
+/// Returns a [Future] that has a static type of `Future<Base>` but that has a
+/// runtime type of `Future<Derived>`.
+Future<Base> polymorphicFuture() =>
+    Future<Derived>.delayed(const Duration(milliseconds: 10), Derived.new);

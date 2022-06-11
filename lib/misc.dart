@@ -136,3 +136,14 @@ extension ImpliesExtension on bool {
   // ignore: avoid_positional_boolean_parameters, https://github.com/dart-lang/linter/issues/1638
   bool implies(bool consequence) => !this || consequence;
 }
+
+/// Provides a [cast] extension method on [Future].
+extension FutureCast<T> on Future<T> {
+  /// Casts a `Future<T>` to a `Future<R>`.
+  //
+  // Motivated by: <https://stackoverflow.com/q/72576065/>
+  Future<R> cast<R>() async {
+    var result = await this;
+    return result as R;
+  }
+}

@@ -6,7 +6,8 @@ import 'dart:typed_data';
 ///
 /// For builds using the Dart VM, compares 8 bytes at a time.  When compiled to
 /// JavaScript, compares 4 bytes at a time.
-// See <https://stackoverflow.com/questions/70749634/>.
+//
+//// See <https://stackoverflow.com/questions/70749634/>.
 bool memEquals(Uint8List bytes1, Uint8List bytes2) {
   if (identical(bytes1, bytes2)) {
     return true;
