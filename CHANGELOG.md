@@ -1,6 +1,8 @@
 ## 0.4.1
 
-* Add a `Future.cast` extension method.
+* Added a `Future.cast` extension method.
+* Added a `List.sortWithAsyncKey` extension method as an asynchronous version of
+ `List.sortWithKey`.
 
 ## 0.4.0
 

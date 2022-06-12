@@ -61,14 +61,31 @@ extension SortWithKeyExtension<E> on List<E> {
   /// `Comparable<K>` so that this works with [int] and [double] types (which
   /// otherwise would not work because [int] and [double] implement
   /// `Comparable<num>`).
-  void sortWithKey<K extends Comparable<Object>>(
-    K Function(E) key,
-  ) {
+  void sortWithKey<K extends Comparable<Object>>(K Function(E) key) {
     final keyPairs = [
       for (var element in this) _SortableKeyPair(element, key(element)),
     ]..sort();
 
+    // Copy back to mutate the original [List].
     assert(length == keyPairs.length);
+    for (var i = 0; i < length; i += 1) {
+      this[i] = keyPairs[i].original;
+    }
+  }
+
+  /// A version of [sortWithKey] that allows the sort key to be computed
+  /// asynchronously.
+  Future<void> sortWithAsyncKey<K extends Comparable<Object>>(
+    Future<K> Function(E) key,
+  ) async {
+    var keys = await Future.wait([for (var element in this) key(element)]);
+
+    assert(length == keys.length);
+    final keyPairs = [
+      for (var i = 0; i < length; i += 1) _SortableKeyPair(this[i], keys[i]),
+    ]..sort();
+
+    // Copy back to mutate the original [List].
     for (var i = 0; i < length; i += 1) {
       this[i] = keyPairs[i].original;
     }

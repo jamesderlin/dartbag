@@ -17,7 +17,7 @@ extension<E> on List<E> {
 }
 
 void main() {
-  group('rotateLeft:', () {
+  group('List.rotateLeft:', () {
     const oddList = [0, 1, 2, 3, 4, 5, 6];
     const evenList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
     assert(oddList.length.isOdd);
@@ -134,7 +134,7 @@ void main() {
     });
   });
 
-  group('sortWithKey:', () {
+  group('List.sortWithKey:', () {
     final random = Random(0);
     final ordered =
         UnmodifiableListView([for (var i = 0; i < 1000; i += 1) '$i']);
@@ -187,6 +187,29 @@ void main() {
         'List.sortWithKey() duration: $keyDuration\n'
         'Speedup: ${speedup.toStringAsFixed(1)}x',
       );
+    });
+  });
+
+  group('List.sortWithAsyncKey', () {
+    final random = Random(0);
+    final ordered =
+        UnmodifiableListView([for (var i = 0; i < 1000; i += 1) '$i']);
+    final shuffled = UnmodifiableListView(ordered.toList()..shuffle(random));
+
+    test('Sorts correctly', () async {
+      Future<int> parseAsync(String string) async {
+        await Future<void>.delayed(const Duration(milliseconds: 100));
+        return int.parse(string);
+      }
+
+      var emptyList = <String>[];
+      await emptyList.sortWithAsyncKey(parseAsync);
+      expect(emptyList, <String>[]);
+
+      var shuffledCopy = shuffled.toList();
+      await shuffledCopy.sortWithAsyncKey(parseAsync);
+
+      expect(shuffledCopy, ordered);
     });
   });
 
