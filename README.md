@@ -106,7 +106,7 @@ includes (but is not limited to):
 [iterables]: https://pub.dev/documentation/dartbag/latest/iterables/iterables-library.html
 [matcher]: https://pub.dev/documentation/dartbag/latest/matcher/matcher-library.html
 [misc]: https://pub.dev/documentation/dartbag/latest/misc/misc-library.html
-[`package:args`] https://pub.dev/packages/args
+[`package:args`]: https://pub.dev/packages/args
 [parse]: https://pub.dev/documentation/dartbag/latest/parse/parse-library.html
 [random]: https://pub.dev/documentation/dartbag/latest/random/random-library.html
 [readable_numbers]: https://pub.dev/documentation/dartbag/latest/readable_numbers/readable_numbers-library.html
