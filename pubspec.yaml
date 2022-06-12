@@ -1,6 +1,6 @@
 name: dartbag
 description: A grab-bag of miscellaneous, lightweight utility code for Dart.
-version: 0.4.1
+version: 0.4.1+1
 repository: https://github.com/jamesderlin/dartbag
 
 environment:

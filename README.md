@@ -23,8 +23,11 @@ includes (but is not limited to):
 
 * `List.rotateLeft` rotates a `List` in place.
 
-* `List.sortWithKey` sorts a `List` by computing and caching sort keys, which can be
-  significantly faster if comparisons are expensive.
+* `List.sortWithKey` sorts a `List` by computing and caching sort keys, which
+  can be significantly faster if comparisons are expensive.
+
+* `List.sortWithAsyncKey`, a version of `sortWithKey` that allows the sort key
+  to be computed asynchronously.
 
 ## [matcher]
 
@@ -52,6 +55,8 @@ includes (but is not limited to):
 * `Rectangle.center` returns the center of a `Rectangle`.
 
 * `bool.implies` returns whether one `bool` logically implies another.
+
+* `Future.cast` casts a `Future<T>` to a `Future<R>`.
 
 ## [parse]
 
@@ -93,11 +98,15 @@ includes (but is not limited to):
 
 * `wordWrap` wraps a string to a maximum line length.
 
+* `ArgResults.parseOptionValue` reduces some boilerplate when parsing option
+  values from [`package:args`].
+  
 [byte_data]: https://pub.dev/documentation/dartbag/latest/byte_data/byte_data-library.html
 [debug]: https://pub.dev/documentation/dartbag/latest/debug/debug-library.html
 [iterables]: https://pub.dev/documentation/dartbag/latest/iterables/iterables-library.html
 [matcher]: https://pub.dev/documentation/dartbag/latest/matcher/matcher-library.html
 [misc]: https://pub.dev/documentation/dartbag/latest/misc/misc-library.html
+[`package:args`] https://pub.dev/packages/args
 [parse]: https://pub.dev/documentation/dartbag/latest/parse/parse-library.html
 [random]: https://pub.dev/documentation/dartbag/latest/random/random-library.html
 [readable_numbers]: https://pub.dev/documentation/dartbag/latest/readable_numbers/readable_numbers-library.html
