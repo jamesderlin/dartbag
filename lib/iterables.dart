@@ -38,16 +38,11 @@ extension InPlaceOperations<E> on List<E> {
   }
 }
 
-class _SortableKeyPair<T, K extends Comparable<Object>>
-    implements Comparable<_SortableKeyPair<T, K>> {
-  _SortableKeyPair(this.original, this.key);
-
-  final T original;
-  final K key;
-
-  @override
-  int compareTo(_SortableKeyPair<T, K> other) => key.compareTo(other.key);
-}
+int _compareKeys<K extends Comparable<Object>, V>(
+  MapEntry<K, V> a,
+  MapEntry<K, V> b,
+) =>
+    a.key.compareTo(b.key);
 
 /// Provides a [sortWithKey] extension method on [List].
 extension SortWithKeyExtension<E> on List<E> {
@@ -62,14 +57,14 @@ extension SortWithKeyExtension<E> on List<E> {
   /// otherwise would not work because [int] and [double] implement
   /// `Comparable<num>`).
   void sortWithKey<K extends Comparable<Object>>(K Function(E) key) {
-    final keyPairs = [
-      for (var element in this) _SortableKeyPair(element, key(element)),
-    ]..sort();
+    final keyValues = [
+      for (var element in this) MapEntry(key(element), element),
+    ]..sort(_compareKeys);
 
     // Copy back to mutate the original [List].
-    assert(length == keyPairs.length);
+    assert(length == keyValues.length);
     for (var i = 0; i < length; i += 1) {
-      this[i] = keyPairs[i].original;
+      this[i] = keyValues[i].value;
     }
   }
 
@@ -81,13 +76,13 @@ extension SortWithKeyExtension<E> on List<E> {
     var keys = await Future.wait([for (var element in this) key(element)]);
 
     assert(length == keys.length);
-    final keyPairs = [
-      for (var i = 0; i < length; i += 1) _SortableKeyPair(this[i], keys[i]),
-    ]..sort();
+    final keyValues = [
+      for (var i = 0; i < length; i += 1) MapEntry(keys[i], this[i]),
+    ]..sort(_compareKeys);
 
     // Copy back to mutate the original [List].
     for (var i = 0; i < length; i += 1) {
-      this[i] = keyPairs[i].original;
+      this[i] = keyValues[i].value;
     }
   }
 }
