@@ -221,4 +221,68 @@ void main() {
     iterable.drain();
     expect(result, 12);
   });
+
+  test('compareIterables', () {
+    const testCases = [
+      _ComparisonTest(<int>[], <int>[], 0),
+      _ComparisonTest(<int>[], [0], -1),
+      _ComparisonTest([0], [0], 0),
+      _ComparisonTest([0], [1], -1),
+      _ComparisonTest([0], [0, 1], -1),
+      _ComparisonTest([0, 1], [1], -1),
+      _ComparisonTest([0, 1], [0, 1], 0),
+      _ComparisonTest([0, 1], [1, 2], -1),
+      _ComparisonTest([0, 0, 2], [0, 1, 2], -1),
+      _ComparisonTest([0, 1, 1], [0, 1, 2], -1),
+    ];
+
+    for (var testCase in testCases) {
+      if (testCase.expectedResult == 0) {
+        expect(
+          compareIterables(testCase.argument1, testCase.argument2),
+          0,
+          reason:
+              'compareIterables(${testCase.argument1}, ${testCase.argument2})',
+        );
+        continue;
+      }
+
+      Matcher normalMatcher;
+      Matcher reverseMatcher;
+
+      if (testCase.expectedResult < 0) {
+        normalMatcher = lessThan(0);
+        reverseMatcher = greaterThan(0);
+      } else {
+        normalMatcher = greaterThan(0);
+        reverseMatcher = lessThan(0);
+      }
+
+      expect(
+        compareIterables(testCase.argument1, testCase.argument2),
+        normalMatcher,
+        reason:
+            'compareIterables(${testCase.argument1}, ${testCase.argument2})',
+      );
+
+      expect(
+        compareIterables(testCase.argument2, testCase.argument1),
+        reverseMatcher,
+        reason:
+            'compareIterables(${testCase.argument2}, ${testCase.argument1})',
+      );
+    }
+  });
+}
+
+class _ComparisonTest<Argument1Type, Argument2Type> {
+  final Argument1Type argument1;
+  final Argument2Type argument2;
+  final int expectedResult;
+
+  const _ComparisonTest(
+    this.argument1,
+    this.argument2,
+    this.expectedResult,
+  );
 }

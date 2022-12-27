@@ -7,7 +7,7 @@ extension InPlaceOperations<E> on List<E> {
   /// Reverses the [List] in-place.
   void reverse() => collection.reverse(this);
 
-  /// Rotates the [List] in-place.
+  /// Rotates the [List] in-place in O(n) time and O(1) space.
   ///
   /// If [shiftAmount] is positive, rotates elements to the left.  If negative,
   /// rotates elements to the right.
@@ -94,5 +94,43 @@ extension IterableUtils<E> on Iterable<E> {
   /// Useful only if iterating has side-effects, which is uncommon.
   void drain() {
     for (void _ in this) {}
+  }
+}
+
+/// Compares two iterables of [Comparable] elements in a manner similar to
+/// string comparison.
+///
+/// For two iterables `iterable1` and `iterable2`, `iterable1` is considered to
+/// be less than `iterable2` if and only if:
+/// * For some *k*, `iterable1[k].compareTo(iterable2[k]) < 0` such that for
+///   all *i* where `0 <= i < k`, `iterable1[i].compareTo(iterable2[i]) == 0`.
+/// * `iterable1.length < iterable2.length` and
+///   `iterable1[i].compareTo(iterable2[i]) == 0` for all
+///   `i < iterable1.length`.
+int compareIterables<E extends Comparable<Object>>(
+  Iterable<E> iterable1,
+  Iterable<E> iterable2,
+) {
+  var iterator1 = iterable1.iterator;
+  var iterator2 = iterable2.iterator;
+  while (true) {
+    var isEmpty1 = !iterator1.moveNext();
+    var isEmpty2 = !iterator2.moveNext();
+    if (isEmpty1 || isEmpty2) {
+      if (isEmpty1 && isEmpty2) {
+        return 0;
+      } else if (isEmpty1) {
+        return -1;
+      } else {
+        return 1;
+      }
+    }
+
+    var value1 = iterator1.current;
+    var value2 = iterator2.current;
+    var comparisonResult = value1.compareTo(value2);
+    if (comparisonResult != 0) {
+      return comparisonResult;
+    }
   }
 }
