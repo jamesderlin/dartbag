@@ -8,16 +8,7 @@ includes (but is not limited to):
 * `List<int>.asUint8List` converts a `List<int>` to a `Uint8List` without
   copying, if possible.
 
-## [debug]
-
-* `assertsEnabled` returns whether `assert` is enabled.
-
-* `currentDartPackagePath` returns the path to the current Dart library for
-  Dart VM builds.
-
-* `staticType` returns the static type of an object.
-
-## [iterables]
+## [collection]
 
 * `List.reverse` reverses a `List` in place.
 
@@ -28,6 +19,20 @@ includes (but is not limited to):
 
 * `List.sortWithAsyncKey`, a version of `sortWithKey` that allows the sort key
   to be computed asynchronously.
+
+* `compareIterables` compares two `Iterable`s in a manner similar to string
+  comparison.
+
+* `LinkedHashMap.sort`.
+
+## [debug]
+
+* `assertsEnabled` returns whether `assert` is enabled.
+
+* `currentDartPackagePath` returns the path to the current Dart library for
+  Dart VM builds.
+
+* `staticType` returns the static type of an object.
 
 ## [matcher]
 
@@ -102,8 +107,8 @@ includes (but is not limited to):
   values from [`package:args`].
   
 [byte_data]: https://pub.dev/documentation/dartbag/latest/byte_data/byte_data-library.html
+[collection]: https://pub.dev/documentation/dartbag/latest/collection/collection-library.html
 [debug]: https://pub.dev/documentation/dartbag/latest/debug/debug-library.html
-[iterables]: https://pub.dev/documentation/dartbag/latest/iterables/iterables-library.html
 [matcher]: https://pub.dev/documentation/dartbag/latest/matcher/matcher-library.html
 [misc]: https://pub.dev/documentation/dartbag/latest/misc/misc-library.html
 [`package:args`]: https://pub.dev/packages/args

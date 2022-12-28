@@ -1,3 +1,13 @@
+## 0.5.0
+
+* Renamed the `iterables` library to `collection`.
+* Added a `compareIterables` function.
+* Added a `LinkedHashMap.sort` extension method.
+* Added an `isSubtype<T1, T2>` generic function.
+* Adjusted some timing-based tests to be less flaky by instead checking if they
+  pass most of the time.
+* Require Dart 2.18.0.
+
 ## 0.4.1
 
 * Added a `Future.cast` extension method.

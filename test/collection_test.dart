@@ -1,7 +1,7 @@
 import 'dart:collection';
 import 'dart:math';
 
-import 'package:dartbag/iterables.dart';
+import 'package:dartbag/collection.dart';
 import 'package:test/test.dart';
 
 extension<E> on List<E> {
