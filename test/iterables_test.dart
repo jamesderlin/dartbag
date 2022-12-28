@@ -273,6 +273,35 @@ void main() {
       );
     }
   });
+
+  test('LinkedHashMap.sort', () {
+    final random = Random(0);
+
+    final asciiLittleA = 'a'.codeUnits[0];
+    var keys = [
+      for (var i = 0; i < 26; i += 1) String.fromCharCode(i + asciiLittleA),
+    ];
+    var values = [for (var i = 0; i < keys.length; i += 1) i];
+
+    keys.shuffle(random);
+    values.shuffle(random);
+
+    var map = LinkedHashMap.fromIterables(keys, values);
+    var mapCopy = {...map};
+
+    assert(!_isSorted(map.keys));
+    assert(!_isSorted(map.values));
+
+    map.sort((entry1, entry2) => entry1.key.compareTo(entry2.key));
+    expect(map.keys, map.keys.toList()..sort());
+    expect(_isSorted(map.values), false);
+    expect(map, mapCopy);
+
+    map.sort((entry1, entry2) => entry1.value.compareTo(entry2.value));
+    expect(map.values, map.values.toList()..sort());
+    expect(_isSorted(map.keys), false);
+    expect(map, mapCopy);
+  });
 }
 
 class _ComparisonTest<Argument1Type, Argument2Type> {
@@ -285,4 +314,23 @@ class _ComparisonTest<Argument1Type, Argument2Type> {
     this.argument2,
     this.expectedResult,
   );
+}
+
+/// Returns `true` if [iterable] is already sorted based on its natural
+/// [Comparable] ordering, `false` otherwise.
+bool _isSorted<E extends Comparable<Object>>(Iterable<E> iterable) {
+  var iterator = iterable.iterator;
+  if (!iterator.moveNext()) {
+    return true;
+  }
+
+  var previousValue = iterator.current;
+  while (iterator.moveNext()) {
+    var currentValue = iterator.current;
+    if (previousValue.compareTo(currentValue) > 0) {
+      return false;
+    }
+    previousValue = currentValue;
+  }
+  return true;
 }

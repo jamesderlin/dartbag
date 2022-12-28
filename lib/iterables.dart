@@ -1,5 +1,6 @@
 /// Utilities for [List]s and other [Iterable]s.
 
+import 'dart:collection';
 import 'package:collection/collection.dart' as collection;
 
 /// Extension methods on [List] that do work in-place.
@@ -132,5 +133,21 @@ int compareIterables<E extends Comparable<Object>>(
     if (comparisonResult != 0) {
       return comparisonResult;
     }
+  }
+}
+
+/// Provides a [sort] extension method on [LinkedHashMap].
+extension SortMap<K, V> on LinkedHashMap<K, V> {
+  /// Sorts a [LinkedHashMap] according to a specified [Comparator] on
+  /// [MapEntry]s.
+  ///
+  /// Note that since extension methods are syntactic sugar that depend on
+  /// *static* (not *runtime*) types, this extension method requires that the
+  /// receiver be declared as (or casted to) a [LinkedHashMap] and not as a
+  /// general [Map].
+  void sort(int Function(MapEntry<K, V> a, MapEntry<K, V> b) compare) {
+    var entries = this.entries.toList()..sort(compare);
+    clear();
+    addEntries(entries);
   }
 }
