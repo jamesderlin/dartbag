@@ -63,6 +63,9 @@ includes (but is not limited to):
 
 * `Future.cast` casts a `Future<T>` to a `Future<R>`.
 
+* `hoursOnly`, `minutesOnly`, `secondsOnly`, `millisecondsOnly`, and
+  `microsecondsOnly` retrieve specific components of a `Duration`.
+
 ## [parse]
 
 * `tryParseBool` parses a `bool` from a `String?`.

@@ -1,3 +1,8 @@
+## 0.5.1-dev
+
+* Added `hoursOnly`, `minutesOnly`, `secondsOnly`, `millisecondsOnly`, and
+  `microsecondsOnly` extension getters to `Duration`.
+
 ## 0.5.0
 
 * Renamed the `iterables` library to `collection`.

@@ -230,6 +230,36 @@ void main() {
       returnsNormally,
     );
   });
+
+  group('DurationUtils', () {
+    const duration = Duration(
+      days: 42,
+      hours: 13,
+      minutes: 59,
+      seconds: 58,
+      microseconds: 123456,
+    );
+
+    test('hoursOnly', () {
+      expect(duration.hoursOnly, 13);
+    });
+
+    test('minutesOnly', () {
+      expect(duration.minutesOnly, 59);
+    });
+
+    test('secondsOnly', () {
+      expect(duration.secondsOnly, 58);
+    });
+
+    test('millisecondsOnly', () {
+      expect(duration.millisecondsOnly, 123);
+    });
+
+    test('microsecondsOnly', () {
+      expect(duration.microsecondsOnly, 456);
+    });
+  });
 }
 
 class Base {}

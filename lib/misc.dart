@@ -155,3 +155,48 @@ extension FutureCast<T> on Future<T> {
     return result as R;
   }
 }
+
+/// Provides miscellaneous extension methods on [Duration].
+extension DurationUtils on Duration {
+  /// Returns the hours component of the [Duration].
+  ///
+  /// Example:
+  /// ```
+  /// print(Duration(days: 1, hours: 2).hoursOnly); // 2
+  /// ```
+  int get hoursOnly => inHours - inDays * 24;
+
+  /// Returns the minutes component of the [Duration].
+  ///
+  /// Example:
+  /// ```
+  /// print(Duration(hours: 2, minutes: 3).minutesOnly); // 3
+  /// ```
+  int get minutesOnly => inMinutes - inHours * 60;
+
+  /// Returns the seconds component of the [Duration].
+  ///
+  /// Example:
+  /// ```
+  /// print(Duration(minutes: 3, seconds: 4).secondsOnly); // 4
+  /// ```
+  int get secondsOnly => inSeconds - inMinutes * 60;
+
+  /// Returns the milliseconds component of the [Duration].
+  ///
+  /// Example:
+  /// ```
+  /// print(Duration(seconds: 4, milliseconds: 5).millisecondsOnly); // 5
+  /// ```
+  int get millisecondsOnly => inMilliseconds - inSeconds * 1000;
+
+  /// Returns the microseconds component of the [Duration].
+  ///
+  /// The returned number of microseconds does not include any milliseconds.
+  ///
+  /// Example:
+  /// ```
+  /// print(Duration(milliseconds: 5, microseconds: 6).microsecondsOnly); // 6
+  /// ```
+  int get microsecondsOnly => inMicroseconds - inMilliseconds * 1000;
+}
