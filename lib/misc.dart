@@ -2,6 +2,18 @@
 
 import 'dart:math' as math;
 
+/// Provides a [tryAs] extension method on all objects.
+extension TryAsExtension on Object? {
+  /// Attempts to cast this to `T`, returning `null` on failure.
+  ///
+  /// This is a workaround until `as?` is implemented:
+  /// <https://github.com/dart-lang/language/issues/399>
+  T? tryAs<T>() {
+    final self = this;
+    return (self is T) ? self : null;
+  }
+}
+
 /// Provides a [chainIf] extension method on all objects.
 extension ChainIf<T> on T {
   /// Returns `this` if [shouldChain] is true, `null` otherwise.
@@ -14,17 +26,13 @@ extension ChainIf<T> on T {
   T? chainIf(bool shouldChain) => shouldChain ? this : null;
 }
 
-/// Provides a [tryAs] extension method on all objects.
-extension TryAsExtension on Object? {
-  /// Attempts to cast this to `T`, returning `null` on failure.
-  ///
-  /// This is a workaround until `as?` is implemented:
-  /// <https://github.com/dart-lang/language/issues/399>
-  T? tryAs<T>() {
-    final self = this;
-    return (self is T) ? self : null;
-  }
-}
+/// Returns `true` if `T1` is a subtype of `T2`.
+///
+/// Note that `T1` and `T2` must be known statically (that is, at
+/// compilation-time)
+//
+// See <https://github.com/dart-lang/language/issues/1312#issuecomment-727284104>
+bool isSubtype<T1, T2>() => <T1>[] is List<T2>;
 
 /// A basic wrapper around another type.
 class Boxed<T> {

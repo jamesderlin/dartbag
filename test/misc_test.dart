@@ -20,6 +20,16 @@ void main() {
     expect(list, [1, 2, 3]);
   });
 
+  test('isSubtype', () {
+    expect(isSubtype<int, num>(), true);
+    expect(isSubtype<num, int>(), false);
+    expect(isSubtype<int, String>(), false);
+    expect(isSubtype<int, void>(), true);
+    expect(isSubtype<void, int>(), false);
+    expect(isSubtype<Future<int>, Future<dynamic>>(), true);
+    expect(isSubtype<Future<dynamic>, Future<int>>(), false);
+  });
+
   test('OutputParameter<T>', () {
     void f(OutputParameter<int> output) {
       output.value = 42;

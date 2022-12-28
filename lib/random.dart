@@ -5,6 +5,7 @@ import 'dart:math' as math;
 import 'package:collection/collection.dart';
 
 /// The maximum value allowed for [Random.nextInt].
+//
 // See <https://github.com/dart-lang/sdk/issues/48647>
 const randMaxInt = (1 << 31) * 2;
 
