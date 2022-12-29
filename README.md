@@ -75,6 +75,8 @@ includes (but is not limited to):
 
 * `List<Enum>.tryParse` parses an `Enum` value from a `String?`.
 
+* `tryParseDuration` parses a `Duration` from a `String?`.
+
 ## [random]
 
 * `randMaxInt` returns the maximum value allowed by `Random.nextInt` portably.

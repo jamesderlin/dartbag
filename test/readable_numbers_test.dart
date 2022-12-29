@@ -118,10 +118,22 @@ void main() {
             .toReadableString(),
         '1d2h3m4s',
       );
+
       expect(
         const Duration(days: 1, hours: 2, minutes: 34, seconds: 56)
             .toReadableString(),
         '1d2h34m56s',
+      );
+
+      expect(
+        const Duration(
+          days: 1,
+          hours: 2,
+          minutes: 3,
+          seconds: 4,
+          milliseconds: 500,
+        ).toReadableString(),
+        '1d2h3m4.5s',
       );
     });
 
@@ -134,6 +146,20 @@ void main() {
         const Duration(hours: 1, milliseconds: 500).toReadableString(),
         '1h0.5s',
       );
+    });
+
+    test('Negative values', () {
+      const duration = Duration(
+        days: 1,
+        hours: 2,
+        minutes: 3,
+        seconds: 4,
+        milliseconds: 567,
+        microseconds: 890,
+      );
+      expect((-duration).toReadableString(), '-1d2h3m4.56789s');
+
+      expect((-const Duration(milliseconds: 500)).toReadableString(), '-0.5s');
     });
 
     group('precision:', () {

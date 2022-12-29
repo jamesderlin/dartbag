@@ -120,10 +120,12 @@ extension ReadableNumber on num {
 /// Trailing zeroes from any fractional portion are always discarded.
 ///
 /// Example outputs:
+/// ```
 /// 1d2h34m56.789s
 /// 1d
-/// 1d58s
-/// 1d0.2s
+/// 2h58s
+/// 2h0.2s
+/// ```
 String readableDuration(Duration duration, {int? precision}) {
   if (duration.inMicroseconds == 0) {
     return '0s';
