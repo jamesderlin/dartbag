@@ -1,4 +1,5 @@
 /// Random number utilities.
+library;
 
 import 'dart:math' as math;
 

@@ -1,4 +1,5 @@
 /// Makes numbers more human-readable by adding SI prefixes and units.
+library;
 
 import 'dart:math' as math;
 

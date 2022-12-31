@@ -1,4 +1,5 @@
 /// Utilities for collection types and [Iterable]s.
+library;
 
 import 'dart:collection';
 import 'package:collection/collection.dart' as collection;

@@ -1,4 +1,5 @@
 /// Utilities for operating on byte data.
+library;
 
 import 'dart:typed_data';
 

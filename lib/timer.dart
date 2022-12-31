@@ -1,4 +1,5 @@
 /// [Timer] implementations with different behaviors.
+library;
 
 import 'dart:async';
 

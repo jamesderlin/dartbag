@@ -1,9 +1,10 @@
-## 0.5.1-dev
+## 0.6.0-dev
 
 * Added `hoursOnly`, `minutesOnly`, `secondsOnly`, `millisecondsOnly`, and
   `microsecondsOnly` extension getters to `Duration`.
 * Added a `tryParseDuration` function.
 * Added a `mergeMaps` function.
+* Require Dart 2.19.0 and enable new lints.
 
 ## 0.5.0
 

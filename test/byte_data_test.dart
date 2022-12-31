@@ -43,6 +43,7 @@ void main() {
 
   void testMemEquals(bool Function(Uint8List, Uint8List) memEquals) {
     test('memEquals behaves correctly for equal lists', () {
+      // ignore: discarded_futures
       usuallyPasses(
         tryCount: 10,
         minimumPassCount: 7,
@@ -72,6 +73,7 @@ void main() {
     });
 
     test('memEquals behaves correctly for unequal lists of equal lengths', () {
+      // ignore: discarded_futures
       usuallyPasses(
         tryCount: 10,
         minimumPassCount: 7,

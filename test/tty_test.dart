@@ -1,4 +1,5 @@
 @TestOn('vm')
+library;
 
 import 'package:args/args.dart';
 import 'package:dartbag/matcher.dart';

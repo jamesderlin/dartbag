@@ -1,4 +1,5 @@
 /// Utilities for command-line applications.
+library;
 
 import 'dart:io' as io;
 

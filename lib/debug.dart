@@ -1,4 +1,5 @@
 /// Utilities to make debugging easier.
+library;
 
 import 'dart:async';
 import 'package:stack_trace/stack_trace.dart' as stacktrace;

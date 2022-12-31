@@ -1,4 +1,5 @@
 /// Miscellaneous utilities.
+library;
 
 import 'dart:math' as math;
 
