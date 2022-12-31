@@ -259,6 +259,15 @@ void main() {
     test('microsecondsOnly', () {
       expect(duration.microsecondsOnly, 456);
     });
+
+    test('Negative duration', () {
+      var negativeDuration = -duration;
+      expect(negativeDuration.hoursOnly, -13);
+      expect(negativeDuration.minutesOnly, -59);
+      expect(negativeDuration.secondsOnly, -58);
+      expect(negativeDuration.millisecondsOnly, -123);
+      expect(negativeDuration.microsecondsOnly, -456);
+    });
   });
 }
 

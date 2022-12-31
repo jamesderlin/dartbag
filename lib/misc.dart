@@ -164,7 +164,7 @@ extension DurationUtils on Duration {
   /// ```
   /// print(Duration(days: 1, hours: 2).hoursOnly); // 2
   /// ```
-  int get hoursOnly => inHours - inDays * 24;
+  int get hoursOnly => inHours.remainder(24);
 
   /// Returns the minutes component of the [Duration].
   ///
@@ -172,7 +172,7 @@ extension DurationUtils on Duration {
   /// ```
   /// print(Duration(hours: 2, minutes: 3).minutesOnly); // 3
   /// ```
-  int get minutesOnly => inMinutes - inHours * 60;
+  int get minutesOnly => inMinutes.remainder(60);
 
   /// Returns the seconds component of the [Duration].
   ///
@@ -180,7 +180,7 @@ extension DurationUtils on Duration {
   /// ```
   /// print(Duration(minutes: 3, seconds: 4).secondsOnly); // 4
   /// ```
-  int get secondsOnly => inSeconds - inMinutes * 60;
+  int get secondsOnly => inSeconds.remainder(60);
 
   /// Returns the milliseconds component of the [Duration].
   ///
@@ -188,7 +188,7 @@ extension DurationUtils on Duration {
   /// ```
   /// print(Duration(seconds: 4, milliseconds: 5).millisecondsOnly); // 5
   /// ```
-  int get millisecondsOnly => inMilliseconds - inSeconds * 1000;
+  int get millisecondsOnly => inMilliseconds.remainder(1000);
 
   /// Returns the microseconds component of the [Duration].
   ///
@@ -198,5 +198,5 @@ extension DurationUtils on Duration {
   /// ```
   /// print(Duration(milliseconds: 5, microseconds: 6).microsecondsOnly); // 6
   /// ```
-  int get microsecondsOnly => inMicroseconds - inMilliseconds * 1000;
+  int get microsecondsOnly => inMicroseconds.remainder(1000);
 }
