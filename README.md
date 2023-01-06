@@ -17,8 +17,8 @@ includes (but is not limited to):
 * `List.sortWithKey` sorts a `List` by computing and caching sort keys, which
   can be significantly faster if comparisons are expensive.
 
-* `List.sortWithAsyncKey`, a version of `sortWithKey` that allows the sort key
-  to be computed asynchronously.
+* `List.sortWithAsyncKey` is a version of `sortWithKey` that allows the sort
+  key to be computed asynchronously.
 
 * `compareIterables` compares two `Iterable`s in a manner similar to string
   comparison.
@@ -79,14 +79,14 @@ includes (but is not limited to):
 
 ## [random]
 
-* `randMaxInt` returns the maximum value allowed by `Random.nextInt` portably.
+* `randMaxInt` portably returns the maximum value allowed by `Random.nextInt`.
 
 * `Random.nextIntFrom` returns a random integer in a specified range.
 
 * `lazyShuffler` shuffles a `List` lazily.
 
-* `RepeatableRandom` wraps an existing pseudo-random number generator and allows
-  a random sequence to be easily restarted and that allows the seed to be
+* `RepeatableRandom` wraps an existing pseudo-random number generator to allow
+  a random sequence to be easily restarted and to allow the seed to be
   retrieved.
 
 ## [readable_numbers]
