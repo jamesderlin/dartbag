@@ -161,7 +161,7 @@ extension DurationUtils on Duration {
   /// Returns the hours component of the [Duration].
   ///
   /// Example:
-  /// ```
+  /// ```dart
   /// print(Duration(days: 1, hours: 2).hoursOnly); // 2
   /// ```
   int get hoursOnly => inHours.remainder(24);
@@ -169,7 +169,7 @@ extension DurationUtils on Duration {
   /// Returns the minutes component of the [Duration].
   ///
   /// Example:
-  /// ```
+  /// ```dart
   /// print(Duration(hours: 2, minutes: 3).minutesOnly); // 3
   /// ```
   int get minutesOnly => inMinutes.remainder(60);
@@ -177,7 +177,7 @@ extension DurationUtils on Duration {
   /// Returns the seconds component of the [Duration].
   ///
   /// Example:
-  /// ```
+  /// ```dart
   /// print(Duration(minutes: 3, seconds: 4).secondsOnly); // 4
   /// ```
   int get secondsOnly => inSeconds.remainder(60);
@@ -185,7 +185,7 @@ extension DurationUtils on Duration {
   /// Returns the milliseconds component of the [Duration].
   ///
   /// Example:
-  /// ```
+  /// ```dart
   /// print(Duration(seconds: 4, milliseconds: 5).millisecondsOnly); // 5
   /// ```
   int get millisecondsOnly => inMilliseconds.remainder(1000);
@@ -195,7 +195,7 @@ extension DurationUtils on Duration {
   /// The returned number of microseconds does not include any milliseconds.
   ///
   /// Example:
-  /// ```
+  /// ```dart
   /// print(Duration(milliseconds: 5, microseconds: 6).microsecondsOnly); // 6
   /// ```
   int get microsecondsOnly => inMicroseconds.remainder(1000);
