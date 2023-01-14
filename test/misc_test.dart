@@ -64,11 +64,11 @@ void main() {
   });
 
   group('flattenDeep:', () {
-    test('Empty list', () {
+    test('Empty List', () {
       expect(flattenDeep<int>(<int>[]), <int>[]);
     });
 
-    test('No nested lists', () {
+    test('No nested Lists', () {
       expect(flattenDeep<int>([1, 2, 3]), [1, 2, 3]);
     });
 
@@ -83,7 +83,7 @@ void main() {
       );
     });
 
-    test('Mixed types of iterables', () {
+    test('Mixed types of Iterables', () {
       expect(
         flattenDeep<int>([
           [1],

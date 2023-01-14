@@ -151,3 +151,36 @@ extension SortMap<K, V> on LinkedHashMap<K, V> {
     addEntries(entries);
   }
 }
+
+/// Combines an [Iterable] of [Map]s into a single [Map] with [List]s of the
+/// corresponding values.
+///
+/// Example:
+/// ```dart
+/// var merged = mergeMaps([
+///   {'a': 1, 'b': 2},
+///   {'a': 10, 'b': 20, 'c': 30},
+///   {'a': 100},
+/// ]);
+/// print(merged); // {a: [1, 10, 100], b: [2, 20], c: [30]}
+///
+/// var foldedValues = {
+///   for (var entry in merged.entries)
+///     entry.key: entry.value.fold(0, (a, b) => a + b),
+/// };
+/// print(foldedValues); // {a: 111, b: 22, c: 30}
+///
+/// var earliestValues = {
+///   for (var entry in merged.entries) entry.key: entry.value.first,
+/// };
+/// print(earliestValues); // {a: 1, b: 2, c: 30}
+/// ```
+Map<K, List<V>> mergeMaps<K, V>(Iterable<Map<K, V>> maps) {
+  var result = <K, List<V>>{};
+  for (var map in maps) {
+    for (var entry in map.entries) {
+      (result[entry.key] ??= <V>[]).add(entry.value);
+    }
+  }
+  return result;
+}

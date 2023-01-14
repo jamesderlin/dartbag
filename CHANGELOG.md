@@ -3,6 +3,7 @@
 * Added `hoursOnly`, `minutesOnly`, `secondsOnly`, `millisecondsOnly`, and
   `microsecondsOnly` extension getters to `Duration`.
 * Added a `tryParseDuration` function.
+* Added a `mergeMaps` function.
 
 ## 0.5.0
 

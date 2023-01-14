@@ -25,6 +25,8 @@ includes (but is not limited to):
 
 * `LinkedHashMap.sort`.
 
+* `mergeMaps`s combines an `Iterable` of `Map`s into a single `Map`.
+
 ## [debug]
 
 * `assertsEnabled` returns whether `assert` is enabled.

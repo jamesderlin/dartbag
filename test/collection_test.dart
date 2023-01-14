@@ -23,7 +23,7 @@ void main() {
     assert(oddList.length.isOdd);
     assert(evenList.length.isEven);
 
-    test('Empty list', () {
+    test('Empty List', () {
       expect(<int>[]..rotateLeft(0), <int>[]);
       expect(<int>[]..rotateLeft(1), <int>[]);
       expect(<int>[]..rotateLeft(-1), <int>[]);
@@ -301,6 +301,51 @@ void main() {
     expect(map.values, map.values.toList()..sort());
     expect(_isSorted(map.keys), false);
     expect(map, mapCopy);
+  });
+
+  group('mergeMaps:', () {
+    const emptyMap = <String, int>{};
+
+    test('Empty List', () {
+      expect(mergeMaps(<Map<String, int>>[]), emptyMap);
+    });
+
+    test('List with empty Maps', () {
+      expect(mergeMaps([emptyMap, emptyMap]), emptyMap);
+    });
+
+    test('List with a single Map', () {
+      var map = {'a': 1, 'b': 2, 'c': 3};
+      expect(
+        mergeMaps([map]),
+        map.map((key, value) => MapEntry(key, [value])),
+      );
+    });
+
+    test('List with multiple Maps', () {
+      var merged = mergeMaps([
+        {'a': 1, 'b': 2},
+        {'a': 10, 'b': 20, 'c': 30},
+        {'a': 100},
+      ]);
+
+      expect(merged, {
+        'a': [1, 10, 100],
+        'b': [2, 20],
+        'c': [30],
+      });
+
+      var foldedValues = {
+        for (var entry in merged.entries)
+          entry.key: entry.value.fold(0, (a, b) => a + b),
+      };
+      expect(foldedValues, {'a': 111, 'b': 22, 'c': 30});
+
+      var earliestValues = {
+        for (var entry in merged.entries) entry.key: entry.value.first,
+      };
+      expect(earliestValues, {'a': 1, 'b': 2, 'c': 30});
+    });
   });
 }
 
