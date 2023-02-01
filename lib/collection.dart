@@ -109,6 +109,19 @@ extension IterableUtils<E> on Iterable<E> {
 /// * `iterable1.length < iterable2.length` and
 ///   `iterable1[i].compareTo(iterable2[i]) == 0` for all
 ///   `i < iterable1.length`.
+///
+/// This can be used to sort a `List` of objects by multiple properties.  For
+/// example:
+///
+/// ```dart
+/// var items = getItems();
+/// items.sort(
+///   (item1, item2) => compareIterables(
+///     [item1.majorProperty, item1.minorProperty],
+///     [item2.majorProperty, item2.minorProperty],
+///   ),
+/// );
+/// ```
 int compareIterables<E extends Comparable<Object>>(
   Iterable<E> iterable1,
   Iterable<E> iterable2,

@@ -234,6 +234,21 @@ void main() {
       _ComparisonTest([0, 1], [1, 2], -1),
       _ComparisonTest([0, 0, 2], [0, 1, 2], -1),
       _ComparisonTest([0, 1, 1], [0, 1, 2], -1),
+      _ComparisonTest(
+        <Comparable<Object>>['Doe', 'John', 0],
+        <Comparable<Object>>['Doe', 'John', 0],
+        0,
+      ),
+      _ComparisonTest(
+        <Comparable<Object>>['Doe', 'John', 0],
+        <Comparable<Object>>['Doe', 'John', 1],
+        -1,
+      ),
+      _ComparisonTest(
+        <Comparable<Object>>['Doe', 'John', 0],
+        <Comparable<Object>>['Doe', 'Jane', 0],
+        1,
+      ),
     ];
 
     for (var testCase in testCases) {
