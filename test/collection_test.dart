@@ -289,6 +289,27 @@ void main() {
     }
   });
 
+  test('ComparableWrapper', () {
+    var names = [
+      const _Name('Smith', 'Jane'),
+      const _Name('Doe', 'John'),
+      const _Name('Doe', 'Jane'),
+      const _Name('Galt', 'John'),
+    ]..sortWithKey(
+        (name) => ComparableWrapper(
+          [name.surname, name.givenName],
+          compareIterables,
+        ),
+      );
+
+    expect(names, [
+      const _Name('Doe', 'Jane'),
+      const _Name('Doe', 'John'),
+      const _Name('Galt', 'John'),
+      const _Name('Smith', 'Jane'),
+    ]);
+  });
+
   test('LinkedHashMap.sort', () {
     final random = Random(0);
 
@@ -362,6 +383,16 @@ void main() {
       expect(earliestValues, {'a': 1, 'b': 2, 'c': 30});
     });
   });
+}
+
+class _Name {
+  final String surname;
+  final String givenName;
+
+  const _Name(this.surname, this.givenName);
+
+  @override
+  String toString() => '$givenName $surname';
 }
 
 class _ComparisonTest<Argument1Type, Argument2Type> {

@@ -1,3 +1,7 @@
+## 0.6.1-dev
+
+* Added a `ComparableWrapper` class.
+
 ## 0.6.0
 
 * Added `hoursOnly`, `minutesOnly`, `secondsOnly`, `millisecondsOnly`, and

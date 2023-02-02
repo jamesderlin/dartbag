@@ -20,6 +20,9 @@ includes (but is not limited to):
 * `List.sortWithAsyncKey` is a version of `sortWithKey` that allows the sort
   key to be computed asynchronously.
 
+* `ComparableWrapper` wraps a value in a [Comparable] interface with a
+  specified comparison function.
+
 * `compareIterables` compares two `Iterable`s in a manner similar to string
   comparison.
 

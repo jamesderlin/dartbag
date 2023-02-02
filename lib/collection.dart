@@ -58,6 +58,10 @@ extension SortWithKeyExtension<E> on List<E> {
   /// `Comparable<K>` so that this works with [int] and [double] types (which
   /// otherwise would not work because [int] and [double] implement
   /// `Comparable<num>`).
+  ///
+  /// To use `sortWithKey` with keys that are easily comparable with a custom
+  /// comparison function but that do not implement [Comparable], use
+  /// [ComparableWrapper].
   void sortWithKey<K extends Comparable<Object>>(K Function(E) key) {
     final keyValues = [
       for (var element in this) MapEntry(key(element), element),
@@ -87,6 +91,50 @@ extension SortWithKeyExtension<E> on List<E> {
       this[i] = keyValues[i].value;
     }
   }
+}
+
+/// Wraps a value in a [Comparable] interface with a specified comparison
+/// function.
+///
+/// For example, this can be used to combine [sortWithKey] and
+/// [compareIterables]:
+///
+/// ```dart
+/// class Name {
+///   String surname;
+///   String givenName;
+///
+///   Name(this.surname, this.givenName);
+/// }
+///
+/// void main() {
+///   var names = [
+///     Name('Smith', 'Jane'),
+///     Name('Doe', 'John'),
+///     Name('Doe', 'Jane'),
+///     Name('Galt', 'John'),
+///   ];
+///
+///   names.sortWithKey(
+///     (name) => ComparableWrapper(
+///       [name.surname, name.givenName],
+///       compareIterables,
+///     ),
+///   );
+/// }
+/// ```
+class ComparableWrapper<T> implements Comparable<ComparableWrapper<T>> {
+  /// The wrapped value to compare.
+  final T value;
+
+  /// The comparison function used to compare [value] to another [T] instance.
+  final Comparator<T> compare;
+
+  /// Constructor.
+  ComparableWrapper(this.value, this.compare);
+
+  @override
+  int compareTo(ComparableWrapper<T> other) => compare(this.value, other.value);
 }
 
 /// Miscellaneous utility methods for [Iterable].
