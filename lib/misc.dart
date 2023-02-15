@@ -173,6 +173,9 @@ class PollableFuture<T> implements Future<T> {
   /// If [futureOrValue] is a [Future], regardless of whether that [Future] is
   /// already completed or not, then the [PollableFuture] will mark itself
   /// completed only after that [Future] executes its [Future.then] callbacks.
+  ///
+  /// Alternatively use the [PollableFutureExtension.toPollable] extension
+  /// method on an existing [Future].
   PollableFuture(FutureOr<T> futureOrValue) : _futureOrValue = futureOrValue {
     final futureOrValue = _futureOrValue;
     if (futureOrValue is Future<T>) {

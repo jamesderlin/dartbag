@@ -20,7 +20,7 @@ includes (but is not limited to):
 * `List.sortWithAsyncKey` is a version of `sortWithKey` that allows the sort
   key to be computed asynchronously.
 
-* `ComparableWrapper` wraps a value in a [Comparable] interface with a
+* `ComparableWrapper` wraps a value in a `Comparable` interface with a
   specified comparison function.
 
 * `compareIterables` compares two `Iterable`s in a manner similar to string
@@ -68,7 +68,7 @@ includes (but is not limited to):
 
 * `Future.cast` casts a `Future<T>` to a `Future<R>`.
 
-* `PollableFuture` is an implementation of [Future] that allows synchronously
+* `PollableFuture` is an implementation of `Future` that allows synchronously
   retrieving the value if it has already been completed.
 
 * `hoursOnly`, `minutesOnly`, `secondsOnly`, `millisecondsOnly`, and

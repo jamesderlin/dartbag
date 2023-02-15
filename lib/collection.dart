@@ -96,8 +96,8 @@ extension SortWithKeyExtension<E> on List<E> {
 /// Wraps a value in a [Comparable] interface with a specified comparison
 /// function.
 ///
-/// For example, this can be used to combine [sortWithKey] and
-/// [compareIterables]:
+/// For example, this can be used to combine [SortWithKeyExtension.sortWithKey]
+/// and [compareIterables]:
 ///
 /// ```dart
 /// class Name {

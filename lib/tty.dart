@@ -79,7 +79,7 @@ String wordWrap(
   return result.join('\n');
 }
 
-/// Provides a [parseOption] extension method on [ArgResults].
+/// Provides a [parseOptionValue] extension method on [ArgResults].
 extension ArgsParseOption on ArgResults {
   /// Tries to parse an option value.
   ///
