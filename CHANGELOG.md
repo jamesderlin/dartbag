@@ -1,3 +1,7 @@
+## 0.6.1+2
+
+* Corrected broken references in the documentation.
+
 ## 0.6.1
 
 * Added a `ComparableWrapper` class.
