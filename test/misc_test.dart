@@ -231,7 +231,30 @@ void main() {
     );
   });
 
-  group('DurationUtils', () {
+  group('PollableFuture:', () {
+    test('initialized with a Future', () async {
+      var pollableFuture =
+          Future<int>.delayed(const Duration(seconds: 1), () => 42)
+              .toPollable();
+      expect(pollableFuture.isCompleted, false);
+      expect(() => pollableFuture.value, throwsA(isA<StateError>()));
+
+      expect(await pollableFuture, 42);
+
+      expect(pollableFuture.isCompleted, true);
+      expect(pollableFuture.value, 42);
+    });
+
+    test('initialized with a value', () async {
+      var pollableFuture = PollableFuture<int>(42);
+      expect(pollableFuture.isCompleted, true);
+      expect(pollableFuture.value, 42);
+
+      expect(await pollableFuture, 42);
+    });
+  });
+
+  group('DurationUtils:', () {
     const duration = Duration(
       days: 42,
       hours: 13,

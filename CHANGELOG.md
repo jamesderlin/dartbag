@@ -1,6 +1,7 @@
-## 0.6.1-dev
+## 0.6.1
 
 * Added a `ComparableWrapper` class.
+* Added a `PollableFuture` class.
 
 ## 0.6.0
 

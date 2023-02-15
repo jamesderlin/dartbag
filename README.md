@@ -68,6 +68,9 @@ includes (but is not limited to):
 
 * `Future.cast` casts a `Future<T>` to a `Future<R>`.
 
+* `PollableFuture` is an implementation of [Future] that allows synchronously
+  retrieving the value if it has already been completed.
+
 * `hoursOnly`, `minutesOnly`, `secondsOnly`, `millisecondsOnly`, and
   `microsecondsOnly` retrieve specific components of a `Duration`.
 

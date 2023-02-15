@@ -1,6 +1,7 @@
 /// Miscellaneous utilities.
 library;
 
+import 'dart:async';
 import 'dart:math' as math;
 
 /// Provides a [tryAs] extension method on all objects.
@@ -155,6 +156,82 @@ extension FutureCast<T> on Future<T> {
     var result = await this;
     return result as R;
   }
+}
+
+/// An implementation of [Future] that allows synchronously retrieving the
+/// value if it has already been completed.
+///
+/// Motivated by <https://www.reddit.com/r/dartlang/comments/112kaap/futuret_and_getting_value_synchronously/>.
+class PollableFuture<T> implements Future<T> {
+  FutureOr<T> _futureOrValue;
+
+  /// Constructor.
+  ///
+  /// If [futureOrValue] is not a [Future], then the [PollableFuture] will be
+  /// constructed in the completed state with that value.
+  ///
+  /// If [futureOrValue] is a [Future], regardless of whether that [Future] is
+  /// already completed or not, then the [PollableFuture] will mark itself
+  /// completed only after that [Future] executes its [Future.then] callbacks.
+  PollableFuture(FutureOr<T> futureOrValue) : _futureOrValue = futureOrValue {
+    final futureOrValue = _futureOrValue;
+    if (futureOrValue is Future<T>) {
+      unawaited(
+        futureOrValue.then((value) {
+          _futureOrValue = value;
+        }),
+      );
+    }
+  }
+
+  /// Returns `true` if the [PollableFuture] has completed, `false` otherwise.
+  bool get isCompleted => _futureOrValue is T;
+
+  /// Returns the completed value.
+  ///
+  /// Throws a [StateError] if the [PollableFuture] has not yet completed.
+  /// Callers should check [isCompleted] first.
+  T get value {
+    final futureOrValue = _futureOrValue;
+    if (futureOrValue is T) {
+      return futureOrValue;
+    }
+    throw StateError('Future not yet completed');
+  }
+
+  /// Unconditionally returns [_futureOrValue] as a [Future], creating a new,
+  /// already-completed [Future] if necessary.
+  Future<T> get _asFuture {
+    final futureOrValue = _futureOrValue;
+    return futureOrValue is Future<T>
+        ? futureOrValue
+        : Future.value(futureOrValue);
+  }
+
+  @override
+  Stream<T> asStream() => _asFuture.asStream();
+
+  @override
+  Future<T> catchError(Function onError, {bool Function(Object)? test}) =>
+      _asFuture.catchError(onError, test: test);
+
+  @override
+  Future<R> then<R>(FutureOr<R> Function(T) onValue, {Function? onError}) =>
+      _asFuture.then(onValue, onError: onError);
+
+  @override
+  Future<T> timeout(Duration timeLimit, {FutureOr<T> Function()? onTimeout}) =>
+      _asFuture.timeout(timeLimit, onTimeout: onTimeout);
+
+  @override
+  Future<T> whenComplete(FutureOr<void> Function() action) =>
+      _asFuture.whenComplete(action);
+}
+
+/// Provides a [toPollable] extension method on [Future].
+extension PollableFutureExtension<T> on Future<T> {
+  /// Wraps this [Future] with a [PollableFuture].
+  PollableFuture<T> toPollable() => PollableFuture<T>(this);
 }
 
 /// Provides miscellaneous extension methods on [Duration].
