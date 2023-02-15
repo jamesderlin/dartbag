@@ -128,18 +128,32 @@ void main() {
     test('is repeatable', () {
       var random = RepeatableRandom();
 
-      List<int> randomSequence() =>
+      List<int> randomIntSequence() =>
           [for (var i = 0; i < 1000; i += 1) random.nextInt(100)];
 
-      var sequence1 = randomSequence();
+      List<bool> randomBoolSequence() =>
+          [for (var i = 0; i < 1000; i += 1) random.nextBool()];
+
+      List<double> randomDoubleSequence() =>
+          [for (var i = 0; i < 1000; i += 1) random.nextDouble()];
+
+      var intSequence1 = randomIntSequence();
+      var boolSequence1 = randomBoolSequence();
+      var doubleSequence1 = randomDoubleSequence();
 
       random.restart();
-      var sequence2 = randomSequence();
-      expect(sequence1, sequence2);
+      var intSequence2 = randomIntSequence();
+      var boolSequence2 = randomBoolSequence();
+      var doubleSequence2 = randomDoubleSequence();
+      expect(intSequence1, intSequence2);
+      expect(boolSequence1, boolSequence2);
+      expect(doubleSequence1, doubleSequence2);
 
       random.seed = random.seed;
-      sequence2 = randomSequence();
-      expect(sequence1, sequence2);
+      intSequence2 = randomIntSequence();
+      expect(intSequence1, intSequence2);
+      expect(boolSequence1, boolSequence2);
+      expect(doubleSequence1, doubleSequence2);
     });
 
     test('can use a different PRNG', () {
