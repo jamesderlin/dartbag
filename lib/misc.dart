@@ -2,7 +2,6 @@
 library;
 
 import 'dart:async';
-import 'dart:math' as math;
 
 import 'misc.dart' as misc;
 
@@ -74,25 +73,16 @@ class Boxed<T> {
 /// ```
 typedef OutputParameter<T> = Boxed<T>;
 
-/// Provides miscellaneous extension methods on [int].
-extension IntUtils on int {
+/// Provides a [padLeft] extension method on [int].
+extension PadLeftExtension on int {
   /// Returns a string representation of this [int], left-padded with zeroes if
   /// necessary to have the specified minimum number of characters.
-  String padDigits(int minimumWidth) {
+  String padLeft(int minimumWidth) {
     if (this < 0) {
-      var padded = (-this).padDigits(minimumWidth - 1);
+      var padded = (-this).padLeft(minimumWidth - 1);
       return '-$padded';
     }
     return toString().padLeft(minimumWidth, '0');
-  }
-
-  /// Rounds a non-negative integer to the nearest multiple of `multipleOf`.
-  ///
-  /// `multipleOf` must be positive.
-  int roundToMultipleOf(int multipleOf) {
-    assert(this >= 0);
-    assert(multipleOf > 0);
-    return (this + multipleOf ~/ 2) ~/ multipleOf * multipleOf;
   }
 }
 
@@ -110,13 +100,6 @@ extension UriUtils on Uri {
       },
     );
   }
-}
-
-/// Miscellaneous utility methods for [Rectangle].
-extension RectangleUtils<T extends num> on math.Rectangle<T> {
-  /// Returns the center of the [Rectangle].
-  math.Point<num> get center =>
-      math.Point<num>(left + width / 2, top + height / 2);
 }
 
 /// Provides an [implies] extension method on [bool].

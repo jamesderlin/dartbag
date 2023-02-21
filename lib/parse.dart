@@ -1,7 +1,7 @@
 /// Utilities to parse objects from [String]s.
 library;
 
-import 'misc.dart';
+import 'math.dart';
 
 /// Tries to parse a [bool] from a [String].
 ///

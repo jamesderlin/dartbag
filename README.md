@@ -51,6 +51,16 @@ includes (but is not limited to):
 * `toStringMatches` verifies that a tested value has a matching type and string
   representation.
 
+## [math]
+
+* `lcm` computes the least-common-multiple of two integers.
+
+* `int.floorToMultipleOf`, `int.ceilToMultipleOf`, and `int.roundToMultipleOf`
+  provide different ways of rounding a non-negative integer to the nearest
+  multiple of another.
+
+* `Rectangle.center` returns the center of a `Rectangle`.
+
 ## [misc]
 
 * `chainIf` allows conditional method chaining based on a condition.
@@ -61,15 +71,10 @@ includes (but is not limited to):
 * `OutputParameter` allows specifying output parameters from functions as a
   crude mechanism to return multiple values.
 
-* `int.padDigits` converts an `int` to a `String`, left-padded with zeroes to
+* `int.padLeft` converts an `int` to a `String`, left-padded with zeroes to
   have a minimum number of digits.
 
-* `int.multipleOf` rounds a non-negative integer to the nearest multiple of
-  another number.
-
 * `Uri.updateQueryParameters` adds or replaces query parameters in a `Uri`.
-
-* `Rectangle.center` returns the center of a `Rectangle`.
 
 * `bool.implies` returns whether one `bool` logically implies another.
 
@@ -131,6 +136,7 @@ includes (but is not limited to):
 [comparable]: https://pub.dev/documentation/dartbag/latest/comparable/comparable-library.html
 [debug]: https://pub.dev/documentation/dartbag/latest/debug/debug-library.html
 [matcher]: https://pub.dev/documentation/dartbag/latest/matcher/matcher-library.html
+[math]: https://pub.dev/documentation/dartbag/latest/math/math-library.html
 [misc]: https://pub.dev/documentation/dartbag/latest/misc/misc-library.html
 [`package:args`]: https://pub.dev/packages/args
 [parse]: https://pub.dev/documentation/dartbag/latest/parse/parse-library.html

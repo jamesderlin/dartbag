@@ -1,9 +1,18 @@
 ## 0.7.0-dev
 
+This version includes multiple breaking changes.
+
 * Moved `flattenDeep` into `collection.dart`.
 * Moved `compareIterators` and `ComparableWrapper` to a new `comparable`
   library.
 * Added a `Comparable.clamp` extension method.
+* Renamed the `int.padDigits` extension method to `int.padLeft` for clarity.
+* Split the `IntUtils` extension into separate `IntUtils` and
+  `PadLeftExtension`extensions.
+* Moved the `int.roundToMultipleOf` `Rectangle.center` extension methods to a
+  new `math` library.
+* Added `int.floorToMultipleOf` and `int.ceilToMultipleOf` extension methods.
+* Added an `lcm` function.
 
 ## 0.6.2
 

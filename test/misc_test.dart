@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:dartbag/collection.dart';
 import 'package:dartbag/misc.dart';
 import 'package:test/test.dart';
@@ -40,26 +38,26 @@ void main() {
     expect(result.value, 42);
   });
 
-  group('int.padDigits:', () {
+  group('int.padLeft:', () {
     test('non-negative integers', () {
-      expect(0.padDigits(0), '0');
-      expect(1.padDigits(0), '1');
-      expect(0.padDigits(1), '0');
-      expect(1.padDigits(1), '1');
-      expect(0.padDigits(2), '00');
-      expect(1.padDigits(2), '01');
-      expect(100.padDigits(2), '100');
+      expect(0.padLeft(0), '0');
+      expect(1.padLeft(0), '1');
+      expect(0.padLeft(1), '0');
+      expect(1.padLeft(1), '1');
+      expect(0.padLeft(2), '00');
+      expect(1.padLeft(2), '01');
+      expect(100.padLeft(2), '100');
     });
 
     test('negative integers', () {
-      expect((-0).padDigits(0), '0');
-      expect((-1).padDigits(0), '-1');
-      expect((-0).padDigits(1), '0');
-      expect((-1).padDigits(1), '-1');
-      expect((-0).padDigits(2), '00');
-      expect((-1).padDigits(2), '-1');
-      expect((-0).padDigits(3), '000');
-      expect((-1).padDigits(3), '-01');
+      expect((-0).padLeft(0), '0');
+      expect((-1).padLeft(0), '-1');
+      expect((-0).padLeft(1), '0');
+      expect((-1).padLeft(1), '-1');
+      expect((-0).padLeft(2), '00');
+      expect((-1).padLeft(2), '-1');
+      expect((-0).padLeft(3), '000');
+      expect((-1).padLeft(3), '-01');
     });
   });
 
@@ -82,75 +80,6 @@ void main() {
       'https://user@www.example.com:8080/'
       '?foo=bar&lorem=ipsum&nine=9&ten=10#anchor',
     );
-  });
-  test('Rectangle.center', () {
-    expect(
-      const math.Rectangle(10, 20, 100, 200).center,
-      const math.Point(60, 120),
-    );
-    expect(
-      const math.Rectangle(-10, -20, 100, 200).center,
-      const math.Point(40, 80),
-    );
-
-    expect(
-      const math.Rectangle(10, 20, 0, 0).center,
-      const math.Point(10, 20),
-    );
-  });
-
-  test('int.roundToMultiple', () {
-    const expectedMultiplesOf5 = <int, int>{
-      0: 0,
-      1: 0,
-      2: 0,
-      3: 5,
-      4: 5,
-      5: 5,
-    };
-
-    const expectedMultiplesOf10 = <int, int>{
-      0: 0,
-      1: 0,
-      2: 0,
-      3: 0,
-      4: 0,
-      5: 10,
-      6: 10,
-      7: 10,
-      8: 10,
-      9: 10,
-      10: 10,
-    };
-
-    var random = math.Random(0);
-    void helper(int multiplier, Map<int, int> expectedMultiples) {
-      for (var entry in expectedMultiples.entries) {
-        var n = entry.key;
-        var expected = entry.value;
-        expect(
-          entry.key.roundToMultipleOf(multiplier),
-          entry.value,
-          reason: '$n.roundToMultipleOf($multiplier) => $expected',
-        );
-      }
-
-      for (var i = 0; i < 100; i += 1) {
-        var exactMultiple = random.nextInt(1000) * multiplier;
-        for (var i = 0; i < multiplier; i += 1) {
-          var n = exactMultiple + i;
-          var expected = exactMultiple + expectedMultiples[i]!;
-          expect(
-            n.roundToMultipleOf(multiplier),
-            expected,
-            reason: '$n.roundToMultipleOf($multiplier) => $expected',
-          );
-        }
-      }
-    }
-
-    helper(5, expectedMultiplesOf5);
-    helper(10, expectedMultiplesOf10);
   });
 
   test('bool.implies', () {

@@ -3,7 +3,7 @@ library;
 
 import 'dart:math' as math;
 
-import 'misc.dart';
+import 'math.dart';
 
 const _siMacroPrefixes = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'];
 const _siMicroPrefixes = ['m', '\u03BC', 'n', 'p', 'f', 'a', 'z', 'y'];
