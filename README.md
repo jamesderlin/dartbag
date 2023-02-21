@@ -10,6 +10,9 @@ includes (but is not limited to):
 
 ## [collection]
 
+* `flattenDeep` recursively flattens nested `Iterable`s into a single
+  `Iterable` sequence.
+
 * `List.reverse` reverses a `List` in place.
 
 * `List.rotateLeft` rotates a `List` in place.

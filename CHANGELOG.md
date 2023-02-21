@@ -1,3 +1,7 @@
+## 0.7.0-dev
+
+* Moved `flattenDeep` into `collection.dart`.
+
 ## 0.6.2
 
 * Added a freestanding `tryAs` function, which works better for `dynamic`

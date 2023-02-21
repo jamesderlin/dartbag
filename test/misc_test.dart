@@ -63,57 +63,6 @@ void main() {
     });
   });
 
-  group('flattenDeep:', () {
-    test('Empty List', () {
-      expect(flattenDeep<int>(<int>[]), <int>[]);
-    });
-
-    test('No nested Lists', () {
-      expect(flattenDeep<int>([1, 2, 3]), [1, 2, 3]);
-    });
-
-    test('One level of nesting', () {
-      expect(
-        flattenDeep<int>([
-          [1],
-          [2],
-          [3]
-        ]),
-        [1, 2, 3],
-      );
-    });
-
-    test('Mixed types of Iterables', () {
-      expect(
-        flattenDeep<int>([
-          [1],
-          {2},
-          [3].map((x) => x),
-        ]),
-        [1, 2, 3],
-      );
-    });
-
-    test('Multiple levels of nesting', () {
-      expect(
-        flattenDeep<int>([
-          [
-            [1],
-            [
-              [2]
-            ]
-          ],
-          [
-            3,
-            [4, 5],
-          ],
-          6
-        ]),
-        [1, 2, 3, 4, 5, 6],
-      );
-    });
-  });
-
   test('Uri.updateQueryParameters', () {
     var uri = Uri.parse(
       'https://user@www.example.com:8080/'

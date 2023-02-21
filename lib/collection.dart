@@ -4,6 +4,18 @@ library;
 import 'dart:collection';
 import 'package:collection/collection.dart' as collection;
 
+/// Recursively flattens all nested [Iterable]s into a single [Iterable]
+/// sequence.
+Iterable<T> flattenDeep<T>(Iterable<Object?> list) sync* {
+  for (var element in list) {
+    if (element is! Iterable) {
+      yield element as T;
+    } else {
+      yield* flattenDeep(element);
+    }
+  }
+}
+
 /// Extension methods on [List] that do work in-place.
 extension InPlaceOperations<E> on List<E> {
   /// Reverses the [List] in-place.

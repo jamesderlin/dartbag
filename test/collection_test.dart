@@ -17,6 +17,57 @@ extension<E> on List<E> {
 }
 
 void main() {
+  group('flattenDeep:', () {
+    test('Empty List', () {
+      expect(flattenDeep<int>(<int>[]), <int>[]);
+    });
+
+    test('No nested Lists', () {
+      expect(flattenDeep<int>([1, 2, 3]), [1, 2, 3]);
+    });
+
+    test('One level of nesting', () {
+      expect(
+        flattenDeep<int>([
+          [1],
+          [2],
+          [3]
+        ]),
+        [1, 2, 3],
+      );
+    });
+
+    test('Mixed types of Iterables', () {
+      expect(
+        flattenDeep<int>([
+          [1],
+          {2},
+          [3].map((x) => x),
+        ]),
+        [1, 2, 3],
+      );
+    });
+
+    test('Multiple levels of nesting', () {
+      expect(
+        flattenDeep<int>([
+          [
+            [1],
+            [
+              [2]
+            ]
+          ],
+          [
+            3,
+            [4, 5],
+          ],
+          6
+        ]),
+        [1, 2, 3, 4, 5, 6],
+      );
+    });
+  });
+
   group('List.rotateLeft:', () {
     const oddList = [0, 1, 2, 3, 4, 5, 6];
     const evenList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];

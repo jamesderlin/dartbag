@@ -74,18 +74,6 @@ class Boxed<T> {
 /// ```
 typedef OutputParameter<T> = Boxed<T>;
 
-/// Recursively flattens all nested [Iterable]s in specified [Iterable] to a
-/// single [Iterable] sequence.
-Iterable<T> flattenDeep<T>(Iterable<Object?> list) sync* {
-  for (var element in list) {
-    if (element is! Iterable) {
-      yield element as T;
-    } else {
-      yield* flattenDeep(element);
-    }
-  }
-}
-
 /// Provides miscellaneous extension methods on [int].
 extension IntUtils on int {
   /// Returns a string representation of this [int], left-padded with zeroes if
