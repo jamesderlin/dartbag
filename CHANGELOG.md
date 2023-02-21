@@ -1,3 +1,8 @@
+## 0.6.2
+
+* Added a freestanding `tryAs` function, which works better for `dynamic`
+  types.
+
 ## 0.6.1+2
 
 * Corrected broken references in the documentation.

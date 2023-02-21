@@ -45,7 +45,6 @@ void main() {
         [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0],
       );
 
-      var stopwatch = Stopwatch()..start();
       for (var list in [oddList, evenList]) {
         for (var i = 0; i < list.length; i += 1) {
           expect(
@@ -55,7 +54,6 @@ void main() {
           );
         }
       }
-      print(stopwatch.elapsed);
     });
 
     test('shiftAmount < 0', () {

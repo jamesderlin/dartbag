@@ -4,17 +4,22 @@ library;
 import 'dart:async';
 import 'dart:math' as math;
 
+import 'misc.dart' as misc;
+
 /// Provides a [tryAs] extension method on all objects.
 extension TryAsExtension on Object? {
-  /// Attempts to cast this to `T`, returning `null` on failure.
+  /// An extension version of [misc.tryAs].
   ///
-  /// This is a workaround until `as?` is implemented:
-  /// <https://github.com/dart-lang/language/issues/399>
-  T? tryAs<T>() {
-    final self = this;
-    return (self is T) ? self : null;
-  }
+  /// Note that extension methods cannot work on `dynamic` types, so the
+  /// freestanding [misc.tryAs] function should be preferred for those cases.
+  T? tryAs<T>() => misc.tryAs<T>(this);
 }
+
+/// Attempts to cast [object] to `T`, returning `null` on failure.
+///
+/// This is a workaround until `as?` is implemented:
+/// <https://github.com/dart-lang/language/issues/399>
+T? tryAs<T>(dynamic object) => (object is T) ? object : null;
 
 /// Provides a [chainIf] extension method on all objects.
 extension ChainIf<T> on T {
@@ -28,13 +33,13 @@ extension ChainIf<T> on T {
   T? chainIf(bool shouldChain) => shouldChain ? this : null;
 }
 
-/// Returns `true` if `T1` is a subtype of `T2`.
+/// Returns `true` if `Subtype` is a subtype of `Supertype`.
 ///
-/// Note that `T1` and `T2` must be known statically (that is, at
+/// Note that `Subtype` and `Supertype` must be known statically (that is, at
 /// compilation-time)
 //
 // See <https://github.com/dart-lang/language/issues/1312#issuecomment-727284104>
-bool isSubtype<T1, T2>() => <T1>[] is List<T2>;
+bool isSubtype<Subtype, Supertype>() => <Subtype>[] is List<Supertype>;
 
 /// A basic wrapper around another type.
 class Boxed<T> {
@@ -160,8 +165,8 @@ extension FutureCast<T> on Future<T> {
 
 /// An implementation of [Future] that allows synchronously retrieving the
 /// value if it has already been completed.
-///
-/// Motivated by <https://www.reddit.com/r/dartlang/comments/112kaap/futuret_and_getting_value_synchronously/>.
+//
+// Motivated by <https://www.reddit.com/r/dartlang/comments/112kaap/futuret_and_getting_value_synchronously/>.
 class PollableFuture<T> implements Future<T> {
   FutureOr<T> _futureOrValue;
 

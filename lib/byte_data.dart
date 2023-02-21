@@ -13,7 +13,7 @@ extension BytesExtension on List<int> {
   ///
   /// Attempts to cast to a [Uint8List] first to avoid creating an unnecessary
   /// copy.
-  Uint8List asUint8List() => tryAs<Uint8List>() ?? Uint8List.fromList(this);
+  Uint8List asUint8List() => tryAs<Uint8List>(this) ?? Uint8List.fromList(this);
 
   /// Returns a [List] of the hexadecimal strings of each element.
   ///
