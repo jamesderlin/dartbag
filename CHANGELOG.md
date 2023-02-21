@@ -1,6 +1,9 @@
 ## 0.7.0-dev
 
 * Moved `flattenDeep` into `collection.dart`.
+* Moved `compareIterators` and `ComparableWrapper` to a new `comparable`
+  library.
+* Added a `Comparable.clamp` extension method.
 
 ## 0.6.2
 

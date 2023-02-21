@@ -23,15 +23,19 @@ includes (but is not limited to):
 * `List.sortWithAsyncKey` is a version of `sortWithKey` that allows the sort
   key to be computed asynchronously.
 
-* `ComparableWrapper` wraps a value in a `Comparable` interface with a
-  specified comparison function.
+* `LinkedHashMap.sort`.
+
+* `mergeMaps`s combines an `Iterable` of `Map`s into a single `Map`.
+
+## [comparable]
+
+* `clamp` clamps a `Comparable` object to be within a specified range.
 
 * `compareIterables` compares two `Iterable`s in a manner similar to string
   comparison.
 
-* `LinkedHashMap.sort`.
-
-* `mergeMaps`s combines an `Iterable` of `Map`s into a single `Map`.
+* `ComparableWrapper` wraps a value in a `Comparable` interface with a
+  specified comparison function.
 
 ## [debug]
 
@@ -124,6 +128,7 @@ includes (but is not limited to):
   
 [byte_data]: https://pub.dev/documentation/dartbag/latest/byte_data/byte_data-library.html
 [collection]: https://pub.dev/documentation/dartbag/latest/collection/collection-library.html
+[comparable]: https://pub.dev/documentation/dartbag/latest/comparable/comparable-library.html
 [debug]: https://pub.dev/documentation/dartbag/latest/debug/debug-library.html
 [matcher]: https://pub.dev/documentation/dartbag/latest/matcher/matcher-library.html
 [misc]: https://pub.dev/documentation/dartbag/latest/misc/misc-library.html

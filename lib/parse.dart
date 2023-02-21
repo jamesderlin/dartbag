@@ -1,7 +1,5 @@
 /// Utilities to parse objects from [String]s.
-
-// See <https://github.com/dart-lang/dartdoc/issues/1082>
-library parse;
+library;
 
 import 'misc.dart';
 
