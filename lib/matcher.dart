@@ -1,8 +1,27 @@
+/// Custom [Matcher]s for tests.
+library;
+
 import 'package:matcher/matcher.dart';
 
 /// Returns a [Matcher] that matches if the value is of a specified type and if
 /// its [Object.toString] representation matches [valueOrMatcher].
-//
+///
+/// Example:
+/// ```dart
+/// void throwIfEven(int x) {
+///   if (x.isEven) {
+///     throw ArgumentError('$x is even');
+///   }
+/// }
+///
+/// test('Example test', () {
+///   expect(
+///     () => throwIfEven(42),
+///       throwsA(toStringMatches<ArgumentError>(contains('42'))),
+///   );
+/// });
+/// ```
+///
 // This alternatively could be implemented by using [allOf] to combine an
 // [isA<T>] matcher with a [CustomMatcher] that matches against the result of
 // [Object.toString].  However, implementing our own [Matcher] gives us more

@@ -22,7 +22,12 @@ T? tryAs<T>(dynamic object) => (object is T) ? object : null;
 
 /// Provides a [chainIf] extension method on all objects.
 extension ChainIf<T> on T {
-  /// Returns `this` if [shouldChain] is true, `null` otherwise.
+  /// Allows conditional method chaining based on a condition.
+  ///
+  /// Returns this object if [shouldChain] is true, `null` otherwise.
+  ///
+  /// This is intended to be used with the conditional-member-access operator
+  /// (`?.`).
   ///
   /// Example:
   /// ```dart
@@ -36,7 +41,7 @@ extension ChainIf<T> on T {
 ///
 /// Note that `Subtype` and `Supertype` must be known statically (that is, at
 /// compilation-time)
-//
+///
 // See <https://github.com/dart-lang/language/issues/1312#issuecomment-727284104>
 bool isSubtype<Subtype, Supertype>() => <Subtype>[] is List<Supertype>;
 
@@ -126,7 +131,7 @@ extension ImpliesExtension on bool {
 /// Provides a [cast] extension method on [Future].
 extension FutureCast<T> on Future<T> {
   /// Casts a `Future<T>` to a `Future<R>`.
-  //
+  ///
   // Motivated by: <https://stackoverflow.com/q/72576065/>
   Future<R> cast<R>() async {
     var result = await this;
@@ -136,7 +141,7 @@ extension FutureCast<T> on Future<T> {
 
 /// An implementation of [Future] that allows synchronously retrieving the
 /// value if it has already been completed.
-//
+///
 // Motivated by <https://www.reddit.com/r/dartlang/comments/112kaap/futuret_and_getting_value_synchronously/>.
 class PollableFuture<T> implements Future<T> {
   FutureOr<T> _futureOrValue;

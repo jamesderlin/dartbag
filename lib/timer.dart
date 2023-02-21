@@ -7,7 +7,7 @@ import 'package:clock/clock.dart';
 
 /// A periodic [Timer] that automatically stops after a specified amount of
 /// time.
-//
+///
 // Based on <https://stackoverflow.com/a/72144642/>.
 class ExpiringPeriodicTimer implements Timer {
   /// When the timer expires.
