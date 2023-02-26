@@ -1,5 +1,7 @@
 # dartbag
 
+[![pub package](https://img.shields.io/pub/v/dartbag.svg)](https://pub.dev/packages/dartbag)
+
 A grab-bag of miscellaneous, lightweight utility code for Dart.  Functionality
 includes (but is not limited to):
 
@@ -41,8 +43,8 @@ includes (but is not limited to):
 
 * `assertsEnabled` returns whether `assert` is enabled.
 
-* `currentDartPackagePath` returns the path to the current Dart library for
-  Dart VM builds.
+* `currentDartFilePath` returns the path to the current `.dart` file for Dart
+  VM builds.
 
 * `staticType` returns the static type of an object.
 

@@ -4,10 +4,17 @@ library;
 import 'dart:async';
 import 'package:stack_trace/stack_trace.dart' as stacktrace;
 
-/// Returns the path to the current Dart library, relative to the package root.
+/// Returns the path to the caller's `.dart` file.
+///
+/// If [packageRelative] is true, returns a path relative to the package root.
+///
+/// If [packageRelative] is false, returns an absolute path.
 ///
 /// This does not work for Dart for the Web.
-String currentDartPackagePath() => stacktrace.Frame.caller(1).library;
+String currentDartFilePath({bool packageRelative = false}) {
+  var caller = stacktrace.Frame.caller(1);
+  return packageRelative ? caller.library : caller.uri.toFilePath();
+}
 
 /// Provides a [staticType] getter as an extension on [Duration].
 extension StaticTypeExtension<T> on T {

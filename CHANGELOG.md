@@ -13,6 +13,9 @@ This version includes multiple breaking changes.
   new `math` library.
 * Added `int.floorToMultipleOf` and `int.ceilToMultipleOf` extension methods.
 * Added an `lcm` function.
+* Replaced `currentDartPackagePath` with a `currentDartFilePath` function.
+  The package-relative path can be obtained by calling it with
+  `packageRelative: true`.
 
 ## 0.6.2
 
