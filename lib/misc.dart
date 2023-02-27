@@ -82,6 +82,16 @@ typedef OutputParameter<T> = Boxed<T>;
 extension PadLeftExtension on int {
   /// Returns a string representation of this [int], left-padded with zeroes if
   /// necessary to have the specified minimum number of characters.
+  ///
+  /// If this [int] is negative, the negative sign is included in number of
+  /// characters.
+  ///
+  /// Examples:
+  /// ```dart
+  /// 7.padLeft(3);    // '007'
+  /// (-7).padLeft(3); // '-07'
+  /// 1234.padLeft(3); // '1234'
+  /// ```
   String padLeft(int minimumWidth) {
     if (this < 0) {
       var padded = (-this).padLeft(minimumWidth - 1);
@@ -141,6 +151,13 @@ extension FutureCast<T> on Future<T> {
 
 /// An implementation of [Future] that allows synchronously retrieving the
 /// value if it has already been completed.
+///
+/// A [PollableFuture] wraps an existing [Future].  Unless the [PollableFuture]
+/// is initialized with a non-[Future] value, it cannot be  marked as completed
+/// until execution returns to the event loop after the underlying [Future]
+/// has completed.  Consequently, a [PollableFuture] cannot be used to
+/// implement a spinlock that synchronously blocks while waiting for a [Future]
+/// to complete.
 ///
 // Motivated by <https://www.reddit.com/r/dartlang/comments/112kaap/futuret_and_getting_value_synchronously/>.
 class PollableFuture<T> implements Future<T> {
@@ -224,7 +241,7 @@ extension DurationUtils on Duration {
   ///
   /// Example:
   /// ```dart
-  /// print(Duration(days: 1, hours: 2).hoursOnly); // 2
+  /// Duration(days: 1, hours: 2).hoursOnly; // 2
   /// ```
   int get hoursOnly => inHours.remainder(24);
 
@@ -232,7 +249,7 @@ extension DurationUtils on Duration {
   ///
   /// Example:
   /// ```dart
-  /// print(Duration(hours: 2, minutes: 3).minutesOnly); // 3
+  /// Duration(hours: 2, minutes: 3).minutesOnly; // 3
   /// ```
   int get minutesOnly => inMinutes.remainder(60);
 
@@ -240,7 +257,7 @@ extension DurationUtils on Duration {
   ///
   /// Example:
   /// ```dart
-  /// print(Duration(minutes: 3, seconds: 4).secondsOnly); // 4
+  /// Duration(minutes: 3, seconds: 4).secondsOnly; // 4
   /// ```
   int get secondsOnly => inSeconds.remainder(60);
 
@@ -248,7 +265,7 @@ extension DurationUtils on Duration {
   ///
   /// Example:
   /// ```dart
-  /// print(Duration(seconds: 4, milliseconds: 5).millisecondsOnly); // 5
+  /// Duration(seconds: 4, milliseconds: 5).millisecondsOnly; // 5
   /// ```
   int get millisecondsOnly => inMilliseconds.remainder(1000);
 
@@ -258,7 +275,7 @@ extension DurationUtils on Duration {
   ///
   /// Example:
   /// ```dart
-  /// print(Duration(milliseconds: 5, microseconds: 6).microsecondsOnly); // 6
+  /// Duration(milliseconds: 5, microseconds: 6).microsecondsOnly; // 6
   /// ```
   int get microsecondsOnly => inMicroseconds.remainder(1000);
 }
