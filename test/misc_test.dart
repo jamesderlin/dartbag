@@ -1,5 +1,6 @@
 import 'package:dartbag/collection.dart';
 import 'package:dartbag/misc.dart';
+import 'package:dartbag/parse.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -90,21 +91,21 @@ void main() {
   });
 
   test('Future.cast', () async {
-    expect(polymorphicFuture(), isA<Future<Derived>>());
-    expect(polymorphicFuture(), isA<Future<Base>>());
-    expect(polymorphicFuture().cast<Base>(), isA<Future<Base>>());
-    expect(polymorphicFuture().cast<Base>(), isNot(isA<Future<Derived>>()));
+    expect(_polymorphicFuture(), isA<Future<_Derived>>());
+    expect(_polymorphicFuture(), isA<Future<_Base>>());
+    expect(_polymorphicFuture().cast<_Base>(), isA<Future<_Base>>());
+    expect(_polymorphicFuture().cast<_Base>(), isNot(isA<Future<_Derived>>()));
 
     expect(
-      () => polymorphicFuture()
-          .timeout(const Duration(milliseconds: 1), onTimeout: Base.new),
+      () => _polymorphicFuture()
+          .timeout(const Duration(milliseconds: 1), onTimeout: _Base.new),
       throwsA(isA<TypeError>()),
     );
 
     expect(
-      () => polymorphicFuture()
-          .cast<Base>()
-          .timeout(const Duration(milliseconds: 1), onTimeout: Base.new),
+      () => _polymorphicFuture()
+          .cast<_Base>()
+          .timeout(const Duration(milliseconds: 1), onTimeout: _Base.new),
       returnsNormally,
     );
   });
@@ -170,13 +171,64 @@ void main() {
       expect(negativeDuration.microsecondsOnly, -456);
     });
   });
+
+  group('DateTimeStringWithOffset:', () {
+    void testStringWithOffset(
+      String Function(DateTime) toStringWithOffset,
+      String expectedSeparator,
+    ) {
+      var utc = DateTime.utc(2000, 1, 2, 3, 4, 5, 6);
+      expect(
+        toStringWithOffset(utc),
+        '2000-01-02${expectedSeparator}03:04:05.006+00:00',
+      );
+
+      var local = utc.copyWith(isUtc: false);
+      var localStringWithOffset = toStringWithOffset(local);
+      expect(
+        DateTime.parse(localStringWithOffset).isAtSameMomentAs(local),
+        true,
+      );
+
+      var offsetRegExp = RegExp(
+        '2000-01-02${expectedSeparator}03:04:05.006'
+        r'(?<offsetSign>[+-])'
+        r'(?<offsetHours>\d{2})'
+        r':'
+        r'(?<offsetMinutes>\d{2})',
+      );
+      var match = offsetRegExp.firstMatch(localStringWithOffset);
+      expect(match, isNot(null));
+
+      match!;
+      var durationString = '${match.namedGroup('offsetSign')}'
+          '${match.namedGroup('offsetHours')}h'
+          '${match.namedGroup('offsetMinutes')}m';
+
+      expect(tryParseDuration(durationString), local.timeZoneOffset);
+    }
+
+    test('toStringWithOffset', () {
+      testStringWithOffset(
+        (dateTime) => dateTime.toStringWithOffset(),
+        ' ',
+      );
+    });
+
+    test('toIso8601StringWithOffset', () {
+      testStringWithOffset(
+        (dateTime) => dateTime.toIso8601StringWithOffset(),
+        'T',
+      );
+    });
+  });
 }
 
-class Base {}
+class _Base {}
 
-class Derived extends Base {}
+class _Derived extends _Base {}
 
-/// Returns a [Future] that has a static type of `Future<Base>` but that has a
-/// runtime type of `Future<Derived>`.
-Future<Base> polymorphicFuture() =>
-    Future<Derived>.delayed(const Duration(milliseconds: 10), Derived.new);
+/// Returns a [Future] that has a static type of `Future<_Base>` but that has a
+/// runtime type of `Future<_Derived>`.
+Future<_Base> _polymorphicFuture() =>
+    Future<_Derived>.delayed(const Duration(milliseconds: 10), _Derived.new);

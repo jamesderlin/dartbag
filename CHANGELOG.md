@@ -16,6 +16,8 @@ This version includes multiple breaking changes.
 * Replaced `currentDartPackagePath` with a `currentDartFilePath` function.
   The package-relative path can be obtained by calling it with
   `packageRelative: true`.
+* Added `DateTime.toStringWithOffset` and `DateTime.toIso8601StringWithOffset`
+  extension methods.
 
 ## 0.6.2
 

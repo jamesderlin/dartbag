@@ -279,3 +279,34 @@ extension DurationUtils on Duration {
   /// ```
   int get microsecondsOnly => inMicroseconds.remainder(1000);
 }
+
+/// TODO: Document
+extension DateTimeStringWithOffset on DateTime {
+  /// Internal helper function to append a timezone offset to the specified
+  /// date-time string.
+  String _appendOffset(String baseString) {
+    var prefix = '+';
+    var offset = timeZoneOffset;
+    if (timeZoneOffset.isNegative) {
+      prefix = '-';
+      offset = -timeZoneOffset;
+    }
+
+    // Strip off the trailing 'Z' for UTC [DateTime]s.
+    if (isUtc) {
+      assert(baseString.endsWith('Z'));
+      baseString = baseString.substring(0, baseString.length - 1);
+    }
+
+    var offsetHours = offset.inHours.padLeft(2);
+    var offsetMinutes = offset.minutesOnly.padLeft(2);
+    return '$baseString$prefix$offsetHours:$offsetMinutes';
+  }
+
+  /// A version of [DateTime.toString] that includes the timezone offset.
+  String toStringWithOffset() => _appendOffset(toString());
+
+  /// A version of [DateTime.toIso8601String] that includes the timezone
+  /// offset.
+  String toIso8601StringWithOffset() => _appendOffset(toIso8601String());
+}

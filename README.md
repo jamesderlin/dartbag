@@ -88,6 +88,10 @@ includes (but is not limited to):
 * `hoursOnly`, `minutesOnly`, `secondsOnly`, `millisecondsOnly`, and
   `microsecondsOnly` retrieve specific components of a `Duration`.
 
+* `DateTime.toStringWithOffset` and `DateTime.toIso8601StringWithOffset` are
+  versions of `DateTime.toString` and `DateTime.totoIso8601String` that include
+  timezone offsets.
+
 ## [parse]
 
 * `tryParseBool` parses a `bool` from a `String?`.
