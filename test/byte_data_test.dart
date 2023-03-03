@@ -95,8 +95,8 @@ void main() {
           var speedup =
               naiveDuration.inMicroseconds / wordDuration.inMicroseconds;
           print(
-            'naive:     $naiveDuration\n'
-            'memEquals: $wordDuration\n'
+            'naive:     ${naiveDuration.toReadableString()}\n'
+            'memEquals: ${wordDuration.toReadableString()}\n'
             'Speedup:   ${speedup.toStringAsFixed(1)}x',
           );
         },

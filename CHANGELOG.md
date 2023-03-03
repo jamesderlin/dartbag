@@ -1,4 +1,4 @@
-## 0.7.0-dev
+## 0.7.0
 
 This version includes multiple breaking changes.
 

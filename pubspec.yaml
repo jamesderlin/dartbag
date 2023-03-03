@@ -2,7 +2,7 @@ name: dartbag
 
 # Description must be 60-180 characters to appease pub.dev's scoring system.
 description: A grab-bag of miscellaneous, lightweight utility libraries for Dart.
-version: 0.7.0-dev
+version: 0.7.0
 repository: https://github.com/jamesderlin/dartbag
 
 environment:
@@ -10,7 +10,7 @@ environment:
 
 dependencies:
   args: ^2.3.1
-  basics: ^0.9.0
+  basics: ^0.10.0
   clock: ^1.1.0
   collection: ^1.17.0
   matcher: ^0.12.14

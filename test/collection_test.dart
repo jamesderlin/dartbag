@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:math';
 
 import 'package:dartbag/collection.dart';
+import 'package:dartbag/readable_numbers.dart';
 import 'package:test/test.dart';
 
 extension<E> on List<E> {
@@ -232,8 +233,8 @@ void main() {
       print(
         'List.sort() element conversion count:        $regularCallCount\n'
         'List.sortWithKey() element conversion count: $keyCallCount\n'
-        'List.sort() duration:        $regularDuration\n'
-        'List.sortWithKey() duration: $keyDuration\n'
+        'List.sort() duration:        ${regularDuration.toReadableString()}\n'
+        'List.sortWithKey() duration: ${keyDuration.toReadableString()}\n'
         'Speedup: ${speedup.toStringAsFixed(1)}x',
       );
     });
