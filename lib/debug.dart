@@ -16,7 +16,7 @@ String currentDartFilePath({bool packageRelative = false}) {
   return packageRelative ? caller.library : caller.uri.toFilePath();
 }
 
-/// Provides a [staticType] getter as an extension on [Duration].
+/// Provides a [staticType] getter on all non-`dynamic` objects.
 extension StaticTypeExtension<T> on T {
   /// Returns the static type of this object.
   ///
