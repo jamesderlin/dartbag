@@ -1,3 +1,8 @@
+## 0.7.0+1
+
+* Correct some documentation.
+* Improve test coverage.
+
 ## 0.7.0
 
 This version includes multiple breaking changes.

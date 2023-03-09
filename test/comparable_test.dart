@@ -4,11 +4,26 @@ import 'package:test/test.dart';
 
 void main() {
   test('clamp', () {
-    expect(5.clamp(0, 10), 5);
-    expect(0.clamp(0, 10), 0);
-    expect((-1).clamp(0, 10), 0);
-    expect(10.clamp(0, 10), 10);
-    expect(11.clamp(0, 10), 10);
+    expect(
+      _WrappedInt(5).clamp(_WrappedInt(0), _WrappedInt(10)).value,
+      5,
+    );
+    expect(
+      _WrappedInt(0).clamp(_WrappedInt(0), _WrappedInt(10)).value,
+      0,
+    );
+    expect(
+      _WrappedInt(-1).clamp(_WrappedInt(0), _WrappedInt(10)).value,
+      0,
+    );
+    expect(
+      _WrappedInt(10).clamp(_WrappedInt(0), _WrappedInt(10)).value,
+      10,
+    );
+    expect(
+      _WrappedInt(11).clamp(_WrappedInt(0), _WrappedInt(10)).value,
+      10,
+    );
   });
 
   test('compareIterables', () {
@@ -120,4 +135,17 @@ class _ComparisonTest<Argument1Type, Argument2Type> {
     this.argument2,
     this.expectedResult,
   );
+}
+
+/// Wraps an [int].
+///
+/// Used for testing [ComparableUtils.clamp] since [num] already provides its
+/// own [num.clamp] method.
+class _WrappedInt extends Comparable<_WrappedInt> {
+  int value;
+
+  _WrappedInt(this.value);
+
+  @override
+  int compareTo(_WrappedInt other) => value.compareTo(other.value);
 }

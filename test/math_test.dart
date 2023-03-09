@@ -134,6 +134,23 @@ void main() {
     _testMultipleOf(wrappedExtension, extensionName, 5, expectedMultiplesOf5);
     _testMultipleOf(wrappedExtension, extensionName, 10, expectedMultiplesOf10);
   });
+
+  test('Rectangle.center', () {
+    expect(
+      const math.Rectangle<int>(0, 0, 200, 80).center,
+      const math.Point<num>(100, 40),
+    );
+
+    expect(
+      const math.Rectangle<int>(-20, -10, 200, 80).center,
+      const math.Point<num>(80, 30),
+    );
+
+    expect(
+      const math.Rectangle<int>(3, 2, 0, 0).center,
+      const math.Point<num>(3, 2),
+    );
+  });
 }
 
 void _testMultipleOf(
