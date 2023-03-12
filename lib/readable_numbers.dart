@@ -4,6 +4,7 @@ library;
 import 'dart:math' as math;
 
 import 'math.dart';
+import 'misc.dart';
 
 const _siMacroPrefixes = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'];
 const _siMicroPrefixes = ['m', '\u03BC', 'n', 'p', 'f', 'a', 'z', 'y'];
@@ -158,8 +159,9 @@ String readableDuration(Duration duration, {int? precision}) {
 
   var secondsString = '';
   if (microseconds > 0) {
+    // Strip off trailing zeroes from the fractional portion.
     var fractionalSecondsString =
-        '$microseconds'.padLeft(6, '0').replaceAll(RegExp(r'0+$'), '');
+        microseconds.padLeft(6).replaceAll(RegExp(r'0+$'), '');
     secondsString = '$seconds.${fractionalSecondsString}s';
   } else if (seconds > 0) {
     secondsString = '${seconds}s';

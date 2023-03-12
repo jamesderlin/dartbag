@@ -83,7 +83,7 @@ extension PadLeftExtension on int {
   /// Returns a string representation of this [int], left-padded with zeroes if
   /// necessary to have the specified minimum number of characters.
   ///
-  /// If this [int] is negative, the negative sign is included in number of
+  /// If this [int] is negative, the negative sign is included in the number of
   /// characters.
   ///
   /// Examples:
@@ -122,7 +122,7 @@ extension ImpliesExtension on bool {
   /// Returns whether this [bool] [logically implies][1] [consequence].
   ///
   /// Given two boolean expressions *p* and *q*, the results of "*p* implies
-  /// *q*"" (denoted as *p &rarr; q*) are shown by the following truth table:
+  /// *q*" (denoted as *p &rarr; q*) are shown by the following truth table:
   ///
   /// |  p  |  q  | p &rarr; q |
   /// |:---:|:---:|:----------:|
@@ -143,10 +143,7 @@ extension FutureCast<T> on Future<T> {
   /// Casts a `Future<T>` to a `Future<R>`.
   ///
   // Motivated by: <https://stackoverflow.com/q/72576065/>
-  Future<R> cast<R>() async {
-    var result = await this;
-    return result as R;
-  }
+  Future<R> cast<R>() async => (await this) as R;
 }
 
 /// An implementation of [Future] that allows synchronously retrieving the

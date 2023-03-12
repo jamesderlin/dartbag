@@ -2,11 +2,11 @@ ifndef VERBOSE
 .SILENT:
 endif
 
-.PHONY: docs coverage
-
+.PHONY: docs
 docs:
 	dart doc --validate-links
 
+.PHONY: coverage
 coverage:
 	# Reference: https://pub.dev/packages/coverage
 	dart pub global run coverage:test_with_coverage \

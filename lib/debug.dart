@@ -11,6 +11,11 @@ import 'package:stack_trace/stack_trace.dart' as stacktrace;
 /// If [packageRelative] is false, returns an absolute path.
 ///
 /// This does not work for Dart for the Web.
+///
+/// Note that [Platform.script] does not work for `import`ed files and
+/// consequently does not work with the Dart test runner.
+///
+/// [Platform.script]: https://api.dart.dev/stable/dart-io/Platform/script.html
 String currentDartFilePath({bool packageRelative = false}) {
   var caller = stacktrace.Frame.caller(1);
   return packageRelative ? caller.library : caller.uri.toFilePath();
