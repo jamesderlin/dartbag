@@ -45,6 +45,23 @@ extension ChainIf<T> on T {
 // See <https://github.com/dart-lang/language/issues/1312#issuecomment-727284104>
 bool isSubtype<Subtype, Supertype>() => <Subtype>[] is List<Supertype>;
 
+/// Identity function for a [Type].
+///
+/// This can be used in situations where a type literal is syntactically
+/// invalid.
+///
+/// Example:
+/// ```dart
+/// x.runtimeType == int?; // Compile-time error due to invalid syntax.
+/// x.runtimeType == identityType<int?>();
+/// ```
+Type identityType<T>() => T;
+
+/// Returns `true` if `T` is a nullable type.
+///
+// See <https://stackoverflow.com/a/66249380/>.
+bool isNullable<T>() => null is T;
+
 /// A basic wrapper around another type.
 class Boxed<T> {
   /// The wrapped value.
