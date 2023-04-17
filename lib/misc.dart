@@ -118,6 +118,50 @@ extension PadLeftExtension on int {
   }
 }
 
+/// Provides a [partialSplit] extension method on [String].
+extension PartialSplit on String {
+  /// A version of [String.split] that limits splitting to return a [List] of
+  /// at most [count] items.
+  ///
+  /// [count] must be non-negative.  If [count] is 0, returns an empty
+  /// [List].
+  ///
+  /// If splitting this [String] would result in more than [count] items, the
+  /// final element will contain the unsplit remainder of this [String].
+  ///
+  /// If splitting this [String] would result in fewer than [count] items,
+  /// returns a [List] with only the split substrings.
+  ///
+  // Based on <https://stackoverflow.com/a/76039017/>.
+  List<String> partialSplit(Pattern pattern, int count) {
+    assert(count >= 0);
+
+    var result = <String>[];
+
+    if (count == 0) {
+      return result;
+    }
+
+    var offset = 0;
+    var matches = pattern.allMatches(this);
+    for (var match in matches) {
+      if (result.length + 1 == count) {
+        break;
+      }
+
+      if (match.end - match.start == 0 && match.start == offset) {
+        continue;
+      }
+
+      result.add(substring(offset, match.start));
+      offset = match.end;
+    }
+    result.add(substring(offset));
+
+    return result;
+  }
+}
+
 /// Miscellaneous utility methods for [Uri].
 extension UriUtils on Uri {
   /// Adds or replaces query parameters.

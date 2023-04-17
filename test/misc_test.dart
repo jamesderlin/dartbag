@@ -62,6 +62,96 @@ void main() {
     });
   });
 
+  group('String.partialSplit:', () {
+    test('Count is zero', () {
+      expect(
+        'a b c d e'.partialSplit(' ', 0),
+        <String>[],
+      );
+    });
+
+    test('Count is less than the number of split items', () {
+      expect(
+        'a b c d e'.partialSplit(' ', 3),
+        ['a', 'b', 'c d e'],
+      );
+    });
+
+    test('Count is greater than the number of split items', () {
+      expect(
+        'a b c d e'.partialSplit(' ', 10),
+        ['a', 'b', 'c', 'd', 'e'],
+      );
+    });
+
+    test('Pattern not found', () {
+      expect(
+        'a b c d e'.partialSplit('_', 3),
+        ['a b c d e'],
+      );
+    });
+
+    test('Pattern is empty', () {
+      expect(
+        'abcde'.partialSplit('', 3),
+        ['a', 'b', 'cde'],
+      );
+    });
+
+    test('Splitting an empty string', () {
+      expect(
+        ''.partialSplit(' ', 3),
+        [''],
+      );
+    });
+
+    test('Consecutive occurrences of the pattern', () {
+      expect(
+        'a  b   c d e'.partialSplit(' ', 3),
+        ['a', '', 'b   c d e'],
+      );
+
+      expect(
+        'a  b   c d e'.partialSplit(' ', 10),
+        ['a', '', 'b', '', '', 'c', 'd', 'e'],
+      );
+    });
+
+    test('Pattern at the beginning', () {
+      expect(
+        ' a b c d e'.partialSplit(' ', 3),
+        ['', 'a', 'b c d e'],
+      );
+
+      expect(
+        '  a b c d e'.partialSplit(' ', 3),
+        ['', '', 'a b c d e'],
+      );
+
+      expect(
+        '  a b c d e'.partialSplit(' ', 10),
+        ['', '', 'a', 'b', 'c', 'd', 'e'],
+      );
+    });
+
+    test('Pattern at the end', () {
+      expect(
+        'a b c d e '.partialSplit(' ', 3),
+        ['a', 'b', 'c d e '],
+      );
+
+      expect(
+        'a b c d e '.partialSplit(' ', 10),
+        ['a', 'b', 'c', 'd', 'e', ''],
+      );
+
+      expect(
+        'a b c d e  '.partialSplit(' ', 10),
+        ['a', 'b', 'c', 'd', 'e', '', ''],
+      );
+    });
+  });
+
   test('Uri.updateQueryParameters', () {
     var uri = Uri.parse(
       'https://user@www.example.com:8080/'
