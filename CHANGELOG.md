@@ -1,7 +1,7 @@
 ## 0.7.1
 
 * Added `identityType<T>` and `isNullable<T>` functions.
-* Added a `String.partialSplit` extension method.
+* Added a `String.lazySplit` and `String.partialSplit` extension methods.
 
 ## 0.7.0+1
 

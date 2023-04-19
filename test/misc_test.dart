@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:dartbag/collection.dart';
 import 'package:dartbag/misc.dart';
 import 'package:dartbag/parse.dart';
@@ -62,93 +63,46 @@ void main() {
     });
   });
 
-  group('String.partialSplit:', () {
-    test('Count is zero', () {
-      expect(
-        'a b c d e'.partialSplit(' ', 0),
-        <String>[],
-      );
+  group('PartialSplit:', () {
+    const maxTokens = 0xFFFFFFFF;
+
+    group('lazySplit:', () {
+      for (var testCase in _splitTestCases) {
+        if (testCase.count != null) {
+          continue;
+        }
+
+        test(testCase.description, () {
+          var normalSplit = testCase.input.split(testCase.separator);
+
+          assert(
+            const ListEquality<String>().equals(
+              testCase.expected,
+              normalSplit,
+            ),
+          );
+          assert(normalSplit.length <= maxTokens);
+
+          expect(
+            testCase.input.lazySplit(testCase.separator).toList(),
+            normalSplit,
+          );
+        });
+      }
     });
 
-    test('Count is less than the number of split items', () {
-      expect(
-        'a b c d e'.partialSplit(' ', 3),
-        ['a', 'b', 'c d e'],
-      );
-    });
-
-    test('Count is greater than the number of split items', () {
-      expect(
-        'a b c d e'.partialSplit(' ', 10),
-        ['a', 'b', 'c', 'd', 'e'],
-      );
-    });
-
-    test('Pattern not found', () {
-      expect(
-        'a b c d e'.partialSplit('_', 3),
-        ['a b c d e'],
-      );
-    });
-
-    test('Pattern is empty', () {
-      expect(
-        'abcde'.partialSplit('', 3),
-        ['a', 'b', 'cde'],
-      );
-    });
-
-    test('Splitting an empty string', () {
-      expect(
-        ''.partialSplit(' ', 3),
-        [''],
-      );
-    });
-
-    test('Consecutive occurrences of the pattern', () {
-      expect(
-        'a  b   c d e'.partialSplit(' ', 3),
-        ['a', '', 'b   c d e'],
-      );
-
-      expect(
-        'a  b   c d e'.partialSplit(' ', 10),
-        ['a', '', 'b', '', '', 'c', 'd', 'e'],
-      );
-    });
-
-    test('Pattern at the beginning', () {
-      expect(
-        ' a b c d e'.partialSplit(' ', 3),
-        ['', 'a', 'b c d e'],
-      );
-
-      expect(
-        '  a b c d e'.partialSplit(' ', 3),
-        ['', '', 'a b c d e'],
-      );
-
-      expect(
-        '  a b c d e'.partialSplit(' ', 10),
-        ['', '', 'a', 'b', 'c', 'd', 'e'],
-      );
-    });
-
-    test('Pattern at the end', () {
-      expect(
-        'a b c d e '.partialSplit(' ', 3),
-        ['a', 'b', 'c d e '],
-      );
-
-      expect(
-        'a b c d e '.partialSplit(' ', 10),
-        ['a', 'b', 'c', 'd', 'e', ''],
-      );
-
-      expect(
-        'a b c d e  '.partialSplit(' ', 10),
-        ['a', 'b', 'c', 'd', 'e', '', ''],
-      );
+    group('partialSplit:', () {
+      for (var testCase in _splitTestCases) {
+        test(testCase.description, () {
+          expect(
+            testCase.input.partialSplit(
+              testCase.separator,
+              testCase.count ?? maxTokens,
+            ),
+            testCase.expected,
+          );
+        });
+      }
     });
   });
 
@@ -322,3 +276,115 @@ class _Derived extends _Base {}
 /// runtime type of `Future<_Derived>`.
 Future<_Base> _polymorphicFuture() =>
     Future<_Derived>.delayed(const Duration(milliseconds: 10), _Derived.new);
+
+class _SplitTest {
+  final String description;
+  final String input;
+  final Pattern separator;
+  final int? count;
+  final List<String> expected;
+
+  const _SplitTest(
+    this.description, {
+    required this.input,
+    required this.separator,
+    required this.expected,
+    this.count,
+  });
+}
+
+const _splitTestCases = [
+  _SplitTest(
+    'Count is zero',
+    input: 'a b c d e',
+    separator: ' ',
+    count: 0,
+    expected: <String>[],
+  ),
+  _SplitTest(
+    'Count is less than the number of split items',
+    input: 'a b c d e',
+    separator: ' ',
+    count: 3,
+    expected: ['a', 'b', 'c d e'],
+  ),
+  _SplitTest(
+    'Count is greater than the number of split items',
+    input: 'a b c d e',
+    separator: ' ',
+    expected: ['a', 'b', 'c', 'd', 'e'],
+  ),
+  _SplitTest(
+    'Pattern not found',
+    input: 'a b c d e',
+    separator: '_',
+    count: 3,
+    expected: ['a b c d e'],
+  ),
+  _SplitTest(
+    'Pattern is empty',
+    input: 'abcde',
+    separator: '',
+    count: 3,
+    expected: ['a', 'b', 'cde'],
+  ),
+  _SplitTest(
+    'Splitting an empty string',
+    input: '',
+    separator: ' ',
+    count: 3,
+    expected: [''],
+  ),
+  _SplitTest(
+    'Consecutive occurrences of the pattern',
+    input: 'a  b   c d e',
+    separator: ' ',
+    count: 3,
+    expected: ['a', '', 'b   c d e'],
+  ),
+  _SplitTest(
+    'Consecutive occurrences of the pattern',
+    input: 'a  b   c d e',
+    separator: ' ',
+    expected: ['a', '', 'b', '', '', 'c', 'd', 'e'],
+  ),
+  _SplitTest(
+    'Pattern at the beginning',
+    input: ' a b c d e',
+    separator: ' ',
+    count: 3,
+    expected: ['', 'a', 'b c d e'],
+  ),
+  _SplitTest(
+    'Pattern at the beginning',
+    input: '  a b c d e',
+    separator: ' ',
+    count: 3,
+    expected: ['', '', 'a b c d e'],
+  ),
+  _SplitTest(
+    'Pattern at the beginning',
+    input: '  a b c d e',
+    separator: ' ',
+    expected: ['', '', 'a', 'b', 'c', 'd', 'e'],
+  ),
+  _SplitTest(
+    'Pattern at the end',
+    input: 'a b c d e ',
+    separator: ' ',
+    count: 3,
+    expected: ['a', 'b', 'c d e '],
+  ),
+  _SplitTest(
+    'Pattern at the end',
+    input: 'a b c d e ',
+    separator: ' ',
+    expected: ['a', 'b', 'c', 'd', 'e', ''],
+  ),
+  _SplitTest(
+    'Pattern at the end',
+    input: 'a b c d e  ',
+    separator: ' ',
+    expected: ['a', 'b', 'c', 'd', 'e', '', ''],
+  ),
+];

@@ -118,8 +118,44 @@ extension PadLeftExtension on int {
   }
 }
 
-/// Provides a [partialSplit] extension method on [String].
+class _Interval {
+  final int start;
+  final int end;
+
+  const _Interval(this.start, this.end);
+}
+
+/// Provides extension methods on [String] that allow partially splitting a
+/// [String] into tokens.
 extension PartialSplit on String {
+  /// Internal helper function to [lazySplit] and [partialSplit].
+  ///
+  /// Returns an [Iterable] that lazily returns the inclusive start and
+  /// exclusive end indices (in UTF-16 code units) of the split tokens.
+  Iterable<_Interval> _lazySplit(Pattern separatorPattern) sync* {
+    var tokenStart = 0;
+    var separatorMatches = separatorPattern.allMatches(this);
+    for (var separatorMatch in separatorMatches) {
+      if (separatorMatch.end - separatorMatch.start == 0 &&
+          separatorMatch.start == tokenStart) {
+        continue;
+      }
+
+      yield _Interval(tokenStart, separatorMatch.start);
+
+      tokenStart = separatorMatch.end;
+    }
+    yield _Interval(tokenStart, length);
+  }
+
+  /// A version of [String.split] that returns an `Iterable` to tokenize the
+  /// [String] lazily.
+  Iterable<String> lazySplit(Pattern separatorPattern) sync* {
+    for (var tokenInterval in _lazySplit(separatorPattern)) {
+      yield substring(tokenInterval.start, tokenInterval.end);
+    }
+  }
+
   /// A version of [String.split] that limits splitting to return a [List] of
   /// at most [count] items.
   ///
@@ -133,32 +169,25 @@ extension PartialSplit on String {
   /// returns a [List] with only the split substrings.
   ///
   // Based on <https://stackoverflow.com/a/76039017/>.
-  List<String> partialSplit(Pattern pattern, int count) {
+  List<String> partialSplit(Pattern separatorPattern, int count) {
     assert(count >= 0);
 
-    var result = <String>[];
+    var tokens = <String>[];
 
     if (count == 0) {
-      return result;
+      return tokens;
     }
 
-    var offset = 0;
-    var matches = pattern.allMatches(this);
-    for (var match in matches) {
-      if (result.length + 1 == count) {
+    for (var tokenInterval in _lazySplit(separatorPattern)) {
+      if (tokens.length + 1 == count) {
+        tokens.add(substring(tokenInterval.start));
         break;
       }
 
-      if (match.end - match.start == 0 && match.start == offset) {
-        continue;
-      }
-
-      result.add(substring(offset, match.start));
-      offset = match.end;
+      tokens.add(substring(tokenInterval.start, tokenInterval.end));
     }
-    result.add(substring(offset));
 
-    return result;
+    return tokens;
   }
 }
 
@@ -338,7 +367,8 @@ extension DurationUtils on Duration {
   int get microsecondsOnly => inMicroseconds.remainder(1000);
 }
 
-/// TODO: Document
+/// Provides extension methods on [DateTime] that create date/time strings with
+/// time-zone information.
 extension DateTimeStringWithOffset on DateTime {
   /// Internal helper function to append a timezone offset to the specified
   /// date-time string.

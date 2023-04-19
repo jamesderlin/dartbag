@@ -76,6 +76,9 @@ includes (but is not limited to):
 * `int.padLeft` converts an `int` to a `String`, left-padded with zeroes to
   have a minimum number of digits.
 
+* `String.lazySplit` is a version of `String.split` that returns an `Iterable`
+  to tokenize a `String` lazily.
+
 * `String.partialSplit` is a version of `String.split` that limits the number
   of returned items.
 
