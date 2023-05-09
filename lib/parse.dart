@@ -26,13 +26,15 @@ bool? tryParseBool(String? value) {
   return null;
 }
 
-/// A wrapper around [int.tryParse] that accepts a `null` argument.
+/// A wrapper around [int.tryParse] that accepts a `null` argument and that
+/// ignores surrounding whitespace.
 int? tryParseInt(String? value, {int? radix}) =>
-    value == null ? null : int.tryParse(value, radix: radix);
+    value == null ? null : int.tryParse(value.trim(), radix: radix);
 
-/// A wrapper around [double.tryParse] that accepts a `null` argument.
+/// A wrapper around [double.tryParse] that accepts a `null` argument and that
+/// ignores surrounding whitespace.
 double? tryParseDouble(String? value) =>
-    value == null ? null : double.tryParse(value);
+    value == null ? null : double.tryParse(value.trim());
 
 /// Provides a [tryParse] extension method on a [List] of `enum` values.
 extension ParseEnum<T extends Enum> on List<T> {

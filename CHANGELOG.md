@@ -1,3 +1,8 @@
+## 0.7.2
+
+* Make `tryParseInt` and `tryParseDouble` ignore whitespace for consistency
+  with `tryParseBool` and `ParseEnum.tryParse`.
+
 ## 0.7.1
 
 * Added `identityType<T>` and `isNullable<T>` functions.
