@@ -141,7 +141,7 @@ class _ComparisonTest<Argument1Type, Argument2Type> {
 ///
 /// Used for testing [ComparableUtils.clamp] since [num] already provides its
 /// own [num.clamp] method.
-class _WrappedInt extends Comparable<_WrappedInt> {
+class _WrappedInt implements Comparable<_WrappedInt> {
   int value;
 
   _WrappedInt(this.value);

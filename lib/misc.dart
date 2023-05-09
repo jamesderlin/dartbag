@@ -261,7 +261,7 @@ class PollableFuture<T> implements Future<T> {
   ///
   /// Alternatively use the [PollableFutureExtension.toPollable] extension
   /// method on an existing [Future].
-  PollableFuture(FutureOr<T> futureOrValue) : _futureOrValue = futureOrValue {
+  PollableFuture(this._futureOrValue) {
     final futureOrValue = _futureOrValue;
     if (futureOrValue is Future<T>) {
       unawaited(
