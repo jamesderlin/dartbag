@@ -118,13 +118,6 @@ extension PadLeftExtension on int {
   }
 }
 
-class _Interval {
-  final int start;
-  final int end;
-
-  const _Interval(this.start, this.end);
-}
-
 /// Provides extension methods on [String] that allow partially splitting a
 /// [String] into tokens.
 extension PartialSplit on String {
@@ -132,7 +125,7 @@ extension PartialSplit on String {
   ///
   /// Returns an [Iterable] that lazily returns the inclusive start and
   /// exclusive end indices (in UTF-16 code units) of the split tokens.
-  Iterable<_Interval> _lazySplit(Pattern separatorPattern) sync* {
+  Iterable<({int start, int end})> _lazySplit(Pattern separatorPattern) sync* {
     var tokenStart = 0;
     var separatorMatches = separatorPattern.allMatches(this);
     for (var separatorMatch in separatorMatches) {
@@ -141,11 +134,11 @@ extension PartialSplit on String {
         continue;
       }
 
-      yield _Interval(tokenStart, separatorMatch.start);
+      yield (start: tokenStart, end: separatorMatch.start);
 
       tokenStart = separatorMatch.end;
     }
-    yield _Interval(tokenStart, length);
+    yield (start: tokenStart, end: length);
   }
 
   /// A version of [String.split] that returns an `Iterable` to tokenize the

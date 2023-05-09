@@ -5,7 +5,6 @@ import 'dart:io' as io;
 
 import 'package:args/args.dart';
 
-import 'misc.dart';
 import 'parse.dart';
 
 /// Tries to get the size of the terminal.
@@ -18,15 +17,12 @@ import 'parse.dart';
 /// * Otherwise falls back to default values (80 columns by 24 lines).
 ///
 /// [1]: https://docs.python.org/3/library/shutil.html#shutil.get_terminal_size
-void getTerminalSize({
-  OutputParameter<int>? width,
-  OutputParameter<int>? height,
-}) {
-  width?.value = tryParseInt(io.Platform.environment['COLUMNS']) ??
-      (io.stdout.hasTerminal ? io.stdout.terminalColumns : 80);
-  height?.value = tryParseInt(io.Platform.environment['LINES']) ??
-      (io.stdout.hasTerminal ? io.stdout.terminalLines : 24);
-}
+({int width, int height}) getTerminalSize() => (
+      width: tryParseInt(io.Platform.environment['COLUMNS']) ??
+          (io.stdout.hasTerminal ? io.stdout.terminalColumns : 80),
+      height: tryParseInt(io.Platform.environment['LINES']) ??
+          (io.stdout.hasTerminal ? io.stdout.terminalLines : 24),
+    );
 
 /// Word wraps a string to a maximum line length.
 ///

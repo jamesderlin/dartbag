@@ -7,6 +7,8 @@
   * Require Dart 3.0.0.
   * Enable new lints.
   * Remove deprecated lints.
+  * `getTerminalSize` now returns a `({int width, int height})` record instead
+    of using `OutputParameter`s.
 
 ## 0.7.1
 
