@@ -1,12 +1,17 @@
+## 0.8.1-dev
+
+* Reimplemented `toStringMatches`.  The new implementation is much simpler,
+  although failure messages will be different.
+
 ## 0.8.0
 
-* Make `tryParseInt` and `tryParseDouble` ignore whitespace for consistency
+* Made `tryParseInt` and `tryParseDouble` ignore whitespace for consistency
   with `tryParseBool` and `ParseEnum.tryParse`.
 
-* Update for Dart 3:
+* Updated for Dart 3:
   * Require Dart 3.0.0.
-  * Enable new lints.
-  * Remove deprecated lints.
+  * Enabled new lints.
+  * Removed deprecated lints.
   * `getTerminalSize` now returns a `({int width, int height})` record instead
     of using `OutputParameter`s.
 
@@ -17,8 +22,8 @@
 
 ## 0.7.0+1
 
-* Correct some documentation.
-* Improve test coverage.
+* Corrected some documentation.
+* Improved test coverage.
 
 ## 0.7.0
 

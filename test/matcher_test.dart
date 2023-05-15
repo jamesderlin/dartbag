@@ -17,11 +17,19 @@ void main() {
           toStringMatches<_MyException>(contains('baz')),
         ),
         allOf(
-          contains(
-            'Expected: a _MyException '
-            "whose string representation contains 'baz'",
+          matches(
+            RegExp(
+              multiLine: true,
+              r'^\s*Expected: .*_MyException.*'
+              r" with `toString\(\)`.* contains 'baz'",
+            ),
           ),
-          contains('Actual: _MyException:<foobar>'),
+          matches(
+            RegExp(
+              multiLine: true,
+              r'^\s*Actual: _MyException:<foobar>',
+            ),
+          ),
         ),
       );
 
@@ -31,11 +39,19 @@ void main() {
           toStringMatches<_MyException>(contains('foo')),
         ),
         allOf(
-          contains(
-            'Expected: a _MyException '
-            "whose string representation contains 'foo'",
+          matches(
+            RegExp(
+              multiLine: true,
+              r'^\s*Expected: .*_MyException.*'
+              r" with `toString\(\)`.* contains 'foo'",
+            ),
           ),
-          contains('Which: is not a _MyException'),
+          matches(
+            RegExp(
+              multiLine: true,
+              r"^\s*Which: is not an instance of '_MyException'",
+            ),
+          ),
         ),
       );
     });
