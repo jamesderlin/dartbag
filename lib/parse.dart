@@ -26,15 +26,13 @@ bool? tryParseBool(String? value) {
   return null;
 }
 
-/// A wrapper around [int.tryParse] that accepts a `null` argument and that
-/// ignores surrounding whitespace.
+/// A wrapper around [int.tryParse] that accepts a `null` argument.
 int? tryParseInt(String? value, {int? radix}) =>
-    value == null ? null : int.tryParse(value.trim(), radix: radix);
+    value == null ? null : int.tryParse(value, radix: radix);
 
-/// A wrapper around [double.tryParse] that accepts a `null` argument and that
-/// ignores surrounding whitespace.
+/// A wrapper around [double.tryParse] that accepts a `null` argument.
 double? tryParseDouble(String? value) =>
-    value == null ? null : double.tryParse(value.trim());
+    value == null ? null : double.tryParse(value);
 
 /// Provides a [tryParse] extension method on a [List] of `enum` values.
 extension ParseEnum<T extends Enum> on List<T> {
@@ -102,6 +100,10 @@ final _readableDurationRegExp = RegExp(
 ///
 /// The string must be in the same format used by either [Duration.toString]
 /// (e.g. `'1:23:45.123456'`) or [readableDuration].
+///
+/// Ignores surrounding whitespace.
+///
+/// Returns `null` if the input is not recognized.
 Duration? tryParseDuration(String? value) {
   if (value == null) {
     return null;

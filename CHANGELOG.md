@@ -5,9 +5,6 @@
 
 ## 0.8.0
 
-* Made `tryParseInt` and `tryParseDouble` ignore whitespace for consistency
-  with `tryParseBool` and `ParseEnum.tryParse`.
-
 * Updated for Dart 3:
   * Require Dart 3.0.0.
   * Enabled new lints.
