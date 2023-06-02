@@ -254,7 +254,7 @@ class PollableFuture<T> implements Future<T> {
   ///
   /// Alternatively use the [PollableFutureExtension.toPollable] extension
   /// method on an existing [Future].
-  PollableFuture(this._futureOrValue) {
+  PollableFuture(FutureOr<T> futureOrValue) : _futureOrValue = futureOrValue {
     final futureOrValue = _futureOrValue;
     if (futureOrValue is Future<T>) {
       unawaited(
@@ -310,6 +310,9 @@ class PollableFuture<T> implements Future<T> {
 }
 
 /// Provides a [toPollable] extension method on [Future].
+///
+// It'd be nice to provide an extension on [FutureOr], but extensions on
+// `FutureOr<T>` apparently apply to both `Future<T>` and `T`.
 extension PollableFutureExtension<T> on Future<T> {
   /// Wraps this [Future] with a [PollableFuture].
   PollableFuture<T> toPollable() => PollableFuture<T>(this);
