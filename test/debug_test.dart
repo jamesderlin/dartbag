@@ -32,6 +32,54 @@ void main() {
   test('asserts are enabled in tests', () {
     expect(assertsEnabled, true);
   });
+
+  group('String.escape', () {
+    test('Escapes properly', () {
+      const testCases = [
+        ('Hello world!', 'Hello world!'),
+        ('\u2665', r'\u{2665}'),
+        ('\u{1f600}', r'\u{1f600}'),
+        ('\u{0}', r'\u{0}'),
+        ('\r\n\b\t\v\f', r'\r\n\b\t\v\f'),
+        (r'\', r'\\'),
+        (r'$', r'\$'),
+      ];
+
+      for (var (input, expected) in testCases) {
+        expect(
+          input.escape(quotes: QuoteType.none, ascii: true),
+          expected,
+        );
+
+        expect(
+          input.escape(quotes: QuoteType.single, ascii: true),
+          "'$expected'",
+        );
+
+        expect(
+          input.escape(quotes: QuoteType.double, ascii: true),
+          '"$expected"',
+        );
+      }
+    });
+
+    test('Unicode characers can be unescaped', () {
+      expect(
+        '\u2665'.escape(quotes: QuoteType.single, ascii: false),
+        "'\u2665'",
+      );
+    });
+
+    test('Embedded quotes are properly escaped', () {
+      expect(r'"'.escape(quotes: QuoteType.none), r'"');
+      expect(r'"'.escape(quotes: QuoteType.single), "'\"'");
+      expect(r'"'.escape(quotes: QuoteType.double), r'"\""');
+
+      expect(r"'".escape(quotes: QuoteType.none), r"'");
+      expect(r"'".escape(quotes: QuoteType.single), r"'\''");
+      expect(r"'".escape(quotes: QuoteType.double), '"\'"');
+    });
+  });
 }
 
 /// Normalizes directory separators to the POSIX style.

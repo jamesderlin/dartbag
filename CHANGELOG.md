@@ -1,7 +1,9 @@
-## 0.8.1-dev
+## 0.8.1
 
 * Reimplemented `toStringMatches`.  The new implementation is much simpler,
   although failure messages will be different.
+
+* Added `String.escape` and `Runes.escape` extension methods.
 
 ## 0.8.0
 

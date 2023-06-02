@@ -39,6 +39,9 @@ includes (but is not limited to):
 * `ComparableWrapper` wraps a value in a `Comparable` interface with a
   specified comparison function.
 
+* `String.escape` escapes a `String` such that it can be used as a string
+  literal in generated code.
+
 ## [debug]
 
 * `assertsEnabled` returns whether `assert` is enabled.
