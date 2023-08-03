@@ -29,6 +29,9 @@ includes (but is not limited to):
 
 * `mergeMaps`s combines an `Iterable` of `Map`s into a single `Map`.
 
+* `Map<K, Future<V>>.wait` waits for `Future` values in a `Map` (in parallel if
+  possible).
+
 ## [comparable]
 
 * `clamp` clamps a `Comparable` object to be within a specified range.

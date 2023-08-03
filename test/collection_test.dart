@@ -345,6 +345,59 @@ void main() {
       expect(earliestValues, {'a': 1, 'b': 2, 'c': 30});
     });
   });
+
+  group('FutureMap.wait:', () {
+    Future<T> returnLater<T>(
+      T value, [
+      Duration duration = const Duration(milliseconds: 100),
+    ]) async {
+      await Future<void>.delayed(duration);
+      return value;
+    }
+
+    Future<Never> failLater(Duration duration) async {
+      await Future<void>.delayed(duration);
+      throw Exception('Expected failure');
+    }
+
+    test('Waits for values in parallel', () async {
+      var map = {
+        'a': returnLater(1),
+        'b': returnLater(2, const Duration(milliseconds: 500)),
+        'c': returnLater(3),
+        'd': returnLater(4, const Duration(milliseconds: 250)),
+        'e': returnLater(5),
+      };
+
+      var stopwatch = Stopwatch()..start();
+      var result = await map.wait;
+      expect(stopwatch.elapsed.inMilliseconds, inClosedOpenRange(500, 1000));
+      expect(result, {'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5});
+    });
+
+    test('Failures are propagated', () async {
+      var map = {
+        'a': returnLater(1),
+        'b': failLater(const Duration(milliseconds: 500)),
+        'c': returnLater(3),
+        'd': failLater(const Duration(milliseconds: 250)),
+        'e': returnLater(null),
+      };
+
+      var stopwatch = Stopwatch()..start();
+
+      try {
+        await map.wait;
+        fail('Failed to fail.');
+
+        // ignore: avoid_catching_errors
+      } on ParallelMapWaitError<String, int?> catch (e) {
+        expect(stopwatch.elapsed.inMilliseconds, inClosedOpenRange(500, 1000));
+        expect(e.values, {'a': 1, 'c': 3, 'e': null});
+        expect(e.errors.keys.toSet(), {'b', 'd'});
+      }
+    });
+  });
 }
 
 /// Returns `true` if [iterable] is already sorted based on its natural

@@ -42,7 +42,7 @@ void main() {
         ('\u{0}', r'\u{0}'),
         ('\r\n\b\t\v\f', r'\r\n\b\t\v\f'),
         (r'\', r'\\'),
-        (r'$', r'\$'),
+        (r'$doNotInterpolate', r'\$doNotInterpolate'),
       ];
 
       for (var (input, expected) in testCases) {

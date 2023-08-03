@@ -1,3 +1,7 @@
+## 0.8.2
+
+* Added a `Map<K, Future<V>>.wait` extension property.
+
 ## 0.8.1
 
 * Reimplemented `toStringMatches`.  The new implementation is much simpler,

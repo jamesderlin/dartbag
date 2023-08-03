@@ -1,6 +1,7 @@
 /// Utilities for collection types and [Iterable]s.
 library;
 
+import 'dart:async';
 import 'dart:collection';
 import 'package:collection/collection.dart' as collection;
 
@@ -164,4 +165,68 @@ Map<K, List<V>> mergeMaps<K, V>(Iterable<Map<K, V>> maps) {
     }
   }
   return result;
+}
+
+/// Provides a [wait] extension property on a [Map] with [Future] values.
+extension FutureMap<K, V> on Map<K, Future<V>> {
+  /// Creates a `Map<K, V>` from a `Map<K, Future<V>>`.
+  ///
+  /// Like [FutureIterable<T>.wait] but waits on [Map] values (in parallel if
+  /// possible).
+  ///
+  /// The returned [Future] will complete only after *all* [Future] values have
+  /// completed.  If any of those [Future]s fails, completes with a
+  /// [ParallelMapWaitError].
+  Future<Map<K, V>> get wait async {
+    // Copy the keys now in case this `Map` is mutated while waiting.
+    var keysCopy = [...keys];
+    try {
+      var awaitedValues = await values.wait;
+      assert(keysCopy.length == awaitedValues.length);
+      return Map.fromIterables(keysCopy, awaitedValues);
+
+      // ignore: avoid_catching_errors
+    } on ParallelWaitError<List<V?>, List<AsyncError?>> catch (e) {
+      assert(keysCopy.length == e.values.length);
+      assert(keysCopy.length == e.errors.length);
+
+      var values = <K, V>{};
+      var errors = <K, AsyncError>{};
+
+      for (var i = 0; i < keysCopy.length; i += 1) {
+        var error = e.errors[i];
+        if (error == null) {
+          values[keysCopy[i]] = e.values[i] as V;
+        } else {
+          errors[keysCopy[i]] = error;
+        }
+      }
+
+      throw ParallelMapWaitError(values, errors);
+    }
+  }
+}
+
+/// An error thrown when [FutureMap.wait] fails.
+///
+/// Similar to [ParallelWaitError] but with the shape of a [Map].
+///
+/// Unlike [ParallelWaitError], [values] will not store `null` for values
+/// that failed, and [errors] will not store `null` for values that succeeded.
+/// Instead, those entries simply will not exist in the returned [Map]s.
+class ParallelMapWaitError<K, V> extends Error {
+  /// A [Map] of keys to successfully completed values.
+  ///
+  /// The returned [Map] will contain entries only for [Future]s that
+  /// successfully completed and not for ones that failed.
+  final Map<K, V> values;
+
+  /// A [Map] of keys to errors from failed [Future]s.
+  ///
+  /// The returned [Map] will contain entries only for failed [Future]s and not
+  /// for ones that successfully completed.
+  final Map<K, AsyncError> errors;
+
+  /// Constructor.
+  ParallelMapWaitError(this.values, this.errors);
 }
