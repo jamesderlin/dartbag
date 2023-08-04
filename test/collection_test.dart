@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 import 'dart:math';
 
@@ -375,6 +376,24 @@ void main() {
       expect(result, {'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5});
     });
 
+    test('Ignores mutations to the original Map', () async {
+      var map = {
+        'a': returnLater(1),
+        'b': returnLater(2, const Duration(milliseconds: 500)),
+        'c': returnLater(3),
+        'd': returnLater(4, const Duration(milliseconds: 250)),
+        'e': returnLater(5),
+      };
+
+      var futureResult = map.wait;
+      map.remove('a')?.ignore();
+      map.remove('b')?.ignore();
+      map['c'] = returnLater(99);
+
+      var result = await futureResult;
+      expect(result, {'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5});
+    });
+
     test('Failures are propagated', () async {
       var map = {
         'a': returnLater(1),
@@ -387,7 +406,12 @@ void main() {
       var stopwatch = Stopwatch()..start();
 
       try {
-        await map.wait;
+        var futureResult = map.wait;
+        map.remove('a')?.ignore();
+        map.remove('b')?.ignore();
+        map['c'] = returnLater(99);
+
+        await futureResult;
         fail('Failed to fail.');
 
         // ignore: avoid_catching_errors
