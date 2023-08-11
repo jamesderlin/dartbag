@@ -12,3 +12,9 @@ coverage:
 	dart pub global run coverage:test_with_coverage \
 	  --function-coverage --branch-coverage
 	genhtml coverage/lcov.info -o coverage/html
+
+.PHONY: publish
+publish:
+	# Don't publish untracked/ignored files.
+	git ls-files --others --directory > .pubignore
+	dart pub publish
