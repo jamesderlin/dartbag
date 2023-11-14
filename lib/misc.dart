@@ -2,6 +2,7 @@
 library;
 
 import 'dart:async';
+import 'dart:math';
 
 import 'misc.dart' as misc;
 
@@ -181,6 +182,25 @@ extension PartialSplit on String {
     }
 
     return tokens;
+  }
+}
+
+/// Provides a [substringLoose] extension method on [String].
+extension LooseSubstring on String {
+  /// A version of [String.substring] with less strict bounds.
+  ///
+  /// Returns the substring from `start` (inclusive) to `end` (exclusive).
+  ///
+  /// Unlike [String.substring], clamps `start` and `end` to [length].  Thus
+  /// if `start` is out-of-bounds, returns an empty string.  If `end` is
+  /// out-of-bounds, returns the substring from `start` to the end of this
+  /// string.
+  ///
+  /// If `start` >= `end`, returns an empty string.
+  String substringLoose(int start, [int? end]) {
+    start = min(length, start);
+    end = max(start, min(length, end ?? length));
+    return substring(start, end);
   }
 }
 

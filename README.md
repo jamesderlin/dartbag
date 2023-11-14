@@ -88,6 +88,9 @@ includes (but is not limited to):
 * `String.partialSplit` is a version of `String.split` that limits the number
   of returned items.
 
+* `String.substringLoose` is a version of `String.substring` with less strict
+  bounds.
+
 * `Uri.updateQueryParameters` adds or replaces query parameters in a `Uri`.
 
 * `bool.implies` returns whether one `bool` logically implies another.

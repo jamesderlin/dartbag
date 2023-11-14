@@ -1,3 +1,7 @@
+## 0.8.3
+
+* Added a `String.substringLoose` extension method.
+
 ## 0.8.2
 
 * Added a `Map<K, Future<V>>.wait` extension property.

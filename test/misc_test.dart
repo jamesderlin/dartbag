@@ -106,6 +106,40 @@ void main() {
     });
   });
 
+  group('String.substringLoose', () {
+    const s = 'Lorem ipsum';
+
+    test('Works normally', () {
+      expect(''.substringLoose(0), '');
+      expect(s.substringLoose(0), s);
+      expect(s.substringLoose(1), 'orem ipsum');
+      expect(s.substringLoose(10), 'm');
+      expect(s.substringLoose(11), '');
+      expect(s.substringLoose(2, 4), 're');
+      expect(s.substringLoose(4, 4), '');
+    });
+
+    test('Start index is out-of-bounds', () {
+      expect(''.substringLoose(1), '');
+      expect(s.substringLoose(100), '');
+    });
+
+    test('End index is out of-bounds', () {
+      expect(''.substringLoose(0, 3), '');
+      expect(s.substringLoose(1, 100), 'orem ipsum');
+      expect(s.substringLoose(11, 100), '');
+    });
+
+    test('Start and end indices are out out-of-bounds', () {
+      expect(''.substringLoose(10, 20), '');
+      expect(s.substringLoose(100, 110), '');
+    });
+
+    test('End index precedes start index', () {
+      expect(s.substringLoose(4, 2), '');
+    });
+  });
+
   test('Uri.updateQueryParameters', () {
     var uri = Uri.parse(
       'https://user@www.example.com:8080/'
