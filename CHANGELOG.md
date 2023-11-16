@@ -2,6 +2,7 @@
 
 * Added a `String.substringLoose` extension method.
 * Fixed `readableNumber` to accept numbers smaller than 10^-24.
+* Internal changes to make better use of Dart 3 patterns.
 
 ## 0.8.2
 

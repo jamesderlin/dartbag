@@ -275,10 +275,9 @@ class PollableFuture<T> implements Future<T> {
   /// Alternatively use the [PollableFutureExtension.toPollable] extension
   /// method on an existing [Future].
   PollableFuture(FutureOr<T> futureOrValue) : _futureOrValue = futureOrValue {
-    final futureOrValue = _futureOrValue;
-    if (futureOrValue is Future<T>) {
+    if (_futureOrValue case Future<T> future) {
       unawaited(
-        futureOrValue.then((value) {
+        future.then((value) {
           _futureOrValue = value;
         }),
       );
@@ -293,9 +292,8 @@ class PollableFuture<T> implements Future<T> {
   /// Throws a [StateError] if the [PollableFuture] has not yet completed.
   /// Callers should check [isCompleted] first.
   T get value {
-    final futureOrValue = _futureOrValue;
-    if (futureOrValue is T) {
-      return futureOrValue;
+    if (_futureOrValue case T value) {
+      return value;
     }
     throw StateError('Future not yet completed');
   }
@@ -303,10 +301,11 @@ class PollableFuture<T> implements Future<T> {
   /// Unconditionally returns [_futureOrValue] as a [Future], creating a new,
   /// already-completed [Future] if necessary.
   Future<T> get _asFuture {
-    final futureOrValue = _futureOrValue;
-    return futureOrValue is Future<T>
-        ? futureOrValue
-        : Future.value(futureOrValue);
+    if (_futureOrValue case Future<T> future) {
+      return future;
+    } else {
+      return Future.value(_futureOrValue);
+    }
   }
 
   @override
