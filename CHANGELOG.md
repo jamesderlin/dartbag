@@ -1,3 +1,7 @@
+## 0.9.0
+
+* Enabled lints introduced by Dart 3.1.
+
 ## 0.8.4
 
 * Added an `Iterable.startsWith` extension method.

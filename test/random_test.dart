@@ -149,6 +149,7 @@ void main() {
       expect(boolSequence1, boolSequence2);
       expect(doubleSequence1, doubleSequence2);
 
+      // ignore: no_self_assignments, self-assignment for side-effect.
       random.seed = random.seed;
       intSequence2 = randomIntSequence();
       expect(intSequence1, intSequence2);
