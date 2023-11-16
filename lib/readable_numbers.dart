@@ -44,7 +44,8 @@ String _readableMicroNumber(
     i += 1;
   }
 
-  return '$numberString ${_siMicroPrefixes[i]}$unit';
+  var prefix = _siMicroPrefixes[math.min(i, _siMicroPrefixes.length - 1)];
+  return '$numberString $prefix$unit';
 }
 
 /// Returns the specified number as a human-readable string.

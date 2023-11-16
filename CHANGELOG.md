@@ -1,6 +1,7 @@
 ## 0.8.3
 
 * Added a `String.substringLoose` extension method.
+* Fixed `readableNumber` to accept numbers smaller than 10^-24.
 
 ## 0.8.2
 

@@ -80,6 +80,8 @@ void main() {
       expect(0.01.toReadableString(unit: 'g'), '10 mg');
       expect(0.001.toReadableString(unit: 'g'), '1 mg');
       expect(0.0001.toReadableString(unit: 'g'), '100 \u03BCg');
+      expect(1e-24.toReadableString(unit: 'g'), '1 yg');
+      expect(1e-25.toReadableString(unit: 'g'), '1e-1 yg');
 
       expect((-0.1).toReadableString(unit: 'g'), '-100 mg');
       expect((-0.01).toReadableString(unit: 'g'), '-10 mg');
