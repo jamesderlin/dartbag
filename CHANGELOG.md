@@ -1,3 +1,7 @@
+## 0.8.4
+
+* Added an `Iterable.startsWith` extension method.
+
 ## 0.8.3+1
 
 * Minor correction to the `README.md` file.

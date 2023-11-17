@@ -273,6 +273,26 @@ void main() {
     expect(result, 12);
   });
 
+  group('Iterable.startsWith:', () {
+    test('empty Lists', () {
+      expect(<int>[].startsWith(<int>[]), true);
+      expect(<int>[].startsWith([1]), false);
+      expect([1].startsWith(<int>[]), true);
+    });
+
+    test('Works normally', () {
+      expect([1, 2, 3].startsWith([1]), true);
+      expect([1, 2, 3].startsWith([1, 2]), true);
+      expect([1, 2, 3].startsWith([1, 2, 3]), true);
+      expect([1, 2, 3].startsWith([1, 2, 3, 4]), false);
+      expect([1, 2, 3].startsWith([0]), false);
+      expect([1, 2, 3].startsWith([2]), false);
+      expect([1, 2, 3].startsWith([3]), false);
+      expect([1, 2, 3].startsWith([1, 1]), false);
+      expect([1, 2, 3].startsWith([0, 1]), false);
+    });
+  });
+
   test('LinkedHashMap.sort', () {
     final random = Random(0);
 

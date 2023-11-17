@@ -116,6 +116,27 @@ extension IterableUtils<E> on Iterable<E> {
   void drain() {
     for (void _ in this) {}
   }
+
+  /// Returns [true] if `this` starts with [other] in order.
+  bool startsWith(Iterable<E> other) {
+    var iterator = this.iterator;
+    var otherIterator = other.iterator;
+
+    while (true) {
+      var hasElementsLeft = iterator.moveNext();
+      var otherHasElementsLeft = otherIterator.moveNext();
+
+      if (!otherHasElementsLeft) {
+        return true;
+      }
+      if (!hasElementsLeft) {
+        return false;
+      }
+      if (iterator.current != otherIterator.current) {
+        return false;
+      }
+    }
+  }
 }
 
 /// Provides a [sort] extension method on [LinkedHashMap].
