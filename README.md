@@ -42,9 +42,6 @@ includes (but is not limited to):
 * `ComparableWrapper` wraps a value in a `Comparable` interface with a
   specified comparison function.
 
-* `String.escape` escapes a `String` such that it can be used as a string
-  literal in generated code.
-
 ## [debug]
 
 * `assertsEnabled` returns whether `assert` is enabled.
@@ -53,6 +50,9 @@ includes (but is not limited to):
   VM builds.
 
 * `staticType` returns the static type of an object.
+
+* `String.escape` escapes a `String` such that it can be used as a string
+  literal in generated code.
 
 ## [matcher]
 

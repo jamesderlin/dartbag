@@ -1,3 +1,7 @@
+## 0.8.3+1
+
+* Minor correction to the `README.md` file.
+
 ## 0.8.3
 
 * Added a `String.substringLoose` extension method.
