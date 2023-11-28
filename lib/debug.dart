@@ -59,12 +59,11 @@ Future<Duration> timeAsyncOperation(Future<void> Function() operation) async {
   return stopwatch.elapsed;
 }
 
-/// The type of surrounding quotes to use when generating escaped strings that
-/// could be used string literals in generated code.
+/// The type of surrounding quotes to use when generating escaped strings.
 ///
 /// See [EscapeString.escape].
 enum QuoteType {
-  /// Do not use surrounding qoutes.
+  /// Do not use surrounding quotes.
   none,
 
   /// Use single-quotes.
@@ -170,13 +169,13 @@ extension EscapeString on String {
   /// In summary, comparing `jsonEncode` to `escape` (when called with
   /// default arguments):
   ///
-  /// |    Input    | `jsonEncode` |  `escape`   |
-  /// |:-----------:|:------------:|:-----------:|
-  /// |     '$'     |     "$"      |    '\$'     |
-  /// |    '\v'     |   "\u000b"   |    '\v'     |
-  /// |  '\u0000'   |   "\u0000"   |   '\u{0}'   |
-  /// |  '\u2665'   |     "♥"      | '\u{2665}'  |
-  /// | '\u{1f600}' |     "😀"     | '\u{1f600}'  |
+  /// |    Input    | `jsonEncode` |   `escape`   |
+  /// |:-----------:|:------------:|:------------:|
+  /// |     '$'     |     r"$"     |    r'\$'     |
+  /// |    '\v'     |  r"\u000b"   |    r'\v'     |
+  /// |  '\u0000'   |  r"\u0000"   |   r'\u{0}'   |
+  /// |  '\u2665'   |     r"♥"     | r'\u{2665}'  |
+  /// | '\u{1f600}' |     r"😀"     | r'\u{1f600}' |
   ///
   String escape({
     QuoteType quotes = QuoteType.single,
