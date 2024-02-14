@@ -46,7 +46,7 @@ extension ChainIf<T> on T {
 // See <https://github.com/dart-lang/language/issues/1312#issuecomment-727284104>
 bool isSubtype<Subtype, Supertype>() => <Subtype>[] is List<Supertype>;
 
-/// Identity function for a [Type].
+/// Identity `typedef` for a [Type].
 ///
 /// This can be used in situations where a type literal is syntactically
 /// invalid.
@@ -54,9 +54,9 @@ bool isSubtype<Subtype, Supertype>() => <Subtype>[] is List<Supertype>;
 /// Example:
 /// ```dart
 /// x.runtimeType == int?; // Compile-time error due to invalid syntax.
-/// x.runtimeType == identityType<int?>();
+/// x.runtimeType == IdentityType<int?>;
 /// ```
-Type identityType<T>() => T;
+typedef IdentityType<T> = T;
 
 /// Returns `true` if `T` is a nullable type.
 ///

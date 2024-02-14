@@ -2,6 +2,9 @@
 
 * Enabled lints introduced by Dart 3.1.
 
+* Replaced the `identityType<T>()` function with an `IdentityType<T>`
+  `typedef`.
+
 ## 0.8.4
 
 * Added an `Iterable.startsWith` extension method.
