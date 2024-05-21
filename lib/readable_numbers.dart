@@ -123,7 +123,7 @@ extension ReadableNumber on num {
 /// Trailing zeroes from any fractional portion are always discarded.
 ///
 /// Example outputs:
-/// ```
+/// ```dart
 /// 1d2h34m56.789s
 /// 1d
 /// 2h58s

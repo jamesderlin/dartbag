@@ -117,7 +117,7 @@ extension IterableUtils<E> on Iterable<E> {
     for (void _ in this) {}
   }
 
-  /// Returns [true] if `this` starts with [other] in order.
+  /// Returns `true` if `this` starts with [other] in order.
   bool startsWith(Iterable<E> other) {
     var iterator = this.iterator;
     var otherIterator = other.iterator;

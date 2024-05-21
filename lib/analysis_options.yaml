@@ -1,5 +1,6 @@
 # Modified from:
-# <https://github.com/dart-lang/linter/blob/master/example/all.yaml>
+# <https://github.com/dart-lang/sdk/blob/main/pkg/linter/example/all.yaml>
+# (commit 607b3f5ddba34348f965cce99e4cac5e87a46a99)
 #
 # References:
 # https://dart.dev/guides/language/analysis-options
@@ -24,6 +25,7 @@ linter:
     #- always_specify_types # Too redundant, and potentially dangerous with raw generic types.
     #- always_use_package_imports # Prefer being able to easily identify files from the current package.
     - annotate_overrides
+    - annotate_redeclares
     #- avoid_annotating_with_dynamic # Use of `dynamic` should be explicit.
     - avoid_bool_literals_in_conditional_expressions
     - avoid_catches_without_on_clauses
@@ -84,6 +86,7 @@ linter:
     - directives_ordering
     - discarded_futures
     - do_not_use_environment
+    #- document_ignores # Unreleased as of Dart 3.4.0.
     - empty_catches
     - empty_constructor_bodies
     - empty_statements
@@ -96,6 +99,7 @@ linter:
     - implicit_call_tearoffs
     - implicit_reopen
     - invalid_case_patterns
+    #- invalid_runtime_check_with_js_interop_types # Unreleased as of Dart 3.4.0.
     - join_return_with_assignment
     - leading_newlines_in_multiline_strings
     - library_annotations
@@ -105,6 +109,7 @@ linter:
     - lines_longer_than_80_chars
     - literal_only_boolean_expressions
     - matching_super_parameters
+    - missing_code_block_language_in_doc_comment
     - missing_whitespace_between_adjacent_strings
     - no_adjacent_strings_in_list
     - no_default_cases
@@ -186,6 +191,7 @@ linter:
     - type_init_formals
     - type_literal_in_constant_pattern
     - unawaited_futures
+    #- unintended_html_in_doc_comment # Unreleased as of Dart 3.4.0.
     - unnecessary_await_in_return
     - unnecessary_brace_in_string_interps
     - unnecessary_breaks
@@ -196,6 +202,7 @@ linter:
     - unnecessary_lambdas
     - unnecessary_late
     - unnecessary_library_directive
+    - unnecessary_library_name
     - unnecessary_new
     - unnecessary_null_aware_assignments
     - unnecessary_null_aware_operator_on_extension_on_nullable

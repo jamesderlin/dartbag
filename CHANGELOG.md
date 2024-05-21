@@ -1,6 +1,6 @@
 ## 0.9.0
 
-* Enabled lints introduced by Dart 3.1.
+* Enabled lints introduced by Dart 3.4.0.
 
 * Replaced the `identityType<T>()` function with an `IdentityType<T>`
   `typedef`.
