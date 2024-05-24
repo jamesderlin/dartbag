@@ -1,3 +1,7 @@
+## 0.9.0+1
+
+* Minor correction to the `README.md` file.
+
 ## 0.9.0
 
 * Require Dart 3.4.0 and enable new lints.

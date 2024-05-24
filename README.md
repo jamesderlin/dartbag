@@ -174,4 +174,4 @@ rain
 [readable_numbers]: https://pub.dev/documentation/dartbag/latest/readable_numbers/readable_numbers-library.html
 [timer]: https://pub.dev/documentation/dartbag/latest/timer/timer-library.html
 [tty]: https://pub.dev/documentation/dartbag/latest/tty/tty-library.html
-[zip]: https://pub.dev/documentation/quiver/latest/quiver.iterables/zip.html
+[`zip`]: https://pub.dev/documentation/quiver/latest/quiver.iterables/zip.html
