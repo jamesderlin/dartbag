@@ -28,6 +28,12 @@ rain
 * `Iterable.startsWith` returns whether one `Iterable` starts with the same
   sequence of elements as another `Iterable`.
 
+* `Iterable.padLeft` and `Iterable.padRight` add elements to an `Iterable` to
+  have a specified length.
+
+* `zipLongest` is a version of [`zip`] that stops only after the longest
+  `Iterable` is exhausted instead of the shortest.
+
 * `LinkedHashMap.sort`.
 
 * `mergeMaps`s combines an `Iterable` of `Map`s into a single `Map`.
@@ -168,3 +174,4 @@ rain
 [readable_numbers]: https://pub.dev/documentation/dartbag/latest/readable_numbers/readable_numbers-library.html
 [timer]: https://pub.dev/documentation/dartbag/latest/timer/timer-library.html
 [tty]: https://pub.dev/documentation/dartbag/latest/tty/tty-library.html
+[zip]: https://pub.dev/documentation/quiver/latest/quiver.iterables/zip.html

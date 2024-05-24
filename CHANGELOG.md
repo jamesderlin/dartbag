@@ -1,6 +1,10 @@
 ## 0.9.0
 
-* Enabled lints introduced by Dart 3.4.0.
+* Require Dart 3.4.0 and enable new lints.
+
+* Added `padLeft` and `padRight` extension methods on `Iterable`.
+
+* Added a `zipLongest` function.
 
 * Replaced the `identityType<T>()` function with an `IdentityType<T>`
   `typedef`.

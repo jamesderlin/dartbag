@@ -19,6 +19,47 @@ Iterable<T> flattenDeep<T>(Iterable<Object?> list) sync* {
   }
 }
 
+/// Like [`zip`] or [`IterableZip`] except that `zip_longest` stops only after
+/// the longest `Iterable` is exhausted instead of the shortest.
+///
+/// All [Iterable]s shorter than the longest [Iterable] will be padded with
+/// [fillValue].
+///
+/// If any of the input [Iterable]s is infinitely long, the returned [Iterable]
+/// also will be infinitely long.
+///
+/// [zip]: https://pub.dev/documentation/quiver/latest/quiver.iterables/zip.html
+///
+// N.B.: It'd be nice if we could leverage [zip] or [IterableZip] by using the
+// [Iterable.padRight] extension method, but doing so would require determining
+// the length of the input [Iterable]s, which cannot work on ones that are
+// infinitely long.
+Iterable<List<E>> zipLongest<E>(
+  Iterable<Iterable<E>> iterables,
+  E fillValue,
+) sync* {
+  var iterators = [for (var iterable in iterables) iterable.iterator];
+
+  while (true) {
+    var exhaustedCount = 0;
+    var current = <E>[];
+    for (var i = 0; i < iterators.length; i += 1) {
+      if (iterators[i].moveNext()) {
+        current.add(iterators[i].current);
+        continue;
+      }
+
+      exhaustedCount += 1;
+      if (exhaustedCount == iterators.length) {
+        return;
+      }
+      current.add(fillValue);
+    }
+
+    yield current;
+  }
+}
+
 /// Extension methods on [List] that do work in-place.
 extension InPlaceOperations<E> on List<E> {
   /// Reverses the [List] in-place.
@@ -136,6 +177,40 @@ extension IterableUtils<E> on Iterable<E> {
         return false;
       }
     }
+  }
+
+  /// Pads elements to the beginning of this [Iterable] to make it have the
+  /// specified length.
+  ///
+  /// If the [length] of this [Iterable] is already [totalLength] or greater,
+  /// returns this [Iterable].
+  Iterable<E> padLeft(int totalLength, {required E padValue}) {
+    if (totalLength <= length) {
+      return this;
+    }
+
+    return Iterable<E>.generate(
+      totalLength - length,
+      (_) => padValue,
+    ).followedBy(this);
+  }
+
+  /// Pads elements to the end of this [Iterable] to make it have the specified
+  /// length.
+  ///
+  /// If the [length] of this [Iterable] is already [totalLength] or greater,
+  /// returns this [Iterable].
+  Iterable<E> padRight(int totalLength, {required E padValue}) {
+    if (totalLength <= length) {
+      return this;
+    }
+
+    return followedBy(
+      Iterable<E>.generate(
+        totalLength - length,
+        (_) => padValue,
+      ),
+    );
   }
 }
 

@@ -7,14 +7,22 @@ import 'package:dartbag/readable_numbers.dart';
 import 'package:test/test.dart';
 
 extension<E> on List<E> {
-  void rotateLeftSlow(
+  List<E> rotateLeftCopy(
     int shiftAmount, {
     int? start,
     int? end,
   }) {
-    for (var i = 0; i < shiftAmount; i += 1) {
-      rotateLeft(1, start: start, end: end);
+    var copy = toList();
+
+    start ??= 0;
+    end ??= length;
+
+    var rotatedLength = end - start;
+    for (var i = 0; i < rotatedLength; i += 1) {
+      copy[i + start] = this[(i + shiftAmount) % rotatedLength + start];
     }
+
+    return copy;
   }
 }
 
@@ -102,7 +110,7 @@ void main() {
         for (var i = 0; i < list.length; i += 1) {
           expect(
             [...list]..rotateLeft(i),
-            [...list]..rotateLeftSlow(i),
+            [...list].rotateLeftCopy(i),
             reason: 'shiftAmount: $i',
           );
         }
@@ -123,7 +131,7 @@ void main() {
         for (var i = 0; i < list.length; i += 1) {
           expect(
             [...list]..rotateLeft(-i),
-            [...list]..rotateLeft(list.length - i),
+            [...list].rotateLeftCopy(-i),
             reason: 'shiftAmount: -$i',
           );
         }
@@ -290,6 +298,219 @@ void main() {
       expect([1, 2, 3].startsWith([3]), false);
       expect([1, 2, 3].startsWith([1, 1]), false);
       expect([1, 2, 3].startsWith([0, 1]), false);
+    });
+  });
+
+  test('Iterable.padLeft:', () {
+    const padValue = -48;
+
+    expect(<int>[].padLeft(0, padValue: padValue).toList(), <int>[]);
+    expect(<int>[].padLeft(1, padValue: padValue).toList(), [padValue]);
+    expect(
+      <int>[].padLeft(2, padValue: padValue).toList(),
+      [padValue, padValue],
+    );
+    expect(<int>[].padLeft(2, padValue: padValue).length, 2);
+    expect([0].padLeft(0, padValue: padValue).toList(), [0]);
+    expect([0].padLeft(1, padValue: padValue).toList(), [0]);
+    expect([0].padLeft(2, padValue: padValue).toList(), [padValue, 0]);
+    expect(
+      [0].padLeft(3, padValue: padValue).toList(),
+      [padValue, padValue, 0],
+    );
+    expect([0, 1].padLeft(0, padValue: padValue).toList(), [0, 1]);
+    expect([0, 1].padLeft(1, padValue: padValue).toList(), [0, 1]);
+    expect([0, 1].padLeft(2, padValue: padValue).toList(), [0, 1]);
+    expect([0, 1].padLeft(3, padValue: padValue).toList(), [padValue, 0, 1]);
+    expect([0, 1].padLeft(3, padValue: padValue).length, 3);
+  });
+
+  test('Iterable.padRight:', () {
+    const padValue = -48;
+
+    expect(<int>[].padRight(0, padValue: 0).toList(), <int>[]);
+    expect(<int>[].padRight(1, padValue: padValue).toList(), [padValue]);
+    expect(
+      <int>[].padRight(2, padValue: padValue).toList(),
+      [padValue, padValue],
+    );
+    expect(<int>[].padRight(2, padValue: padValue).length, 2);
+    expect([0].padRight(0, padValue: padValue).toList(), [0]);
+    expect([0].padRight(1, padValue: padValue).toList(), [0]);
+    expect([0].padRight(2, padValue: padValue).toList(), [0, padValue]);
+    expect(
+      [0].padRight(3, padValue: padValue).toList(),
+      [0, padValue, padValue],
+    );
+    expect([0, 1].padRight(0, padValue: padValue).toList(), [0, 1]);
+    expect([0, 1].padRight(1, padValue: padValue).toList(), [0, 1]);
+    expect([0, 1].padRight(2, padValue: padValue).toList(), [0, 1]);
+    expect([0, 1].padRight(3, padValue: padValue).toList(), [0, 1, padValue]);
+    expect([0, 1].padRight(3, padValue: padValue).length, 3);
+  });
+
+  group('zipLongest', () {
+    const padValue = -48;
+
+    test('Works with finite iterables', () {
+      expect(zipLongest([<int>[]], padValue).toList(), <List<int>>[]);
+      expect(
+          zipLongest(
+            [
+              <int>[],
+              [1],
+            ],
+            padValue,
+          ).toList(),
+          [
+            [padValue, 1],
+          ]);
+      expect(
+          zipLongest(
+            [
+              [1],
+              <int>[],
+            ],
+            padValue,
+          ).toList(),
+          [
+            [1, padValue],
+          ]);
+      expect(
+          zipLongest(
+            [
+              <int>[],
+              [1],
+              <int>[],
+            ],
+            padValue,
+          ).toList(),
+          [
+            [padValue, 1, padValue],
+          ]);
+
+      expect(
+          zipLongest(
+            [
+              [1, 2, 3],
+            ],
+            padValue,
+          ).toList(),
+          [
+            [1],
+            [2],
+            [3],
+          ]);
+      expect(
+          zipLongest(
+            [
+              <int>[],
+              [1, 2, 3],
+            ],
+            padValue,
+          ).toList(),
+          [
+            [padValue, 1],
+            [padValue, 2],
+            [padValue, 3],
+          ]);
+      expect(
+          zipLongest(
+            [
+              [1, 2, 3],
+              <int>[],
+            ],
+            padValue,
+          ).toList(),
+          [
+            [1, padValue],
+            [2, padValue],
+            [3, padValue],
+          ]);
+
+      expect(
+          zipLongest(
+            [
+              [1, 2, 3],
+              [4, 5],
+              [6],
+            ],
+            padValue,
+          ).toList(),
+          [
+            [1, 4, 6],
+            [2, 5, padValue],
+            [3, padValue, padValue],
+          ]);
+    });
+
+    test('Works with infinite iterables', () {
+      expect(
+        zipLongest(
+          [
+            _naturalNumbers,
+          ],
+          padValue,
+        ).take(5).toList(),
+        [
+          [1],
+          [2],
+          [3],
+          [4],
+          [5],
+        ],
+      );
+
+      expect(
+        zipLongest(
+          [
+            _naturalNumbers,
+            <int>[],
+          ],
+          padValue,
+        ).take(5).toList(),
+        [
+          [1, padValue],
+          [2, padValue],
+          [3, padValue],
+          [4, padValue],
+          [5, padValue],
+        ],
+      );
+
+      expect(
+        zipLongest(
+          [
+            <int>[],
+            _naturalNumbers,
+          ],
+          padValue,
+        ).take(5).toList(),
+        [
+          [padValue, 1],
+          [padValue, 2],
+          [padValue, 3],
+          [padValue, 4],
+          [padValue, 5],
+        ],
+      );
+
+      expect(
+        zipLongest(
+          [
+            [-1, -2, -3],
+            _naturalNumbers,
+          ],
+          padValue,
+        ).take(5).toList(),
+        [
+          [-1, 1],
+          [-2, 2],
+          [-3, 3],
+          [padValue, 4],
+          [padValue, 5],
+        ],
+      );
     });
   });
 
@@ -461,4 +682,13 @@ bool _isSorted<E extends Comparable<Object>>(Iterable<E> iterable) {
     previousValue = currentValue;
   }
   return true;
+}
+
+/// Returns an infinite [Iterable] of the natural numbers.
+Iterable<int> get _naturalNumbers sync* {
+  var i = 1;
+  while (true) {
+    yield i;
+    i += 1;
+  }
 }
