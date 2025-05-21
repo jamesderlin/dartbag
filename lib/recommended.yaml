@@ -1,6 +1,5 @@
 # Modified from:
-# <https://github.com/dart-lang/sdk/blob/main/pkg/linter/example/all.yaml>
-# (commit 607b3f5ddba34348f965cce99e4cac5e87a46a99)
+# <https://github.com/dart-lang/sdk/blob/3.8.0/pkg/linter/example/all.yaml>
 #
 # References:
 # https://dart.dev/guides/language/analysis-options
@@ -16,7 +15,7 @@ analyzer:
     todo: ignore
 
 # To make maintenance easier, these rules are in the same order as:
-# <https://github.com/dart-lang/linter/blob/master/example/all.yaml>
+# <https://github.com/dart-lang/sdk/blob/main/pkg/linter/example/all.yaml>
 linter:
   rules:
     - always_declare_return_types
@@ -39,6 +38,7 @@ linter:
     - avoid_field_initializers_in_const_classes
     - avoid_final_parameters
     - avoid_function_literals_in_foreach_calls
+    #- avoid_futureor_void # Experimental.
     - avoid_implementing_value_types
     - avoid_init_to_null
     - avoid_js_rounded_ints
@@ -126,10 +126,11 @@ linter:
     - null_check_on_nullable_type_parameter
     - null_closures
     - omit_local_variable_types
+    #- omit_obvious_local_variable_types # Experimental.
+    #- omit_obvious_property_types # Experimental.
     #- one_member_abstracts # Makes defining interfaces annoying and does not seem to offer much value.
     - only_throw_errors
     - overridden_fields
-    - package_api_docs
     - package_names
     - package_prefixed_library_names
     #- parameter_assignments # Sometimes necessary to normalize arguments to minimize errors.
@@ -184,6 +185,9 @@ linter:
     #- sort_constructors_first # Style.
     - sort_pub_dependencies
     - sort_unnamed_constructors_first
+    #- specify_nonobvious_local_variable_types # Experimental.
+    #- specify_nonobvious_property_types # Experimental.
+    - strict_top_level_inference
     - test_types_in_equals
     - throw_in_finally
     - tighten_type_of_initializing_formals
@@ -192,6 +196,7 @@ linter:
     - type_literal_in_constant_pattern
     - unawaited_futures
     #- unintended_html_in_doc_comment # Unreleased as of Dart 3.4.0.
+    #- unnecessary_async # Experimental.
     - unnecessary_await_in_return
     - unnecessary_brace_in_string_interps
     - unnecessary_breaks
@@ -199,6 +204,7 @@ linter:
     - unnecessary_constructor_name
     #- unnecessary_final # Useful when intentionally shadowing member variables.
     - unnecessary_getters_setters
+    - unnecessary_ignore
     - unnecessary_lambdas
     - unnecessary_late
     - unnecessary_library_directive
@@ -217,9 +223,10 @@ linter:
     - unnecessary_string_interpolations
     - unnecessary_this
     - unnecessary_to_list_in_spreads
+    - unnecessary_underscores
     - unreachable_from_main
     - unrelated_type_equality_checks
-    #- unsafe_html # Re-enable after <https://github.com/dart-lang/linter/issues/2348> is fixed.
+    #- unsafe_variance # Experimental.
     - use_build_context_synchronously
     - use_colored_box
     - use_decorated_box
@@ -231,6 +238,7 @@ linter:
     - use_key_in_widget_constructors
     - use_late_for_private_fields_and_variables
     - use_named_constants
+    - use_null_aware_elements
     - use_raw_strings
     - use_rethrow_when_possible
     - use_setters_to_change_properties
@@ -239,5 +247,6 @@ linter:
     - use_super_parameters
     - use_test_throws_matchers
     - use_to_and_as_if_applicable
+    - use_truncating_division
     - valid_regexps
     - void_checks

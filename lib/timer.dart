@@ -39,10 +39,10 @@ class ExpiringPeriodicTimer implements Timer {
     required Duration interval,
     required void Function(Duration timeLeft) onTick,
     void Function()? onFinish,
-  })  : _endTime = clock.now().add(total),
-        _interval = interval,
-        _onTick = onTick,
-        _onFinish = onFinish {
+  }) : _endTime = clock.now().add(total),
+       _interval = interval,
+       _onTick = onTick,
+       _onFinish = onFinish {
     // Schedule the periodic [Timer] first to try to ensure that it fires first
     // if it coincides with the completion [Timer].
     _periodicTimer = Timer.periodic(_interval, (_) {

@@ -20,6 +20,6 @@ extension BytesExtension on List<int> {
   /// Each hexadecimal string will be converted to uppercase and will be
   /// optionally prefixed with [prefix].
   List<String> toHex({String prefix = '0x'}) => [
-        for (var byte in this) '$prefix${byte.toRadixString(16).toUpperCase()}',
-      ];
+    for (var byte in this) '$prefix${byte.toRadixString(16).toUpperCase()}',
+  ];
 }

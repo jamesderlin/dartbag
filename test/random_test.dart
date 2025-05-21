@@ -100,8 +100,10 @@ void main() {
       trackedRandom = TrackedRandom();
       var partiallyShuffled = [...original];
 
-      var iterator =
-          lazyShuffler(partiallyShuffled, random: trackedRandom).iterator;
+      var iterator = lazyShuffler(
+        partiallyShuffled,
+        random: trackedRandom,
+      ).iterator;
 
       var n = 10;
       for (var i = 0; i < n; i += 1) {
@@ -128,14 +130,17 @@ void main() {
     test('is repeatable', () {
       var random = RepeatableRandom();
 
-      List<int> randomIntSequence() =>
-          [for (var i = 0; i < 1000; i += 1) random.nextInt(100)];
+      List<int> randomIntSequence() => [
+        for (var i = 0; i < 1000; i += 1) random.nextInt(100),
+      ];
 
-      List<bool> randomBoolSequence() =>
-          [for (var i = 0; i < 1000; i += 1) random.nextBool()];
+      List<bool> randomBoolSequence() => [
+        for (var i = 0; i < 1000; i += 1) random.nextBool(),
+      ];
 
-      List<double> randomDoubleSequence() =>
-          [for (var i = 0; i < 1000; i += 1) random.nextDouble()];
+      List<double> randomDoubleSequence() => [
+        for (var i = 0; i < 1000; i += 1) random.nextDouble(),
+      ];
 
       var intSequence1 = randomIntSequence();
       var boolSequence1 = randomBoolSequence();

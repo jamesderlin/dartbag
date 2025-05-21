@@ -160,8 +160,12 @@ void main() {
     });
 
     test('Whitespace-insensitive', () {
-      const expectedDuration =
-          Duration(days: 1, hours: 2, minutes: 3, seconds: 4);
+      const expectedDuration = Duration(
+        days: 1,
+        hours: 2,
+        minutes: 3,
+        seconds: 4,
+      );
       expect(
         tryParseDuration('  1d2h3m4s  '),
         expectedDuration,

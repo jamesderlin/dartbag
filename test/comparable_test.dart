@@ -94,17 +94,18 @@ void main() {
   });
 
   test('ComparableWrapper', () {
-    var names = [
-      const _Name('Smith', 'Jane'),
-      const _Name('Doe', 'John'),
-      const _Name('Doe', 'Jane'),
-      const _Name('Galt', 'John'),
-    ]..sortWithKey(
-        (name) => ComparableWrapper(
-          [name.surname, name.givenName],
-          compareIterables,
-        ),
-      );
+    var names =
+        [
+          const _Name('Smith', 'Jane'),
+          const _Name('Doe', 'John'),
+          const _Name('Doe', 'Jane'),
+          const _Name('Galt', 'John'),
+        ]..sortWithKey(
+          (name) => ComparableWrapper(
+            [name.surname, name.givenName],
+            compareIterables,
+          ),
+        );
 
     expect(names, [
       const _Name('Doe', 'Jane'),

@@ -1,3 +1,8 @@
+## 0.10.0
+
+* Require Dart 3.8 and enable new lints.
+* Breaking: Renamed `analysis_options.yaml` to `recommended.yaml`.
+
 ## 0.9.0+1
 
 * Minor correction to the `README.md` file.

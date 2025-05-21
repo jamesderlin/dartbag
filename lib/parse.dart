@@ -114,7 +114,8 @@ Duration? tryParseDuration(String? value) {
     return null;
   }
 
-  var match = _durationRegExp.firstMatch(value) ??
+  var match =
+      _durationRegExp.firstMatch(value) ??
       _readableDurationRegExp.firstMatch(value);
   if (match == null) {
     return null;
@@ -137,7 +138,8 @@ Duration? tryParseDuration(String? value) {
   if (subsecondsString != null) {
     const microsecondDigits = 6;
     const fixedLength = microsecondDigits + 1;
-    microseconds = int.parse(
+    microseconds =
+        int.parse(
           subsecondsString.padRight(fixedLength, '0').substring(0, fixedLength),
         ).roundToMultipleOf(10) ~/
         10;

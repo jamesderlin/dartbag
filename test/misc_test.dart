@@ -175,24 +175,28 @@ void main() {
     expect(_polymorphicFuture().cast<_Base>(), isNot(isA<Future<_Derived>>()));
 
     expect(
-      () => _polymorphicFuture()
-          .timeout(const Duration(milliseconds: 1), onTimeout: _Base.new),
+      () => _polymorphicFuture().timeout(
+        const Duration(milliseconds: 1),
+        onTimeout: _Base.new,
+      ),
       throwsA(isA<TypeError>()),
     );
 
     expect(
-      () => _polymorphicFuture()
-          .cast<_Base>()
-          .timeout(const Duration(milliseconds: 1), onTimeout: _Base.new),
+      () => _polymorphicFuture().cast<_Base>().timeout(
+        const Duration(milliseconds: 1),
+        onTimeout: _Base.new,
+      ),
       returnsNormally,
     );
   });
 
   group('PollableFuture:', () {
     test('initialized with a Future', () async {
-      var pollableFuture =
-          Future<int>.delayed(const Duration(seconds: 1), () => 42)
-              .toPollable();
+      var pollableFuture = Future<int>.delayed(
+        const Duration(seconds: 1),
+        () => 42,
+      ).toPollable();
       expect(pollableFuture.isCompleted, false);
       expect(() => pollableFuture.value, throwsA(isA<StateError>()));
 
@@ -279,7 +283,8 @@ void main() {
       expect(match, isNot(null));
 
       match!;
-      var durationString = '${match.namedGroup('offsetSign')}'
+      var durationString =
+          '${match.namedGroup('offsetSign')}'
           '${match.namedGroup('offsetHours')}h'
           '${match.namedGroup('offsetMinutes')}m';
 

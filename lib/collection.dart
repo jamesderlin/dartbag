@@ -99,8 +99,7 @@ extension InPlaceOperations<E> on List<E> {
 int _compareKeys<K extends Comparable<Object>, V>(
   MapEntry<K, V> a,
   MapEntry<K, V> b,
-) =>
-    a.key.compareTo(b.key);
+) => a.key.compareTo(b.key);
 
 /// Provides a [sortWithKey] extension method on [List].
 extension SortWithKeyExtension<E> on List<E> {

@@ -180,12 +180,11 @@ void main() {
 
       for (var i = 0; i < oddList.length; i += 1) {
         expect(
-          (preamble + oddList + postamble)
-            ..rotateLeft(
-              i,
-              start: preamble.length,
-              end: preamble.length + oddList.length,
-            ),
+          (preamble + oddList + postamble)..rotateLeft(
+            i,
+            start: preamble.length,
+            end: preamble.length + oddList.length,
+          ),
           preamble + ([...oddList]..rotateLeft(i)) + postamble,
           reason: 'shiftAmount: $i',
         );
@@ -195,8 +194,9 @@ void main() {
 
   group('List.sortWithKey:', () {
     final random = Random(0);
-    final ordered =
-        UnmodifiableListView([for (var i = 0; i < 1000; i += 1) '$i']);
+    final ordered = UnmodifiableListView([
+      for (var i = 0; i < 1000; i += 1) '$i',
+    ]);
     final shuffled = UnmodifiableListView(ordered.toList()..shuffle(random));
 
     test('Sorts correctly', () {
@@ -251,8 +251,9 @@ void main() {
 
   group('List.sortWithAsyncKey', () {
     final random = Random(0);
-    final ordered =
-        UnmodifiableListView([for (var i = 0; i < 1000; i += 1) '$i']);
+    final ordered = UnmodifiableListView([
+      for (var i = 0; i < 1000; i += 1) '$i',
+    ]);
     final shuffled = UnmodifiableListView(ordered.toList()..shuffle(random));
 
     test('Sorts correctly', () async {
@@ -355,93 +356,100 @@ void main() {
     test('Works with finite iterables', () {
       expect(zipLongest([<int>[]], padValue).toList(), <List<int>>[]);
       expect(
-          zipLongest(
-            [
-              <int>[],
-              [1],
-            ],
-            padValue,
-          ).toList(),
+        zipLongest(
           [
-            [padValue, 1],
-          ]);
+            <int>[],
+            [1],
+          ],
+          padValue,
+        ).toList(),
+        [
+          [padValue, 1],
+        ],
+      );
       expect(
-          zipLongest(
-            [
-              [1],
-              <int>[],
-            ],
-            padValue,
-          ).toList(),
-          [
-            [1, padValue],
-          ]);
-      expect(
-          zipLongest(
-            [
-              <int>[],
-              [1],
-              <int>[],
-            ],
-            padValue,
-          ).toList(),
-          [
-            [padValue, 1, padValue],
-          ]);
-
-      expect(
-          zipLongest(
-            [
-              [1, 2, 3],
-            ],
-            padValue,
-          ).toList(),
+        zipLongest(
           [
             [1],
-            [2],
-            [3],
-          ]);
+            <int>[],
+          ],
+          padValue,
+        ).toList(),
+        [
+          [1, padValue],
+        ],
+      );
       expect(
-          zipLongest(
-            [
-              <int>[],
-              [1, 2, 3],
-            ],
-            padValue,
-          ).toList(),
+        zipLongest(
           [
-            [padValue, 1],
-            [padValue, 2],
-            [padValue, 3],
-          ]);
-      expect(
-          zipLongest(
-            [
-              [1, 2, 3],
-              <int>[],
-            ],
-            padValue,
-          ).toList(),
-          [
-            [1, padValue],
-            [2, padValue],
-            [3, padValue],
-          ]);
+            <int>[],
+            [1],
+            <int>[],
+          ],
+          padValue,
+        ).toList(),
+        [
+          [padValue, 1, padValue],
+        ],
+      );
 
       expect(
-          zipLongest(
-            [
-              [1, 2, 3],
-              [4, 5],
-              [6],
-            ],
-            padValue,
-          ).toList(),
+        zipLongest(
           [
-            [1, 4, 6],
-            [2, 5, padValue],
-            [3, padValue, padValue],
-          ]);
+            [1, 2, 3],
+          ],
+          padValue,
+        ).toList(),
+        [
+          [1],
+          [2],
+          [3],
+        ],
+      );
+      expect(
+        zipLongest(
+          [
+            <int>[],
+            [1, 2, 3],
+          ],
+          padValue,
+        ).toList(),
+        [
+          [padValue, 1],
+          [padValue, 2],
+          [padValue, 3],
+        ],
+      );
+      expect(
+        zipLongest(
+          [
+            [1, 2, 3],
+            <int>[],
+          ],
+          padValue,
+        ).toList(),
+        [
+          [1, padValue],
+          [2, padValue],
+          [3, padValue],
+        ],
+      );
+
+      expect(
+        zipLongest(
+          [
+            [1, 2, 3],
+            [4, 5],
+            [6],
+          ],
+          padValue,
+        ).toList(),
+        [
+          [1, 4, 6],
+          [2, 5, padValue],
+          [3, padValue, padValue],
+        ],
+      );
     });
 
     test('Works with infinite iterables', () {

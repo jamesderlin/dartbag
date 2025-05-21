@@ -51,12 +51,14 @@ void main() {
           var dataCopy = Uint8List.fromList(data);
 
           late bool result;
-          var naiveDuration =
-              timeOperation(() => result = listEquals(data, dataCopy));
+          var naiveDuration = timeOperation(
+            () => result = listEquals(data, dataCopy),
+          );
           expect(result, true);
 
-          var wordDuration =
-              timeOperation(() => result = memEquals(data, dataCopy));
+          var wordDuration = timeOperation(
+            () => result = memEquals(data, dataCopy),
+          );
           expect(result, true);
 
           expect(wordDuration, lessThan(naiveDuration));
@@ -82,12 +84,14 @@ void main() {
           dataCopy[numBytes - 1] += 1;
 
           late bool result;
-          var naiveDuration =
-              timeOperation(() => result = listEquals(data, dataCopy));
+          var naiveDuration = timeOperation(
+            () => result = listEquals(data, dataCopy),
+          );
           expect(result, false);
 
-          var wordDuration =
-              timeOperation(() => result = memEquals(data, dataCopy));
+          var wordDuration = timeOperation(
+            () => result = memEquals(data, dataCopy),
+          );
           expect(result, false);
 
           expect(wordDuration, lessThan(naiveDuration));

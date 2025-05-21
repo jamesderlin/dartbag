@@ -110,8 +110,7 @@ extension ReadableNumber on num {
     int precision = 0,
     String unit = '',
     bool binary = false,
-  }) =>
-      readableNumber(this, precision: precision, unit: unit, binary: binary);
+  }) => readableNumber(this, precision: precision, unit: unit, binary: binary);
 }
 
 /// Returns a [Duration] as a human-readable string.
@@ -147,8 +146,9 @@ String readableDuration(Duration duration, {int? precision}) {
       );
     }
     duration = Duration(
-      microseconds: duration.inMicroseconds
-          .roundToMultipleOf(math.pow(10, 6 - precision) as int),
+      microseconds: duration.inMicroseconds.roundToMultipleOf(
+        math.pow(10, 6 - precision) as int,
+      ),
     );
   }
 
@@ -161,8 +161,9 @@ String readableDuration(Duration duration, {int? precision}) {
   var secondsString = '';
   if (microseconds > 0) {
     // Strip off trailing zeroes from the fractional portion.
-    var fractionalSecondsString =
-        microseconds.padLeft(6).replaceAll(RegExp(r'0+$'), '');
+    var fractionalSecondsString = microseconds
+        .padLeft(6)
+        .replaceAll(RegExp(r'0+$'), '');
     secondsString = '$seconds.${fractionalSecondsString}s';
   } else if (seconds > 0) {
     secondsString = '${seconds}s';

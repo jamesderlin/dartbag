@@ -116,14 +116,22 @@ void main() {
 
     test('All components', () {
       expect(
-        const Duration(days: 1, hours: 2, minutes: 3, seconds: 4)
-            .toReadableString(),
+        const Duration(
+          days: 1,
+          hours: 2,
+          minutes: 3,
+          seconds: 4,
+        ).toReadableString(),
         '1d2h3m4s',
       );
 
       expect(
-        const Duration(days: 1, hours: 2, minutes: 34, seconds: 56)
-            .toReadableString(),
+        const Duration(
+          days: 1,
+          hours: 2,
+          minutes: 34,
+          seconds: 56,
+        ).toReadableString(),
         '1d2h34m56s',
       );
 
@@ -187,8 +195,10 @@ void main() {
 
       test('Simple rounding', () {
         expect(
-          const Duration(seconds: 1, microseconds: 500 * 1000)
-              .toReadableString(precision: 0),
+          const Duration(
+            seconds: 1,
+            microseconds: 500 * 1000,
+          ).toReadableString(precision: 0),
           '2s',
         );
 

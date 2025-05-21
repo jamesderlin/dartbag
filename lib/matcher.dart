@@ -22,7 +22,7 @@ import 'package:matcher/matcher.dart';
 /// });
 /// ```
 Matcher toStringMatches<T>(Object valueOrMatcher) => isA<T>().having(
-      (object) => object.toString(),
-      'toString()',
-      valueOrMatcher,
-    );
+  (object) => object.toString(),
+  'toString()',
+  valueOrMatcher,
+);

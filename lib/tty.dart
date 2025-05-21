@@ -18,11 +18,13 @@ import 'parse.dart';
 ///
 /// [1]: https://docs.python.org/3/library/shutil.html#shutil.get_terminal_size
 ({int width, int height}) getTerminalSize() => (
-      width: tryParseInt(io.Platform.environment['COLUMNS']) ??
-          (io.stdout.hasTerminal ? io.stdout.terminalColumns : 80),
-      height: tryParseInt(io.Platform.environment['LINES']) ??
-          (io.stdout.hasTerminal ? io.stdout.terminalLines : 24),
-    );
+  width:
+      tryParseInt(io.Platform.environment['COLUMNS']) ??
+      (io.stdout.hasTerminal ? io.stdout.terminalColumns : 80),
+  height:
+      tryParseInt(io.Platform.environment['LINES']) ??
+      (io.stdout.hasTerminal ? io.stdout.terminalLines : 24),
+);
 
 /// Word wraps a string to a maximum line length.
 ///

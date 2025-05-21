@@ -180,8 +180,7 @@ extension EscapeString on String {
   String escape({
     QuoteType quotes = QuoteType.single,
     bool ascii = true,
-  }) =>
-      String.fromCharCodes(
-        runes.escape(quotes: quotes, ascii: ascii),
-      );
+  }) => String.fromCharCodes(
+    runes.escape(quotes: quotes, ascii: ascii),
+  );
 }
