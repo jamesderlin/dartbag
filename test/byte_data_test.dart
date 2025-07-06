@@ -43,6 +43,8 @@ void main() {
 
   void testMemEquals(bool Function(Uint8List, Uint8List) memEquals) {
     test('memEquals behaves correctly for equal lists', () {
+      // The body is actually synchronous.
+      //
       // ignore: discarded_futures
       usuallyPasses(
         tryCount: 10,
@@ -75,6 +77,8 @@ void main() {
     });
 
     test('memEquals behaves correctly for unequal lists of equal lengths', () {
+      // The body is actually synchronous.
+      //
       // ignore: discarded_futures
       usuallyPasses(
         tryCount: 10,
@@ -135,7 +139,7 @@ void main() {
 /// If [body] is asynchronous (that is, returns a [Future]), `usuallyPasses`
 /// also will be asynchronous and will return a `Future<void>`.  If [body] is
 /// synchronous, `usuallyPasses` will complete synchronously.
-FutureOr<void> usuallyPasses<R>(
+Future<void>? usuallyPasses<R>(
   R Function() body, {
   required int tryCount,
   int? minimumPassCount,

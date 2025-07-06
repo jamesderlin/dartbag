@@ -29,20 +29,17 @@ class ExpiringPeriodicTimer implements Timer {
   /// Constructor.
   ///
   /// The [ExpiringPeriodicTimer] will expire after the [total] amount of time
-  /// has elapsed.  The optional [onFinish] callback will be invoked upon
+  /// has elapsed.  The optional [_onFinish] callback will be invoked upon
   /// expiration.
   ///
-  /// Until the timer expires, [onTick] will be invoked periodically every
-  /// [interval] with the amount of time left before expiration.
-  ExpiringPeriodicTimer({
+  /// Until the timer expires, [_onTick] will be invoked periodically every
+  /// [_interval] with the amount of time left before expiration.
+  new({
     required Duration total,
-    required Duration interval,
-    required void Function(Duration timeLeft) onTick,
-    void Function()? onFinish,
-  }) : _endTime = clock.now().add(total),
-       _interval = interval,
-       _onTick = onTick,
-       _onFinish = onFinish {
+    required this._interval,
+    required this._onTick,
+    this._onFinish,
+  }) : _endTime = clock.now().add(total) {
     // Schedule the periodic [Timer] first to try to ensure that it fires first
     // if it coincides with the completion [Timer].
     _periodicTimer = Timer.periodic(_interval, (_) {

@@ -6,7 +6,7 @@ import 'package:test/test.dart';
 
 class TrackedRandom implements math.Random {
   final _rawRandom = math.Random(0);
-  int callCount = 0;
+  var callCount = 0;
 
   @override
   bool nextBool() {
@@ -32,12 +32,12 @@ class FakeRandom implements math.Random {
 
   static int? currentSeed;
 
-  factory FakeRandom([int? seed]) {
+  factory([int? seed]) {
     currentSeed = seed;
     return _instance;
   }
 
-  FakeRandom._();
+  new _();
 
   @override
   bool nextBool() => false;

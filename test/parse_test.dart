@@ -259,5 +259,5 @@ class _DurationTestCase {
 
   String get normalDurationString => '$expectedDuration';
 
-  _DurationTestCase(this.readableDurationString, this.expectedDuration);
+  new(this.readableDurationString, this.expectedDuration);
 }

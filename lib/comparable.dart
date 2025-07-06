@@ -99,8 +99,8 @@ class ComparableWrapper<T> implements Comparable<ComparableWrapper<T>> {
   final Comparator<T> compare;
 
   /// Constructor.
-  ComparableWrapper(this.value, this.compare);
+  new(this.value, this.compare);
 
   @override
-  int compareTo(ComparableWrapper<T> other) => compare(this.value, other.value);
+  int compareTo(ComparableWrapper<T> other) => compare(value, other.value);
 }

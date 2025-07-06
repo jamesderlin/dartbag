@@ -16,7 +16,7 @@ includes (but is not limited to):
   `Iterable` sequence.
 
 * `List.reverse` reverses a `List` in place.
-rain
+
 * `List.rotateLeft` rotates a `List` in place.
 
 * `List.sortWithKey` sorts a `List` by computing and caching sort keys, which

@@ -34,7 +34,6 @@ extension ChainIf<T> on T {
   /// ```dart
   /// var items = Set<int>.of([1, 2, 3]..chainIf(shouldShuffle)?.shuffle());
   /// ```
-  // ignore: avoid_positional_boolean_parameters, https://github.com/dart-lang/linter/issues/1638
   T? chainIf(bool shouldChain) => shouldChain ? this : null;
 }
 
@@ -68,8 +67,9 @@ class Boxed<T> {
   /// The wrapped value.
   T value;
 
+  // Usage should be self-evident.
   // ignore: public_member_api_docs
-  Boxed(this.value);
+  new(this.value);
 }
 
 /// An output parameter.
@@ -237,7 +237,6 @@ extension ImpliesExtension on bool {
   /// <style>table, th, td { border: 1px solid; border-collapse: collapse; padding: 1ex; }</style>
   ///
   /// [1]: https://simple.wikipedia.org/wiki/Implication_(logic)
-  // ignore: avoid_positional_boolean_parameters, https://github.com/dart-lang/linter/issues/1638
   bool implies(bool consequence) => !this || consequence;
 }
 
@@ -274,7 +273,7 @@ class PollableFuture<T> implements Future<T> {
   ///
   /// Alternatively use the [PollableFutureExtension.toPollable] extension
   /// method on an existing [Future].
-  PollableFuture(FutureOr<T> futureOrValue) : _futureOrValue = futureOrValue {
+  new(FutureOr<T> futureOrValue) : _futureOrValue = futureOrValue {
     if (_futureOrValue case Future<T> future) {
       unawaited(
         future.then((value) {

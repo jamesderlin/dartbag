@@ -1,3 +1,10 @@
+## 0.11.0
+
+* Require Dart 3.14 and enable new lints.
+* Minor correction to the `README.md` file.
+* Make better use concise constructor syntax.
+* Other minor adjustments to appease stylistic lints.
+
 ## 0.10.0
 
 * Require Dart 3.8 and enable new lints.
@@ -10,11 +17,8 @@
 ## 0.9.0
 
 * Require Dart 3.4.0 and enable new lints.
-
 * Added `padLeft` and `padRight` extension methods on `Iterable`.
-
 * Added a `zipLongest` function.
-
 * Replaced the `identityType<T>()` function with an `IdentityType<T>`
   `typedef`.
 

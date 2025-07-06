@@ -67,7 +67,7 @@ class RepeatableRandom implements math.Random {
   ///
   /// [prngFromSeed] is a callback that constructs a [math.Random] from a seed.
   /// If not specified, defaults to [math.Random.new].
-  RepeatableRandom([math.Random Function(int?) prngFromSeed = math.Random.new])
+  new([math.Random Function(int?) prngFromSeed = math.Random.new])
     : _prngFromSeed = prngFromSeed;
 
   /// A callback that constructs the underlying pseudo-random number generator.

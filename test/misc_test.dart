@@ -307,9 +307,9 @@ void main() {
   });
 }
 
-class _Base {}
+class _Base;
 
-class _Derived extends _Base {}
+class _Derived extends _Base;
 
 /// Returns a [Future] that has a static type of `Future<_Base>` but that has a
 /// runtime type of `Future<_Derived>`.
@@ -323,7 +323,7 @@ class _SplitTest {
   final int? count;
   final List<String> expected;
 
-  const _SplitTest(
+  const new(
     this.description, {
     required this.input,
     required this.separator,

@@ -3,6 +3,7 @@ library;
 
 import 'dart:async';
 import 'dart:collection';
+
 import 'package:collection/collection.dart' as collection;
 
 import 'comparable.dart';
@@ -280,6 +281,9 @@ extension FutureMap<K, V> on Map<K, Future<V>> {
       assert(keysCopy.length == awaitedValues.length);
       return Map.fromIterables(keysCopy, awaitedValues);
 
+      // Despite inherting from `Error`, `ParallelWaitError` does not
+      // necessarily represent a logical error.
+      //
       // ignore: avoid_catching_errors
     } on ParallelWaitError<List<V?>, List<AsyncError?>> catch (e) {
       assert(keysCopy.length == e.values.length);
@@ -323,5 +327,5 @@ class ParallelMapWaitError<K, V> extends Error {
   final Map<K, AsyncError> errors;
 
   /// Constructor.
-  ParallelMapWaitError(this.values, this.errors);
+  new(this.values, this.errors);
 }

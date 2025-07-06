@@ -663,6 +663,9 @@ void main() {
         await futureResult;
         fail('Failed to fail.');
 
+        // Despite inherting from `Error`, `ParallelMapWaitError` does not
+        // necessarily represent a logical error.
+        //
         // ignore: avoid_catching_errors
       } on ParallelMapWaitError<String, int?> catch (e) {
         expect(stopwatch.elapsed.inMilliseconds, inClosedOpenRange(500, 1000));

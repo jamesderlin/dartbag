@@ -191,7 +191,7 @@ class _BinaryOperatorTest<ArgumentType, ResultType> {
 
   final ResultType expectedResult;
 
-  const _BinaryOperatorTest(
+  const new(
     this.argument1,
     this.argument2, {
     required ResultType expected,

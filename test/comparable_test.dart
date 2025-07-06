@@ -120,7 +120,7 @@ class _Name {
   final String surname;
   final String givenName;
 
-  const _Name(this.surname, this.givenName);
+  const new(this.surname, this.givenName);
 
   @override
   String toString() => '$givenName $surname';
@@ -131,7 +131,7 @@ class _ComparisonTest<Argument1Type, Argument2Type> {
   final Argument2Type argument2;
   final int expectedResult;
 
-  const _ComparisonTest(
+  const new(
     this.argument1,
     this.argument2,
     this.expectedResult,
@@ -145,7 +145,7 @@ class _ComparisonTest<Argument1Type, Argument2Type> {
 class _WrappedInt implements Comparable<_WrappedInt> {
   int value;
 
-  _WrappedInt(this.value);
+  new(this.value);
 
   @override
   int compareTo(_WrappedInt other) => value.compareTo(other.value);

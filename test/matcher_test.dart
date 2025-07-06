@@ -72,7 +72,7 @@ void expectFailure(void Function() expectation, Matcher failureMessageMatcher) {
 
 /// A simple [Exception] class.
 class _MyException implements Exception {
-  _MyException(this.message);
+  new(this.message);
 
   final String message;
 
