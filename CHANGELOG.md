@@ -1,6 +1,7 @@
 ## 0.11.0
 
 * Require Dart 3.14 and enable new lints.
+* Reimplement `memEquals` to use `Uint8List.rangeEquals`.
 * Minor correction to the `README.md` file.
 * Make better use concise constructor syntax.
 * Other minor adjustments to appease stylistic lints.

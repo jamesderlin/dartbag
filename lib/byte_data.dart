@@ -5,8 +5,6 @@ import 'dart:typed_data';
 
 import 'misc.dart';
 
-export 'src/mem_equals32.dart' if (dart.library.io) 'src/mem_equals64.dart';
-
 /// Provides extension methods for operating on lists of bytes.
 extension BytesExtension on List<int> {
   /// Converts a `List<int>` to a [Uint8List].
@@ -22,4 +20,10 @@ extension BytesExtension on List<int> {
   List<String> toHex({String prefix = '0x'}) => [
     for (var byte in this) '$prefix${byte.toRadixString(16).toUpperCase()}',
   ];
+}
+
+/// Compares two [Uint8List]s for equality.
+bool memEquals(Uint8List bytes1, Uint8List bytes2) {
+  return bytes1.length == bytes2.length &&
+      bytes1.rangeEquals(0, bytes1.length, bytes2);
 }
